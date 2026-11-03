@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/core/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/core/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/core/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/core/images/apple-touch-icon.png">
+    <title>Drainage-CADD Studio | KAPPS Studio</title>
+    <meta name="description" content="Turn an OpenRoads SUDA export into AutoCAD DXF drainage callouts and storm sewer profile sheets for VDOT plans.">
+    <link rel="canonical" href="https://kapps.ai/tools/drainage-cadd-studio/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="KAPPS">
+    <meta property="og:url" content="https://kapps.ai/tools/drainage-cadd-studio/">
+    <meta property="og:title" content="Drainage-CADD Studio | KAPPS Studio">
+    <meta property="og:description" content="Turn an OpenRoads SUDA export into AutoCAD DXF drainage callouts and storm sewer profile sheets for VDOT plans.">
+    <meta property="og:image" content="https://kapps.ai/static/core/images/og-kapps.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kapps.ai/static/core/images/og-kapps.png">
+    <script type="application/ld+json" nonce="04PEvANcElg510x4ZiEoTQ">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kapps.ai/#org","name":"KAPPS LLC","alternateName":"KAPPS","url":"https://kapps.ai/","logo":"https://kapps.ai/static/core/images/kapps.png","email":"support@kapps.ai","telephone":"+1-804-404-3621","address":{"@type":"PostalAddress","addressLocality":"Richmond","addressRegion":"VA","addressCountry":"US"}},{"@type":"SoftwareApplication","name":"Drainage-CADD Studio","description":"Turn an OpenRoads SUDA export into AutoCAD DXF drainage callouts and storm sewer profile sheets for VDOT plans.","url":"https://kapps.ai/tools/drainage-cadd-studio/","applicationCategory":"BusinessApplication","operatingSystem":"Web browser","publisher":{"@id":"https://kapps.ai/#org"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"KAPPS","item":"https://kapps.ai/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://kapps.ai/tools/"},{"@type":"ListItem","position":3,"name":"Drainage-CADD Studio"}]}]}</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-blOohCVdhjmtROpu8+CfTnUWham9nkX7P7OZQMst+RUnhtoY/9qemFAkIKOYxDI3" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-main: #FAFAF7; --bg-surface: #FFFFFF; --bg-surface2: #F5F3EE;
+            --border: #E7E3DA; --border-hover: #D6D0C2;
+            --text-main: #1C1917; --text-muted: #423E39; --text-dim: #6A635B;
+            --accent: #2563EB; --accent-dim: rgba(37, 99, 235, 0.10); --accent-glow: rgba(37, 99, 235, 0.25);
+            --success: #059669; --success-dim: rgba(5, 150, 105, 0.10);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg-main); color: var(--text-main); font-family: 'Mukta', -apple-system, sans-serif; font-weight: 500; line-height: 1.5; }
+        a { color: inherit; }
+        code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: .92em; background: var(--bg-surface2); border: 1px solid var(--border); border-radius: 5px; padding: 0 5px; }
+
+        .btn-primary, .btn-secondary { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: inherit; font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 10px; transition: background .2s, border-color .2s, box-shadow .2s; white-space: nowrap; }
+        .btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+        .btn-primary:hover { background: #1D4ED8; box-shadow: 0 8px 25px var(--accent-glow); }
+        .btn-secondary { background: var(--bg-surface2); color: var(--text-main); border: 1px solid var(--border); font-weight: 500; }
+        .btn-secondary:hover { border-color: var(--border-hover); }
+        .btn-sm { padding: 9px 16px; font-size: 14px; }
+
+        .wrap { max-width: 1120px; margin: 0 auto; padding: 0 48px; }
+        .crumbs { font-size: 13px; color: var(--text-dim); padding-top: 28px; }
+        .crumbs a { color: var(--text-dim); text-decoration: none; }
+        .crumbs a:hover { color: var(--accent); }
+        .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
+        .free-tag { font-size: 10.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--success); background: var(--success-dim); border-radius: 999px; padding: 2px 8px; }
+        .paid-tag { font-size: 10.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--text-muted); background: var(--bg-surface2); border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; }
+        .chip { display: inline-flex; font-size: 12.5px; font-weight: 600; color: var(--text-muted); padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-surface); }
+
+        .footer { margin-top: 64px; padding: 40px 48px 26px; border-top: 1px solid var(--border); }
+        .footer-main { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 36px; }
+        .fb-logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+        .fb-logo img { height: 26px; }
+        .footer-brand p { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 300px; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text-dim); margin-bottom: 12px; }
+        .footer-col a { display: block; font-size: 13.5px; color: var(--text-muted); text-decoration: none; padding: 4px 0; }
+        .footer-col a:hover { color: var(--text-main); }
+        .footer-bottom { max-width: 1120px; margin: 28px auto 0; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--text-dim); }
+
+        @media (max-width: 900px) {
+            .wrap { padding: 0 22px; }
+            .footer { padding: 32px 22px 22px; }
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 26px; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+        
+        .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; padding: 30px 0 34px; align-items: start; }
+        .hero h1 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -1.2px; line-height: 1.1; margin: 10px 0 14px; }
+        .name-row { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+        .app-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 19px; color: #fff; flex-shrink: 0; }
+        .app-name { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+        .summary { font-size: 16.5px; color: var(--text-muted); line-height: 1.65; }
+        .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; align-items: center; }
+        .billing { font-size: 13px; color: var(--text-dim); }
+        .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+        .panel h2 { font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+        .highlights { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .highlights li { display: flex; gap: 12px; font-size: 15px; line-height: 1.5; }
+        .highlights i { color: var(--success); margin-top: 5px; font-size: 13px; }
+        .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+        .section { padding: 30px 0; border-top: 1px solid var(--border); }
+        .section > h2 { font-size: 24px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 18px; }
+        .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+        .steps li { counter-increment: step; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; font-size: 15px; line-height: 1.55; color: var(--text-muted); }
+        .steps li::before { content: counter(step); display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+        .io { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .io h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+        .io h3 i { color: var(--accent); }
+        .io ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .io li { font-size: 14px; line-height: 1.5; color: var(--text-muted); }
+        .io li b { color: var(--text-main); font-weight: 700; }
+        .io .ext { font-size: 12px; color: var(--text-dim); font-family: ui-monospace, 'JetBrains Mono', monospace; }
+        .others { display: flex; flex-wrap: wrap; gap: 10px; }
+        .others a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-surface); }
+        .others a:hover { border-color: var(--accent); color: var(--accent); }
+        .others i { font-size: 13px; }
+        @media (max-width: 900px) {
+            .hero, .io { grid-template-columns: 1fr; gap: 22px; }
+            .steps { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body><div style="background:#0f172a;color:#e2e8f0;text-align:center;padding:10px 16px;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:1000">The KAPPS web tools are offline for now. For a demo or project work, email <a href="mailto:support@kapps.ai" style="color:#7dd3fc">support@kapps.ai</a> or call <a href="tel:+18044043621" style="color:#7dd3fc">804-404-3621</a>.</div>
+    
+<style>
+    .site-nav { position: sticky; top: 0; z-index: 100; height: 64px; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: rgba(250, 250, 247, 0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border, #E7E3DA); font-family: 'Mukta', -apple-system, sans-serif; }
+    .site-nav .sn-brand { flex: 1 1 0; display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main, #1C1917); }
+    .site-nav .sn-brand img { height: 32px; width: auto; object-fit: contain; }
+    .site-nav .sn-links { display: flex; gap: 32px; align-items: center; }
+    .site-nav .sn-links a { font-size: 14px; font-weight: 500; line-height: 1; color: var(--text-muted, #423E39); text-decoration: none; transition: color .2s; }
+    .site-nav .sn-links a:hover, .site-nav .sn-links a.active { color: var(--text-main, #1C1917); }
+    .site-nav .sn-links a.active { text-decoration: underline; text-decoration-color: var(--accent, #2563EB); text-decoration-thickness: 2px; text-underline-offset: 8px; }
+    .site-nav .sn-right { flex: 1 1 0; display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+    .site-nav .sn-ghost, .site-nav .sn-primary { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1; padding: 11px 20px; border-radius: 8px; text-decoration: none; white-space: nowrap; transition: background .2s, border-color .2s, box-shadow .2s, color .2s; }
+    .site-nav .sn-ghost { color: var(--text-muted, #423E39); border: 1px solid transparent; }
+    .site-nav .sn-ghost:hover { color: var(--text-main, #1C1917); background: rgba(0,0,0,0.04); border-color: var(--border, #E7E3DA); }
+    .site-nav .sn-ghost .fa-shield-halved { color: var(--warn, #D97706); }
+    .site-nav .sn-primary { color: #fff; background: var(--accent, #2563EB); border: 1px solid transparent; }
+    .site-nav .sn-primary:hover { background: #1D4ED8; box-shadow: 0 0 20px var(--accent-glow, rgba(37,99,235,.25)); }
+    .site-nav .sn-primary i { font-size: 11px; }
+    @media (max-width: 1100px) { .site-nav { padding: 0 24px; } .site-nav .sn-links { gap: 24px; } }
+    @media (max-width: 900px) { .site-nav .sn-links { display: none; } }
+    @media (max-width: 480px) {
+        .site-nav { padding: 0 16px; }
+        .site-nav .sn-right { gap: 6px; }
+        .site-nav .sn-ghost, .site-nav .sn-primary { padding: 9px 12px; font-size: 13.5px; }
+        .site-nav .sn-primary i, .site-nav .sn-admin { display: none; }
+    }
+</style>
+
+<nav class="site-nav">
+    <a href="/" class="sn-brand"><img src="/static/core/images/kapps.png" alt="KAPPS Logo"> KAPPS</a>
+    <div class="sn-links">
+        <a href="/#studio">Services</a>
+        <a href="/tools/" class="active">Tools</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/team/">Team</a>
+        <a href="/#contact">Contact</a>
+    </div>
+    <div class="sn-right">
+        <a href="/#contact" class="sn-primary">Contact us <i class="fas fa-arrow-right"></i></a>
+        
+    </div>
+</nav>
+
+
+
+    <main>
+<div class="wrap">
+    <div class="crumbs"><a href="/">KAPPS</a> / <a href="/tools/">Tools</a> / Drainage-CADD Studio</div>
+
+    <section class="hero">
+        <div>
+            <span class="eyebrow"><i class="fas fa-drafting-compass"></i> Drafting</span>
+            <h1>Drainage callouts and storm sewer profiles, straight from an OpenRoads export.</h1>
+            <p class="summary">Upload one OpenRoads Designer SUDA export and get AutoCAD DXF drawings back: formatted callouts for every inlet, manhole, end section and pipe, and storm sewer profile sheets with structures, pipes and the hydraulic grade line. Hours of annotation on VDOT plans, done in one upload.</p>
+            <div class="name-row">
+                <div class="app-icon" style="background: #AF52DE;" aria-hidden="true"><i class="fas fa-drafting-compass"></i></div>
+                <div>
+                    <div class="app-name">Drainage-CADD Studio</div>
+                    <span class="paid-tag">Monthly subscription</span>
+                </div>
+            </div>
+            <div class="ctas">
+                
+                <a href="/#contact" class="btn-primary">Contact us <i class="fas fa-arrow-right"></i></a>
+                
+            </div>
+        </div>
+        <aside class="panel">
+            <h2>What you get</h2>
+            <ul class="highlights">
+                <li><i class="fas fa-check"></i><span>Callouts for every structure and pipe, VDOT-style.</span></li><li><i class="fas fa-check"></i><span>Profile sheets with elevation grid, top of pipe and HGL.</span></li><li><i class="fas fa-check"></i><span>DXF drawings that open in AutoCAD.</span></li>
+            </ul>
+            <div class="chips"><span class="chip">VDOT</span><span class="chip">OpenRoads Designer</span><span class="chip">DXF</span></div>
+        </aside>
+    </section>
+
+    <section class="section">
+        <h2>How it works</h2>
+        <ol class="steps"><li>Export the SUDA report from OpenRoads Designer.</li><li>Upload it and choose callouts, profiles or both.</li><li>Download the DXF drawings.</li></ol>
+    </section>
+
+    
+    <section class="section">
+        <h2>What goes in, what comes out</h2>
+        <div class="io">
+            <div class="panel">
+                <h3><i class="fas fa-arrow-right-to-bracket"></i> You provide</h3>
+                <ul><li><b>OpenRoads SUDA export</b> <span class="ext">.txt  or  .csv  (tab-separated)</span><br>The same export drives both outputs: the standard VDOT structure and pipe tables (with sizes, slopes, inverts, HGL elevations, and optional stations). Supported structure types include DI-1, DI-2A – DI-4CC, DI-5, DI-7, DI-10G/H/I/J/K/L, MH-12, ES-1, and EW-1/2.</li><li><b>Default curb height</b> <span class="ext">number (inches)</span><br>Used where the source file does not provide a curb height.</li><li><b>Outputs to generate</b> <span class="ext">selector</span><br>Drainage Description and/or Storm sewer profiles. Defaults to both; deselect one to generate only the other.</li></ul>
+            </div>
+            <div class="panel">
+                <h3><i class="fas fa-file-arrow-down"></i> You get</h3>
+                <ul><li><b>Drainage callout drawing</b> <span class="ext">.dxf  (inside the ZIP, when selected)</span><br>Structure callouts (ID, type, invert, slot length/height) and pipe specifications (length, diameter, class, slope, inverts, cover) on clean &#x27;Text&#x27; and &#x27;Structure&#x27; layers.</li><li><b>Storm sewer profile drawing</b> <span class="ext">.dxf  (inside the ZIP, when selected)</span><br>One or more profile diagrams: station/elevation grid, structure boxes, pipe inverts, top-of-pipe, dashed HGL, and complete text callouts — ready to drop into a plan set.</li></ul>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="section">
+        <h2>More tools in KAPPS Studio</h2>
+        <div class="others">
+            <a href="/tools/design-build-studio/"><i class="fas fa-file-contract" style="color: #0071E3;"></i> Design-Build Studio</a><a href="/tools/usda-hsg/"><i class="fas fa-layer-group" style="color: #34C759;"></i> USDA HSG <span class="free-tag">Free</span></a><a href="/tools/cn-studio/"><i class="fas fa-chart-pie" style="color: #FF9500;"></i> CN Studio</a><a href="/tools/c-calculator/"><i class="fas fa-cloud-rain" style="color: #5AC8FA;"></i> C-Calculator <span class="free-tag">Free</span></a><a href="/tools/time-of-concentration/"><i class="fas fa-stopwatch" style="color: #5856D6;"></i> Time of Concentration <span class="free-tag">Free</span></a><a href="/tools/floodway-studio/"><i class="fas fa-water" style="color: #0EA5E9;"></i> Floodway Studio</a><a href="/tools/pond-studio/"><i class="fas fa-circle-nodes" style="color: #14B8A6;"></i> Pond Studio</a><a href="/tools/geotech-studio/"><i class="fas fa-mountain" style="color: #B45309;"></i> Geotech Studio</a>
+        </div>
+    </section>
+</div>
+</main>
+
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="fb-logo"><img src="/static/core/images/kapps.png" alt="KAPPS Logo"> KAPPS</div>
+                <p>A small Virginia based software company. KAPPS Studio is our web based automation platform.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Tools</h4>
+                <a href="/tools/design-build-studio/">Design-Build Studio</a><a href="/tools/usda-hsg/">USDA HSG</a><a href="/tools/cn-studio/">CN Studio</a><a href="/tools/c-calculator/">C-Calculator</a><a href="/tools/time-of-concentration/">Time of Concentration</a><a href="/tools/drainage-cadd-studio/">Drainage-CADD Studio</a><a href="/tools/floodway-studio/">Floodway Studio</a><a href="/tools/pond-studio/">Pond Studio</a><a href="/tools/geotech-studio/">Geotech Studio</a>
+                <a href="/tools/">All tools</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="/#studio">Services</a>
+                <a href="/#faq">FAQ</a>
+                <a href="/#contact">Contact</a>
+                <a href="/team/">Team</a>
+            </div>
+            <div class="footer-col">
+                <h4>Account &amp; Legal</h4>
+                <a href="/terms/">Terms of Service</a>
+                <a href="/privacy/">Privacy Policy</a>
+                <a href="mailto:support@kapps.ai">support@kapps.ai</a>
+                <a href="tel:+18044043621">804-404-3621</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 KAPPS LLC. All rights reserved.</span>
+            <span>Richmond, Virginia, USA</span>
+        </div>
+    </footer>
+</body>
+</html>

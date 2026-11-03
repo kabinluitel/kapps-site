@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/core/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/core/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/core/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/core/images/apple-touch-icon.png">
+    <title>Privacy Policy — KAPPS LLC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-blOohCVdhjmtROpu8+CfTnUWham9nkX7P7OZQMst+RUnhtoY/9qemFAkIKOYxDI3" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #FAFAF7;
+            --surface: #FFFFFF;
+            --primary: #2563EB;
+            --text: #1C1917;
+            --muted: #423E39;
+            --border: #E7E3DA;
+            --danger: #DC2626;
+            --warning: #D97706;
+            --accent: #1C1917;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            font-family: 'Mukta', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 500;
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: auto;
+        }
+        /* NAV */
+        .navbar {
+            background: rgba(250,250,247,0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .nav-brand { font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 9px; letter-spacing: -.2px; }
+        .nav-brand span { color: var(--primary); }
+        .btn-back {
+            background: none; border: none; color: var(--primary);
+            font-size: 15px; font-weight: 500; cursor: pointer;
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+        }
+        .btn-back:hover { text-decoration: underline; }
+        /* HERO */
+        .hero {
+            background: var(--accent);
+            color: #fff;
+            text-align: center;
+            padding: 52px 40px 42px;
+        }
+        .hero h1 {
+            font-size: 28px; font-weight: 800; letter-spacing: -.5px;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .hero .subtitle {
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: #D97706; margin-bottom: 16px;
+        }
+        .hero .badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+        .badge {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.25); color: #fff;
+        }
+        .badge.ok { border-color: #32D74B; color: #32D74B; }
+        .badge.warn { border-color: #D97706; color: #D97706; }
+        .eff-date { font-size: 13px; color: #6A635B; margin-top: 10px; }
+        /* LAYOUT */
+        .layout { display: flex; max-width: 1280px; margin: 0 auto; padding: 40px 24px; gap: 36px; }
+        .toc {
+            width: 240px; flex-shrink: 0;
+            position: sticky; top: 64px; height: fit-content;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px; font-size: 12px;
+        }
+        .toc h3 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+        .toc a { display: block; color: var(--text); text-decoration: none; padding: 4px 0; border-left: 2px solid transparent; padding-left: 10px; transition: all .15s; line-height: 1.4; }
+        .toc a:hover { color: var(--primary); border-left-color: var(--primary); }
+        .toc .toc-num { color: var(--muted); font-size: 10px; }
+        .doc {
+            flex: 1; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 18px;
+            padding: 60px 64px; max-width: 860px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+        }
+        .intro-block {
+            background: #F5F3EE; border-radius: 12px; border: 1px solid var(--border);
+            padding: 24px 28px; margin-bottom: 40px; font-size: 13px; color: #423E39;
+        }
+        .intro-block strong { color: var(--text); }
+        .doc h2 {
+            font-size: 13px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text);
+            border-bottom: 2px solid var(--text); padding-bottom: 5px;
+            display: inline-block; margin-top: 48px; margin-bottom: 16px;
+        }
+        .doc h3 { font-size: 14px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+        .doc p { font-size: 14px; color: #1C1917; margin-bottom: 14px; }
+        .doc ul { font-size: 14px; color: #423E39; padding-left: 22px; margin-bottom: 18px; }
+        .doc li { margin-bottom: 7px; }
+        .doc strong { color: var(--text); }
+        .data-table {
+            width: 100%; border-collapse: collapse; margin: 18px 0 26px;
+            font-size: 13px; color: #423E39;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid var(--border); padding: 10px 12px; text-align: left;
+            vertical-align: top;
+        }
+        .data-table th {
+            background: #F5F3EE; font-weight: 700; font-size: 11px;
+            letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+        }
+        .callout {
+            border-radius: 12px; padding: 20px 24px;
+            margin: 22px 0; font-size: 13px; font-weight: 600;
+            border-left: 4px solid;
+        }
+        .callout-blue { background: rgba(37,99,235,0.08); border-color: var(--primary); color: #1E3A8A; }
+        .callout-black { background: #F5F3EE; border-color: var(--accent); color: var(--accent); }
+        .callout p { font-size: 13px; margin: 0; color: inherit; font-weight: 600; }
+        .callout .callout-title { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; opacity: .7; }
+        .sig-block {
+            margin-top: 50px; border-top: 1px solid var(--border); padding-top: 30px;
+            font-size: 12px; color: var(--muted); text-align: center;
+        }
+        @media (max-width: 900px) {
+            .toc { display: none; }
+            .doc { padding: 32px 24px; }
+            .layout { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body><div style="background:#0f172a;color:#e2e8f0;text-align:center;padding:10px 16px;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:1000">The KAPPS web tools are offline for now. For a demo or project work, email <a href="mailto:support@kapps.ai" style="color:#7dd3fc">support@kapps.ai</a> or call <a href="tel:+18044043621" style="color:#7dd3fc">804-404-3621</a>.</div>
+
+<nav class="navbar">
+    <div class="nav-brand"><i class="fas fa-layer-group"></i> <span>KAPPS</span>&nbsp;LLC Legal</div>
+    <a href="/" class="btn-back"><i class="fas fa-chevron-left"></i> Back to kapps.ai</a>
+</nav>
+
+<div class="hero">
+    <div class="subtitle"><i class="fas fa-user-shield"></i> &nbsp;How we handle your data</div>
+    <h1>Privacy Policy</h1>
+    <div class="eff-date">Effective Date: April 21, 2026 &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; KAPPS LLC, Richmond, Virginia, USA</div>
+    <div class="badges">
+        <span class="badge ok"><i class="fas fa-shield-alt"></i> &nbsp;Minimal Data Collection</span>
+        <span class="badge ok"><i class="fas fa-lock"></i> &nbsp;TLS 1.3 In Transit</span>
+        <span class="badge ok"><i class="fas fa-credit-card"></i> &nbsp;No Card Data Stored</span>
+        <span class="badge warn"><i class="fas fa-globe"></i> &nbsp;US-Based Processing</span>
+    </div>
+</div>
+
+<div class="layout">
+
+    <nav class="toc">
+        <h3>Contents</h3>
+        <a href="#s1"><span class="toc-num">§1 &nbsp;</span>Who We Are</a>
+        <a href="#s2"><span class="toc-num">§2 &nbsp;</span>What We Collect</a>
+        <a href="#s3"><span class="toc-num">§3 &nbsp;</span>Why We Collect It</a>
+        <a href="#s4"><span class="toc-num">§4 &nbsp;</span>Third Parties</a>
+        <a href="#s5"><span class="toc-num">§5 &nbsp;</span>Cookies & Local Storage</a>
+        <a href="#s6"><span class="toc-num">§6 &nbsp;</span>Data Retention</a>
+        <a href="#s7"><span class="toc-num">§7 &nbsp;</span>Your Rights</a>
+        <a href="#s8"><span class="toc-num">§8 &nbsp;</span>Security</a>
+        <a href="#s9"><span class="toc-num">§9 &nbsp;</span>International Transfers</a>
+        <a href="#s10"><span class="toc-num">§10</span> Children</a>
+        <a href="#s11"><span class="toc-num">§11</span> Changes</a>
+        <a href="#s12"><span class="toc-num">§12</span> Contact</a>
+    </nav>
+
+    <main class="doc">
+
+        <div class="intro-block">
+            <p>This Privacy Policy explains what information KAPPS LLC ("<strong>KAPPS</strong>", "<strong>we</strong>", "<strong>us</strong>") collects from users of the <strong>kapps.ai</strong> web application, why we collect it, who we share it with, and how long we keep it. It is written to be readable, not exhaustive — if anything here is unclear, email <a href="mailto:support@kapps.ai">support@kapps.ai</a> and we will answer directly.</p>
+            <p style="margin-top:10px;">By creating an account or continuing to use the service, you acknowledge the practices described below. This Policy is incorporated by reference into the <a href="/terms/" style="color:var(--primary);">Master Subscription Agreement &amp; Global Terms of Service</a>.</p>
+        </div>
+
+        <h2 id="s1">§1 &nbsp; Who We Are</h2>
+        <p>KAPPS LLC is a Virginia-registered limited-liability company operating the automation tools available at <strong>https://kapps.ai</strong>. All data is controlled by KAPPS and processed on infrastructure we operate or contract from the vendors named in §4. Inquiries about this Policy can be sent to <strong>support@kapps.ai</strong>.</p>
+
+        <h2 id="s2">§2 &nbsp; What We Collect</h2>
+        <p>We collect only the information needed to run your account and the tools you use. The table below is exhaustive for the core app — if a specific tool collects additional data, that tool's own help page says so.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Category</th><th>Examples</th><th>How we got it</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Account basics</strong></td>
+                    <td>Name, email address, password hash (Argon2 — never the plaintext), phone number, optional company</td>
+                    <td>You type it during signup / in Profile → Identity</td>
+                </tr>
+                <tr>
+                    <td><strong>Profile photo</strong></td>
+                    <td>One image file per user</td>
+                    <td>You upload it (optional). Stored in Amazon S3 under time-limited signed URLs</td>
+                </tr>
+                <tr>
+                    <td><strong>Billing identifiers</strong></td>
+                    <td>Stripe Customer ID, Subscription ID, Payment-method flag ("has card on file" — we do <u>not</u> see the card number itself)</td>
+                    <td>Returned to us by Stripe when you check out</td>
+                </tr>
+                <tr>
+                    <td><strong>Subscription state</strong></td>
+                    <td>Which tool apps you have access to, any scheduled cancellations, the timestamp you last opened each tool</td>
+                    <td>Derived from your use of the service</td>
+                </tr>
+                <tr>
+                    <td><strong>Uploaded content</strong></td>
+                    <td>Files you upload to a tool (shapefiles, DXF, CSV/TXT, PDFs, HEC-RAS models, etc.)</td>
+                    <td>You upload them. Held only as long as needed to process the job — see §6</td>
+                </tr>
+                <tr>
+                    <td><strong>Generated output</strong></td>
+                    <td>ZIPs, PDFs, DXFs and other artifacts produced by a tool run</td>
+                    <td>Created by our tools from your inputs. Deleted once downloaded</td>
+                </tr>
+                <tr>
+                    <td><strong>Security telemetry</strong></td>
+                    <td>IP address (read from the AWS load balancer's <code>X-Forwarded-For</code> chain), failed-login counter, last-login timestamp, lockout expiry</td>
+                    <td>Captured automatically on each request</td>
+                </tr>
+                <tr>
+                    <td><strong>Admin audit log</strong></td>
+                    <td>Which admin did what to which account, when, and from which IP</td>
+                    <td>Written by our internal admin tooling whenever an operator takes an action on a user account</td>
+                </tr>
+                <tr>
+                    <td><strong>Optional feedback</strong></td>
+                    <td>Idea submissions from the public <em>Request a Program</em> form (email, title, description)</td>
+                    <td>You fill the form. Also emailed to our internal address</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-blue">
+            <div class="callout-title">What we explicitly do not collect</div>
+            <p>Payment card numbers, CVV, or bank details — those go directly from your browser to Stripe. Location beyond what's implied by your IP. Analytics/tracking cookies. Third-party advertising identifiers. Content of any email we send you beyond what you see in your inbox.</p>
+        </div>
+
+        <h2 id="s3">§3 &nbsp; Why We Collect It</h2>
+        <p>Under the Virginia Consumer Data Protection Act ("<strong>VCDPA</strong>") and similar laws elsewhere, a controller must declare a specific processing purpose. Ours, in plain language:</p>
+        <ul>
+            <li><strong>Authentication and account management.</strong> The email, password hash, and phone number are used to sign you in, verify your identity, let you reset your password, and block accounts after repeated failed logins.</li>
+            <li><strong>Billing.</strong> Stripe IDs and subscription state are used to grant access to the tools you have paid for and to stop access when you cancel or a payment fails.</li>
+            <li><strong>Running the tools.</strong> Files you upload are handed to the tool's processor, converted into the requested output, and returned to you.</li>
+            <li><strong>Security.</strong> IP addresses, failed-login counters, and lockout timestamps are used to detect and throttle abusive traffic (rate limiting, brute-force defence, WAF signals).</li>
+            <li><strong>Support and abuse response.</strong> The admin audit log exists so that if something goes wrong we can tell who did what.</li>
+            <li><strong>Product improvement.</strong> Aggregate usage (which tool was opened, how often) is used to decide what to build next. Individual user behaviour is not cross-referenced with third-party data brokers.</li>
+        </ul>
+        <p>We do <strong>not</strong> sell personal data, and we do not use it for targeted advertising. We do not profile users in a way that produces legal or similarly significant effects.</p>
+
+        <h2 id="s4">§4 &nbsp; Third Parties (Sub-processors)</h2>
+        <p>We use the following service providers, each bound by its own security and privacy commitments. Each is contractually prohibited from using your data for any purpose beyond the service listed.</p>
+        <table class="data-table">
+            <thead><tr><th>Vendor</th><th>Service</th><th>What reaches them</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>Amazon Web Services</strong></td>
+                    <td>Application hosting (ECS Fargate), database (RDS PostgreSQL), object storage (S3), email delivery (SES), logging (CloudWatch), secrets (Secrets Manager), DNS (Route 53)</td>
+                    <td>Everything you store or upload — AWS is the substrate we run on. Data is stored in the <em>us-east-1</em> region.</td>
+                </tr>
+                <tr>
+                    <td><strong>Stripe, Inc.</strong></td>
+                    <td>Subscription billing, payment-method vaulting, tax collection</td>
+                    <td>Your name, email, and the payment method you enter on Stripe's hosted checkout form. We never see raw card data.</td>
+                </tr>
+                <tr>
+                    <td><strong>Anthropic, PBC</strong></td>
+                    <td>Large-language-model inference for the AI auditor tools (Procurement Auditor, Technical Proposal Auditor)</td>
+                    <td>Only the PDFs you upload to those specific tools, and only for the duration of the audit run. Outputs are not used to train Anthropic's models per their API terms.</td>
+                </tr>
+                <tr>
+                    <td><strong>USDA Soil Data Access</strong></td>
+                    <td>Public soil-survey API used by the Soil Extractor and CN Studio</td>
+                    <td>Only the state and county codes you pick from the dropdown. No personal data.</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub / GitHub Actions</strong></td>
+                    <td>Source-control and continuous deployment</td>
+                    <td>Source code only. No end-user data.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>A current list of sub-processors is maintained in our Terms of Service. We will update this Policy and the Terms if we add a new sub-processor that processes personal data.</p>
+
+        <h2 id="s5">§5 &nbsp; Cookies &amp; Local Storage</h2>
+        <p>We set only the cookies required to run the application. We do <strong>not</strong> use marketing, analytics, or third-party tracking cookies.</p>
+        <ul>
+            <li><strong><code>sessionid</code></strong> — keeps you signed in. HttpOnly, Secure, SameSite=Lax. Cleared on logout or after the 1-hour idle timeout.</li>
+            <li><strong><code>csrftoken</code></strong> — cross-site-request-forgery protection for form submissions. Readable by JavaScript on our own origin only.</li>
+        </ul>
+        <p>Your browser's <em>localStorage</em> holds a small in-flight job tray (which tool jobs are running or ready to download). That data never leaves your browser and is cleared when you dismiss a job.</p>
+
+        <h2 id="s6">§6 &nbsp; Data Retention</h2>
+        <table class="data-table">
+            <thead><tr><th>Data</th><th>How long we keep it</th></tr></thead>
+            <tbody>
+                <tr><td>Account record (user row, profile, subscription state)</td><td>Until you delete your account. Delete happens in two stages: soft-delete (hidden, login blocked) then a permanent purge (removal from the database).</td></tr>
+                <tr><td>Profile photo (S3)</td><td>Until you replace it, delete it, or delete your account.</td></tr>
+                <tr><td>Uploaded job files + generated output</td><td>Deleted automatically when you download the result, and at most 24 hours after the job runs regardless.</td></tr>
+                <tr><td>Geotech Studio uploads + output (fence diagrams, AGS4, boring logs)</td><td>Accessible only to the account and browser session that uploaded them &mdash; never shared with other users, including colleagues at the same company or on the same group plan (and its manager). KAPPS staff have no access path. Raw uploads are deleted as soon as they are processed. Results are deleted as soon as you download the bundle (downloads are one-time), or when you delete the project, leave the page, sign out, or your account is deactivated or deleted, and in any case after 60 minutes without activity. Nothing is written to our database except a usage record with counts only (no file names, project names or contents).</td></tr>
+                <tr><td>Geotech Studio manual data entry (borings typed or pasted on the data-entry page)</td><td>Kept only in your own browser (local storage) as a draft until you clear it; it is not sent to KAPPS until you make files or add the borings to a Geotech Studio project. The server then builds the requested files (.gpj, AGS4, boring logs) in a temporary private workspace, sends them to you once and deletes them; borings added to a project follow the Geotech Studio retention above. Use "Clear" on the page (or clear your browser's site data) to remove the draft from a shared computer.</td></tr>
+                <tr><td>Email-verification codes</td><td>15 minutes after issue, or immediately on successful verification.</td></tr>
+                <tr><td>Password-reset tokens</td><td>3 days after issue.</td></tr>
+                <tr><td>Server access logs (CloudWatch)</td><td>14 days.</td></tr>
+                <tr><td>Admin audit log</td><td>Kept for the life of the account. Retained <em>after</em> account purge, with the <code>target_user</code> reference nulled out, so the history is preserved without the personal data.</td></tr>
+                <tr><td>RDS database backups</td><td>1 day rolling window (to be extended as the service matures).</td></tr>
+            </tbody>
+        </table>
+
+        <h2 id="s7">§7 &nbsp; Your Rights</h2>
+        <p>If you are a resident of Virginia, California, the EU/EEA, the UK, or another jurisdiction with comparable privacy laws, you have the following rights in respect of your personal data. KAPPS honours these rights regardless of where you live.</p>
+        <ul>
+            <li><strong>Access.</strong> You can already see most of your data in Profile → Identity, Profile → Console, and Profile → Billing. For anything not shown there, email <a href="mailto:support@kapps.ai">support@kapps.ai</a> and we will respond within 30 days.</li>
+            <li><strong>Correction.</strong> You can edit your name, phone, company, and profile photo yourself from the Profile page. For anything else, email us.</li>
+            <li><strong>Deletion.</strong> Use Profile → Security → <em>Delete Account</em>, or email us. Soft-delete is immediate; permanent purge follows once any pending Stripe subscription has fully cancelled.</li>
+            <li><strong>Portability.</strong> On request to support@kapps.ai we will export a machine-readable JSON dump of everything we hold about you.</li>
+            <li><strong>Objection.</strong> You can ask us to stop processing your data. Doing so requires closing the account, since the data is only retained while the account is active.</li>
+            <li><strong>Appeal.</strong> If we decline a request, you may appeal that decision by replying to the same email thread. Virginia residents can further contact the Attorney General's Office at <a href="https://www.oag.state.va.us/" target="_blank" rel="noopener noreferrer">oag.state.va.us</a>.</li>
+        </ul>
+        <p>Requests are free and processed manually. We may ask you to re-authenticate before executing a deletion or export.</p>
+
+        <h2 id="s8">§8 &nbsp; Security</h2>
+        <p>We apply proportionate safeguards throughout the stack:</p>
+        <ul>
+            <li>All traffic is served over HTTPS with HSTS. Modern TLS (1.2+) only.</li>
+            <li>Passwords are hashed with Argon2id. Plaintext is never stored or logged.</li>
+            <li>Uploaded images are re-encoded through Pillow; uploaded PDFs are validated by magic bytes; ZIP extraction is zip-slip protected.</li>
+            <li>Rate limiting covers login, signup, password reset, subscription purchase, admin writes, and the feedback form.</li>
+            <li>Admin actions are gated by role and written to an append-only audit log with the actor's IP address.</li>
+            <li>Cookies are HttpOnly and Secure; CSRF is enforced on every state-changing request.</li>
+            <li>Content Security Policy is set with a per-request nonce; subresource integrity is set on all CDN-hosted assets that support it.</li>
+            <li>S3 access is via short-lived pre-signed URLs (one hour) — the bucket itself is not publicly listable.</li>
+            <li>The PostgreSQL database is only reachable from our ECS tasks; no other network has ingress.</li>
+        </ul>
+        <div class="callout callout-black">
+            <div class="callout-title">Breach notification</div>
+            <p>If we discover a security incident that compromises personal data, we will notify affected users by email without undue delay and within 72 hours where required by law.</p>
+        </div>
+
+        <h2 id="s9">§9 &nbsp; International Transfers</h2>
+        <p>KAPPS is a US-based company and all personal data is stored and processed in the United States (AWS <em>us-east-1</em>, N. Virginia). If you access the service from outside the US, your data is transferred to the US where privacy protections may differ from those in your home jurisdiction. By using the service you consent to that transfer.</p>
+
+        <h2 id="s10">§10 &nbsp; Children</h2>
+        <p>KAPPS is not directed to children under 13 and we do not knowingly collect personal data from anyone under 13. If we learn that a child has created an account, we will delete the account and associated data promptly.</p>
+
+        <h2 id="s11">§11 &nbsp; Changes to this Policy</h2>
+        <p>We may revise this Policy as the service evolves. Material changes will be announced by email to the address on your account and by updating the <em>Effective Date</em> at the top of this page. Continued use after the Effective Date constitutes acceptance of the revised Policy. You can always view prior versions by asking support.</p>
+
+        <h2 id="s12">§12 &nbsp; Contact</h2>
+        <p>Questions, requests to exercise any of the rights in §7, or complaints about our handling of your data can be sent to:</p>
+        <p style="margin-top:6px;">
+            <strong>KAPPS LLC — Privacy</strong><br>
+            Email: <a href="mailto:support@kapps.ai">support@kapps.ai</a><br>
+            Mail: Richmond, Virginia, USA
+        </p>
+        <p>We aim to respond within 30 days.</p>
+
+        <div class="sig-block">
+            <p>KAPPS LLC &nbsp;·&nbsp; Richmond, Virginia, USA &nbsp;·&nbsp; Effective April 21, 2026 &nbsp;·&nbsp; Version 1.0</p>
+            <p style="margin-top:6px;">This Privacy Policy forms part of the <a href="/terms/" style="color:var(--primary);">Master Subscription Agreement &amp; Global Terms of Service</a>.</p>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

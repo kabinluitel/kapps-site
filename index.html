@@ -1,0 +1,1960 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/core/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/core/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/core/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/core/images/apple-touch-icon.png">
+    <title>KAPPS Studio | AI for the AEC Industry</title>
+    <meta name="description" content="KAPPS Studio is an AI platform for civil engineering and AEC work: VDOT Design-Build proposal audits, Curve Number and TR-55 hydrology, HEC-RAS floodways, pond routing, drainage CADD and geotechnical deliverables, all in your browser.">
+    <link rel="canonical" href="https://kapps.ai/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="KAPPS">
+    <meta property="og:url" content="https://kapps.ai/">
+    <meta property="og:title" content="KAPPS Studio | AI for the AEC Industry">
+    <meta property="og:description" content="QA/QC, hydrology, floodplain, drafting and geotechnical tools for AEC teams. Nothing to install.">
+    <meta property="og:image" content="https://kapps.ai/static/core/images/og-kapps.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="KAPPS: AI tools for civil engineering and AEC work.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KAPPS Studio | AI for the AEC Industry">
+    <meta name="twitter:description" content="QA/QC, hydrology, floodplain, drafting and geotechnical tools for AEC teams. Nothing to install.">
+    <meta name="twitter:image" content="https://kapps.ai/static/core/images/og-kapps.png">
+    <script type="application/ld+json" nonce="gZsK5hQbFx-vGF9dioe4PQ">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kapps.ai/#org","name":"KAPPS LLC","alternateName":"KAPPS","url":"https://kapps.ai/","logo":"https://kapps.ai/static/core/images/kapps.png","email":"support@kapps.ai","telephone":"+1-804-404-3621","address":{"@type":"PostalAddress","addressLocality":"Richmond","addressRegion":"VA","addressCountry":"US"}},{"@type":"WebApplication","name":"KAPPS Studio","url":"https://kapps.ai/","applicationCategory":"BusinessApplication","operatingSystem":"Web browser","publisher":{"@id":"https://kapps.ai/#org"},"featureList":["Design-Build Studio","USDA HSG","CN Studio","C-Calculator","Time of Concentration","Drainage-CADD Studio","Floodway Studio","Pond Studio","Geotech Studio"]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where is my data stored, and for how long?","acceptedAnswer":{"@type":"Answer","text":"In the United States, on Amazon Web Services in Northern Virginia (us-east-1). Uploaded job files and results are deleted when you download the result, and within 24 hours regardless. Geotech Studio files are private to your session and deleted as soon as you download the bundle."}},{"@type":"Question","name":"Do the results need a PE's review?","acceptedAnswer":{"@type":"Answer","text":"Yes. KAPPS is a software company, not an engineering firm. Results are advisory, for internal screening and drafting, and anything used in regulated work must be reviewed and sealed by a licensed Professional Engineer. See section 4 of our Terms."}},{"@type":"Question","name":"Do I need to install anything?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs in your browser. Heavy work, such as HEC-RAS runs and terrain processing, happens on our servers, so there is no software to install or license."}},{"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"USDA HSG, C-Calculator and Time of Concentration are free with an account. The other tools are a monthly subscription per tool, and Design-Build Studio audits are paid per run. You see the price before you pay, and payment is handled by Stripe."}},{"@type":"Question","name":"Can I cancel?","acceptedAnswer":{"@type":"Answer","text":"Yes. Cancel any tool from your profile and you keep access until the end of the period you have paid for."}}]}]}</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-blOohCVdhjmtROpu8+CfTnUWham9nkX7P7OZQMst+RUnhtoY/9qemFAkIKOYxDI3" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-main: #FAFAF7;
+            --bg-surface: #FFFFFF;
+            --bg-surface2: #F5F3EE;
+            --border: #E7E3DA;
+            --border-hover: #D6D0C2;
+            --text-main: #1C1917;
+            --text-muted: #423E39;
+            --text-dim: #6A635B;
+            --accent: #2563EB;
+            --accent-dim: rgba(37, 99, 235, 0.10);
+            --accent-glow: rgba(37, 99, 235, 0.25);
+            --success: #059669;
+            --success-dim: rgba(5, 150, 105, 0.10);
+            --warn: #D97706;
+            --danger: #DC2626;
+            --grid-line: rgba(0,0,0,0.04);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-main); 
+            font-family: 'Mukta', -apple-system, sans-serif; font-weight: 500; 
+            color: var(--text-main); 
+            -webkit-font-smoothing: auto; 
+            overflow-x: hidden;
+        }
+
+        /* Engineering Grid texture */
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* Ambient Glows */
+        .blob {
+            position: fixed; border-radius: 50%; filter: blur(150px);
+            pointer-events: none; z-index: 0; opacity: 0.06;
+        }
+        .blob-1 { width: 700px; height: 700px; background: #3B82F6; top: -200px; right: -100px; }
+        .blob-2 { width: 500px; height: 500px; background: #60A5FA; bottom: 10%; left: -100px; }
+
+        /* ─── NAVBAR ─── */
+        section { position: relative; z-index: 1; }
+
+        /* ─── HERO ─── */
+        .hero { padding: 56px 48px 52px; }
+        .hero-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center;
+        }
+        .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.3);
+            color: #1D4ED8; font-size: 12px; font-weight: 600;
+            padding: 6px 16px; border-radius: 999px;
+            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: clamp(32px, 3.4vw, 44px); font-weight: 700;
+            letter-spacing: -1.5px; line-height: 1.14;
+            margin-bottom: 16px; color: var(--text-main);
+        }
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(to right, #3B82F6, #1E40AF);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-sub {
+            font-size: 16px; line-height: 1.6; color: var(--text-muted);
+            max-width: 540px; margin-bottom: 26px;
+        }
+        .hero-ctas { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+        
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--accent); color: white; text-decoration: none;
+            font-family: inherit; font-size: 15px; font-weight: 600;
+            padding: 13px 26px; border-radius: 10px; border: none; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: #1D4ED8; box-shadow: 0 8px 25px var(--accent-glow); transform: translateY(-1px); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--bg-surface2); color: var(--text-main); text-decoration: none;
+            font-family: inherit; font-size: 15px; font-weight: 500;
+            padding: 13px 26px; border-radius: 10px; border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--border-hover); background: rgba(0,0,0,0.04); }
+
+        .hero-trust {
+            display: flex; align-items: center; gap: 14px 24px; flex-wrap: wrap;
+            width: 100%; margin-top: 28px; padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+        .hero-trust-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--text-muted); }
+        .hero-trust-item i { color: var(--accent); font-size: 13px; }
+        .hero-trust-item strong { color: var(--text-main); font-weight: 600; }
+
+        /* hero product mock — MacBook Pro device frame */
+        .hero-visual { display: flex; justify-content: center; align-items: flex-start; }
+        .macbook { width: 100%; max-width: 520px; }
+
+        /* lid (display) */
+        .mb-lid {
+            position: relative;
+            background: linear-gradient(165deg, #3b3b40 0%, #232327 60%, #1b1b1e 100%);
+            border-radius: 24px; padding: 11px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.18),
+                0 2px 4px rgba(28,25,23,0.20),
+                0 44px 70px -22px rgba(28,25,23,0.40);
+        }
+        .mb-screen {
+            position: relative; background: var(--bg-surface);
+            border-radius: 13px; overflow: hidden;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.55);
+        }
+        .mb-screen::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 6;
+            background: linear-gradient(125deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 26%);
+            mix-blend-mode: overlay;
+        }
+        .mb-notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 124px; height: 17px; background: #161619;
+            border-radius: 0 0 11px 11px; z-index: 7;
+        }
+        /* aluminum base + hinge */
+        .mb-base {
+            position: relative; height: 13px; width: 113%; margin: 0 0 0 -6.5%;
+            background: linear-gradient(180deg, #e6e7ea 0%, #c8c9cf 45%, #a7a9b1 100%);
+            border-radius: 0 0 13px 13px / 0 0 70px 70px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 26px -14px rgba(28,25,23,0.30);
+        }
+        .mb-base::after {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 102px; height: 7px;
+            background: linear-gradient(180deg, #aeb0b8, #cfd0d6);
+            border-radius: 0 0 9px 9px;
+        }
+
+        /* macOS window chrome inside the screen */
+        .aw-bar {
+            display: flex; align-items: center; gap: 8px;
+            padding: 11px 16px; border-bottom: 1px solid var(--border);
+            background: var(--bg-surface2);
+        }
+        .aw-dot { width: 11px; height: 11px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+        .aw-bar .aw-dot:nth-child(1) { background: #FF5F57; }
+        .aw-bar .aw-dot:nth-child(2) { background: #FEBC2E; }
+        .aw-bar .aw-dot:nth-child(3) { background: #28C840; }
+        .aw-title { margin-left: 8px; font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
+        .aw-body { padding: 20px; }
+        .aw-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+        .aw-toolgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .aw-tool {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 11px;
+            padding: 15px 8px; display: flex; flex-direction: column; align-items: center; gap: 9px; text-align: center;
+            box-shadow: 0 1px 2px rgba(28,25,23,0.04);
+        }
+        .aw-tool-ico {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--accent-dim); color: var(--accent);
+            display: flex; align-items: center; justify-content: center; font-size: 16px;
+        }
+        .aw-tool-name { font-size: 10.5px; font-weight: 600; color: var(--text-main); line-height: 1.3; }
+        .aw-job {
+            margin-top: 12px; background: var(--bg-main); border: 1px solid var(--border);
+            border-radius: 11px; padding: 14px 15px;
+        }
+        .aw-job-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+        .aw-job-ico { color: var(--accent); font-size: 13px; }
+        .aw-job-name { flex: 1; color: var(--text-main); font-weight: 600; }
+        .aw-job-pct { color: var(--text-muted); font-weight: 600; }
+        .aw-track { margin-top: 10px; height: 6px; border-radius: 999px; background: var(--bg-surface2); overflow: hidden; }
+        .aw-fill { height: 100%; width: 68%; border-radius: 999px; background: linear-gradient(to right, var(--accent), #60A5FA); }
+
+        /* ─── SHARED SECTION HEADINGS ─── */
+        .section-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 10px;
+        }
+        .section-heading { font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 12px; }
+        .section-sub { font-size: 16px; color: var(--text-muted); line-height: 1.55; max-width: 600px; }
+
+        /* ─── USE CASES (TABS) ─── */
+        .usecases-section { padding: 40px 48px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+        .usecases-inner { max-width: 1200px; margin: 0 auto; }
+        .usecases-header { text-align: center; margin-bottom: 28px; }
+        .usecases-header .section-sub { margin: 0 auto; }
+
+        .tabs-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+        .tab-btn {
+            font-family: inherit; font-size: 14px; font-weight: 600;
+            padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--bg-main); color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+        }
+        .tab-btn:hover  { border-color: var(--border-hover); color: var(--text-main); }
+        .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; animation: fadeIn 0.4s ease-out;}
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .uc-text h3 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 12px; }
+        .uc-text p  { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        .uc-benefits { display: flex; flex-direction: column; gap: 12px; }
+        .uc-benefit { display: flex; gap: 14px; align-items: flex-start; }
+        .uc-benefit i { color: var(--success); font-size: 15px; margin-top: 3px; }
+        .uc-benefit-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
+        .uc-benefit-text strong { color: var(--text-main); }
+
+        .uc-card {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 14px;
+            padding: 22px 24px; font-family: 'Mukta', sans-serif; font-weight: 500; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .uc-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .uc-card-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .uc-card-title { font-size: 16px; font-weight: 600; margin-bottom: 2px;}
+        .uc-card-sub { font-size: 12px; color: var(--text-muted); }
+
+        .flow-step { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--grid-line); }
+        .flow-step:last-child { border-bottom: none; padding-bottom: 0;}
+        .flow-icon { width: 30px; height: 30px; border-radius: 8px; background: var(--bg-surface2); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-muted);}
+        .flow-step-name { color: var(--text-main); flex: 1; font-size: 13px; font-weight: 500;}
+        .flow-status { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .status-ok { background: var(--success-dim); color: var(--success); }
+        .status-warn { background: rgba(245,158,11,0.1); color: var(--warn); }
+        .status-run { background: var(--accent-dim); color: var(--accent); }
+
+        /* ─── DATA SCIENCE ─── */
+        .data-section { padding: 40px 48px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+        .data-inner { max-width: 1240px; margin: 0 auto; }
+        .data-header { text-align: center; margin-bottom: 28px; }
+        .data-header .section-sub { margin: 0 auto; max-width: 720px; }
+        .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .data-card {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 14px;
+            padding: 24px 26px; display: flex; flex-direction: column;
+            transition: all 0.3s;
+        }
+        .data-card:hover { border-color: var(--border-hover); background: var(--bg-surface2); }
+        .data-icon {
+            width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 19px; margin-bottom: 14px;
+        }
+        .data-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.3; margin-bottom: 10px; color: var(--text-main); }
+        .data-card > p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; margin-bottom: 0; }
+
+        /* ─── TRUST / FEATURES ─── */
+        .features-section { padding: 40px 48px; border-top: 1px solid var(--border); }
+        .features-inner { max-width: 1200px; margin: 0 auto; }
+        .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+        .feat-card {
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px;
+            padding: 24px 26px; transition: all 0.3s;
+        }
+        .feat-card:hover { border-color: var(--border-hover); background: var(--bg-surface2); }
+        .feat-icon {
+            width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 19px; margin-bottom: 14px;
+        }
+        .feat-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; }
+        .feat-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; }
+
+        /* ─── FILE FORMATS STRIP ─── */
+        .format-strip {
+            margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px 18px; flex-wrap: wrap;
+        }
+        .format-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--text-dim);
+        }
+        .int-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .int-pill {
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px;
+            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+            font-size: 13px; font-weight: 600; color: var(--text-muted); transition: all 0.2s;
+        }
+        .int-pill:hover { border-color: var(--border-hover); color: var(--text-main); }
+        .int-pill i { font-size: 15px; }
+
+        /* ─── FOOTER ─── */
+        .footer { padding: 44px 48px 26px; border-top: 1px solid var(--border); background: var(--bg-main); }
+        .footer-main {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.7fr 1fr 1fr 1fr; gap: 40px;
+        }
+        .footer-brand .fb-logo {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;
+        }
+        .footer-brand p { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 300px; }
+        .footer-col h4 {
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-dim); margin-bottom: 14px;
+        }
+        .footer-col a {
+            display: block; font-size: 13.5px; color: var(--text-muted);
+            text-decoration: none; padding: 5px 0; transition: color 0.15s;
+        }
+        .footer-col a:hover { color: var(--text-main); }
+        .footer-bottom {
+            max-width: 1200px; margin: 32px auto 0; padding-top: 22px;
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+            font-size: 12px; color: var(--text-dim);
+        }
+
+        /* ─── TOOLS GRID ─── */
+        .tools-section { padding: 64px 48px; border-top: 1px solid var(--border); }
+        .tools-inner { max-width: 1200px; margin: 0 auto; }
+        .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+        .tool-card {
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: 18px;
+            padding: 22px 24px; transition: all 0.25s; cursor: default;
+        }
+        .tool-card:hover { border-color: var(--border-hover); background: var(--bg-surface2); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.10); }
+        .tool-card-icon { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 14px; }
+        .tool-card h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+        .tool-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .tool-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 9px; border-radius: 6px; margin-bottom: 12px; }
+
+        /* ─── REQUEST A SERVICE ─── */
+        .idea-section { padding: 40px 48px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+        .idea-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .request-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 22px; margin-top: 32px; text-align: left; align-items: stretch; }
+
+        .idea-form-card {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 14px;
+            padding: 26px 30px 28px; text-align: left;
+            position: relative; overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .idea-form-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to right, var(--accent), #60A5FA);
+        }
+        .idea-form-card:focus-within { border-color: rgba(37, 99, 235, 0.35); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.06); }
+        .idea-form-header {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 14px; flex-wrap: wrap;
+            padding-bottom: 16px; margin-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .idea-form-header-left { display: flex; align-items: center; gap: 14px; }
+        .idea-form-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: var(--accent-dim); color: var(--accent);
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+        }
+        .idea-form-title { font-size: 16px; font-weight: 700; color: var(--text-main); letter-spacing: -0.2px; line-height: 1.2; }
+        .idea-form-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.2px; }
+        .idea-form-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 11.5px; font-weight: 600; letter-spacing: 0.3px;
+            background: var(--success-dim); color: var(--success);
+            padding: 6px 12px; border-radius: 999px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            text-transform: uppercase;
+        }
+        .idea-form-pill i { font-size: 7px; }
+
+        .request-aside { display: flex; flex-direction: column; gap: 14px; height: 100%; }
+        .aside-card {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 14px;
+            padding: 20px 22px; transition: border-color 0.2s, background 0.2s, transform 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .aside-card:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+        .aside-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .aside-icon {
+            width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 15px; margin-bottom: 10px; flex-shrink: 0;
+        }
+        .aside-card-header .aside-icon { margin-bottom: 0; }
+        .aside-card h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.2px; }
+        .aside-card-header h4 { margin-bottom: 0; }
+        .aside-card p { font-size: 13px; line-height: 1.55; color: var(--text-muted); }
+        .aside-card p a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .aside-card p a:hover { color: #1E40AF; }
+        .aside-contact-row {
+            display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+        }
+        .aside-contact-row a, .aside-contact-row span {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 13px; color: var(--text-main); text-decoration: none;
+            font-weight: 500;
+        }
+        .aside-contact-row a:hover { color: var(--accent); }
+        .aside-contact-row i { width: 14px; color: var(--text-muted); font-size: 12px; }
+        .aside-steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: flex; flex-direction: column; gap: 8px; }
+        .aside-steps li {
+            position: relative; padding-left: 28px; font-size: 13px; line-height: 1.5; color: var(--text-muted);
+            counter-increment: step;
+        }
+        .aside-steps li::before {
+            content: counter(step); position: absolute; left: 0; top: 0;
+            width: 20px; height: 20px; border-radius: 50%; background: var(--accent-dim);
+            color: var(--accent); font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .contact-btn {
+            display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+            border: 1px solid var(--border); border-radius: 12px; background: #FFFFFF;
+            text-decoration: none; color: var(--text-main); transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .contact-btn:hover { border-color: var(--accent); box-shadow: 0 6px 20px var(--accent-glow); transform: translateY(-1px); }
+        .contact-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .contact-btn-icon {
+            width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+            background: var(--accent); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 16px;
+        }
+        .contact-btn-label { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-muted); }
+        .contact-btn-value { display: block; font-size: 16px; font-weight: 700; letter-spacing: -0.2px; overflow-wrap: anywhere; }
+        .contact-include { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .contact-include h4 { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+        .contact-include ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        .contact-include li { display: flex; gap: 10px; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
+        .contact-include li i { color: var(--success); font-size: 12px; margin-top: 4px; }
+        .contact-foot { margin-top: 18px; font-size: 12.5px; color: var(--text-dim); }
+        .contact-foot i { margin-right: 6px; }
+
+        /* ─── TRUST STRIP ─── */
+        .trust-strip { max-width: 1100px; margin: 0 auto; padding: 0 48px 56px; text-align: center; }
+        .trust-strip-label { font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 22px; }
+        .trust-logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 34px; }
+        .trust-logos span { font-size: 15px; font-weight: 600; color: var(--text-muted); letter-spacing: -0.2px; opacity: 0.62; transition: opacity .2s, color .2s; }
+        .trust-logos span:hover { opacity: 1; color: var(--text-main); }
+
+        /* ─── CLOSING CTA + STATS ─── */
+        .closing-cta { max-width: 1200px; margin: 0 auto; padding: 16px 48px 84px; }
+        .closing-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 46px; }
+        .cstat { text-align: center; padding: 24px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color .2s; }
+        .cstat:hover { border-color: var(--border-hover); }
+        .cstat-num { font-size: 30px; font-weight: 700; color: var(--text-main); letter-spacing: -1px; line-height: 1; }
+        .cstat-num span { color: var(--accent); }
+        .cstat-label { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+        .closing-card { text-align: center; padding: 52px 32px; border: 1px solid var(--border); border-radius: 22px;
+            background: radial-gradient(120% 140% at 50% 0%, rgba(37,99,235,0.10), transparent 60%), var(--bg-surface); }
+        .closing-card h2 { font-size: 30px; font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
+        .closing-card p { font-size: 15.5px; color: var(--text-muted); max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
+        .closing-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* ─────────────────────────────────────────────────────────────────────
+           PRODUCTS — every tool as an animated laptop, two per row, seen just
+           by scrolling. Design-Build Studio spans the row with its two
+           auditors side by side. Screens only animate while on screen.
+           ───────────────────────────────────────────────────────────────────── */
+        .products-section { padding: 64px 48px 60px; border-top: 1px solid var(--border); background: linear-gradient(180deg, var(--bg-main) 0%, #F2F5FA 45%, var(--bg-main) 100%); }
+        .products-inner { max-width: 1240px; margin: 0 auto; }
+        .products-header { text-align: center; margin-bottom: 36px; }
+        .products-header .section-sub { margin: 0 auto; }
+        .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: liveDot 2s ease-out infinite; }
+        @keyframes liveDot { 0% { box-shadow: 0 0 0 0 rgba(5,150,105,0.45); } 100% { box-shadow: 0 0 0 8px rgba(5,150,105,0); } }
+
+        .demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+        .demo-card {
+            position: relative; display: flex; flex-direction: column; overflow: hidden;
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: 22px;
+            box-shadow: 0 1px 2px rgba(28,25,23,0.04);
+            transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s, border-color .35s;
+        }
+        .demo-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 2;
+            background: linear-gradient(90deg, transparent, var(--accent), #38BDF8, transparent);
+            opacity: 0; transition: opacity .35s;
+        }
+        .demo-card:hover { transform: translateY(-4px); border-color: rgba(37,99,235,0.30); box-shadow: 0 26px 50px -26px rgba(37,99,235,0.40); }
+        .demo-card:hover::after { opacity: 1; }
+        .demo-card.wide { grid-column: 1 / -1; }
+
+        .demo-visuals {
+            position: relative; display: grid; gap: 40px; padding: 36px 40px 30px; isolation: isolate;
+            background: radial-gradient(110% 90% at 50% 0%, rgba(37,99,235,0.10), transparent 62%), linear-gradient(180deg, #F6F8FC, #EDF2F9);
+            border-bottom: 1px solid var(--border);
+        }
+        .demo-visuals::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background-image: linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 35%, transparent 90%);
+                    mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 35%, transparent 90%);
+        }
+        .demo-card.wide .demo-visuals { grid-template-columns: 1fr 1fr; padding: 40px 56px 32px; gap: 56px; }
+        .demo-visual { display: flex; justify-content: center; }
+        .demo-visual .macbook { width: 100%; max-width: 500px; }
+        /* same screen height in every laptop, so cards side by side line up */
+        .demo-visual .app-screen { height: 296px; display: flex; flex-direction: column; justify-content: space-between; }
+        .demo-visual .app-screen > .as-head { margin-bottom: 0; }
+        .demo-copy { padding: 24px 30px 28px; display: flex; flex-direction: column; flex: 1; }
+        .demo-card.wide .demo-copy { padding: 26px 40px 30px; }
+        .demo-copy .product-name { font-size: clamp(21px, 2vw, 25px); margin-bottom: 8px; }
+        .demo-copy .product-desc { max-width: 760px; font-size: 14.5px; margin-bottom: 16px; }
+        .demo-copy .product-link { margin-top: auto; }
+
+        .products-more { text-align: center; padding-top: 34px; }
+
+        @media (max-width: 1000px) {
+            .products-section { padding: 48px 24px; }
+            .demo-grid { gap: 20px; }
+            .demo-visuals { padding: 26px 22px 22px; }
+            .demo-card.wide .demo-visuals { padding: 28px 28px 24px; gap: 28px; }
+            .demo-copy { padding: 20px 22px 24px; }
+            .demo-card.wide .demo-copy { padding: 20px 28px 26px; }
+        }
+        @media (max-width: 760px) {
+            .demo-grid { grid-template-columns: 1fr; }
+            .demo-card.wide .demo-visuals { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .products-section { padding: 40px 16px; }
+            .demo-visuals, .demo-card.wide .demo-visuals { padding: 22px 14px 18px; }
+            .demo-copy, .demo-card.wide .demo-copy { padding: 18px 18px 22px; }
+        }
+
+        /* Shared copy styles for each tool */
+        .product-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 12px;
+        }
+        .product-name { font-size: clamp(22px, 2.4vw, 29px); font-weight: 700; letter-spacing: -0.7px; line-height: 1.15; margin-bottom: 12px; }
+        .product-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px; max-width: 470px; }
+        .product-points { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+        .product-points li { display: flex; gap: 11px; align-items: flex-start; font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+        .product-points li i { color: var(--success); font-size: 13px; margin-top: 3px; flex-shrink: 0; }
+        .product-points strong { color: var(--text-main); font-weight: 600; }
+        .product-link {
+            display: inline-flex; align-items: center; gap: 9px;
+            font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none;
+            transition: gap .2s, color .2s;
+        }
+        .product-link:hover { color: #1D4ED8; gap: 13px; }
+        .product-link i { font-size: 11px; }
+
+
+        /* The animated app canvas inside the laptop screen */
+        .app-screen { position: relative; background: var(--bg-surface); min-height: 252px; padding: 14px 16px; overflow: hidden; }
+        .app-screen .as-head {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;
+        }
+        .app-screen .as-head > span:first-child { display: inline-flex; align-items: center; gap: 7px; color: var(--text-main); }
+        .app-screen .as-head i { color: var(--accent); }
+        .as-pill { font-size: 9.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--accent-dim); color: var(--accent); }
+        .as-pill.run::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 5px; vertical-align: middle; animation: asBlink 1.1s ease-in-out infinite; }
+        @keyframes asBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+        /* ── SOQ Auditor: document scan + live checklist ── */
+        .soq-body { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 12px; }
+        .soq-doc { position: relative; background: var(--bg-main); border: 1px solid var(--border); border-radius: 8px; padding: 11px 10px; display: flex; flex-direction: column; gap: 7px; overflow: hidden; }
+        .soq-line { height: 5px; border-radius: 3px; background: var(--border); }
+        .soq-line.w1 { width: 92%; } .soq-line.w2 { width: 74%; } .soq-line.w3 { width: 58%; }
+        .soq-scan { position: absolute; left: 0; right: 0; top: -38px; height: 38px;
+            background: linear-gradient(180deg, transparent, rgba(37,99,235,0.18), transparent);
+            border-bottom: 1.5px solid rgba(37,99,235,0.7); box-shadow: 0 0 14px rgba(37,99,235,0.35);
+            animation: soqScan 2.7s ease-in-out infinite; }
+        @keyframes soqScan { 0% { top: -38px; } 100% { top: 100%; } }
+        .soq-checks { display: flex; flex-direction: column; gap: 7px; }
+        .soq-check {
+            display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; color: var(--text-main);
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 7px; padding: 6px 9px;
+            opacity: 0.4; animation: soqReveal 5.5s ease-in-out infinite;
+        }
+        .soq-check i { font-size: 11px; color: var(--success); }
+        .soq-check span { flex: 1; }
+        .soq-tick { flex: none !important; font-size: 8.5px; font-weight: 700; letter-spacing: 0.4px; color: var(--success); background: var(--success-dim); padding: 2px 6px; border-radius: 5px; }
+        .soq-check.flag { animation-name: soqRevealFlag; }
+        .soq-check.flag i { color: var(--warn); }
+        .soq-check.flag .soq-tick { color: var(--warn); background: rgba(217,119,6,0.12); }
+        .soq-check:nth-child(1) { animation-delay: 0.1s; }
+        .soq-check:nth-child(2) { animation-delay: 0.8s; }
+        .soq-check:nth-child(3) { animation-delay: 1.5s; }
+        .soq-check:nth-child(4) { animation-delay: 2.2s; }
+        @keyframes soqReveal { 0%,8% { opacity: 0.4; transform: translateX(5px); } 18%,90% { opacity: 1; transform: none; } 100% { opacity: 0.4; transform: translateX(5px); } }
+        @keyframes soqRevealFlag { 0%,8% { opacity: 0.4; transform: translateX(5px); } 18%,90% { opacity: 1; transform: none; } 100% { opacity: 0.4; transform: translateX(5px); } }
+        .soq-foot { margin-top: 12px; }
+        .soq-foot-top { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); margin-bottom: 6px; }
+        .soq-foot-top b { color: var(--accent); font-weight: 700; }
+        .soq-bar { height: 6px; border-radius: 999px; background: var(--bg-surface2); overflow: hidden; }
+        .soq-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(to right, var(--accent), #60A5FA); width: 0; animation: soqBar 5.5s ease-in-out infinite; }
+        @keyframes soqBar { 0% { width: 4%; } 86%,100% { width: 92%; } }
+
+        /* ── Technical Proposal Auditor: pipeline + findings ── */
+        .tp-body { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 14px; align-items: stretch; }
+        .tp-pipe { position: relative; list-style: none; margin: 2px 0; padding-left: 22px; display: flex; flex-direction: column; gap: 9px; }
+        .tp-pipe::before { content: ''; position: absolute; left: 6px; top: 7px; bottom: 7px; width: 2px; background: var(--border); border-radius: 2px; }
+        .tp-pipe::after { content: ''; position: absolute; left: 6px; top: 7px; width: 2px; height: 0; border-radius: 2px; background: linear-gradient(var(--accent), var(--success)); animation: tpProg 6s ease-in-out infinite; }
+        @keyframes tpProg { 0% { height: 0; } 60% { height: calc(100% - 14px); } 100% { height: calc(100% - 14px); } }
+        .tp-step { position: relative; font-size: 11px; font-weight: 500; color: var(--text-muted); }
+        .tp-dot { position: absolute; left: -19px; top: 50%; transform: translateY(-50%); width: 9px; height: 9px; border-radius: 50%; background: #cdc8bd; z-index: 1; animation: tpDot 6s ease-in-out infinite; }
+        .tp-step:nth-child(1) .tp-dot { animation-delay: 0.0s; } .tp-step:nth-child(1) { animation: tpText 6s ease-in-out infinite 0.0s; }
+        .tp-step:nth-child(2) .tp-dot { animation-delay: 0.6s; } .tp-step:nth-child(2) { animation: tpText 6s ease-in-out infinite 0.6s; }
+        .tp-step:nth-child(3) .tp-dot { animation-delay: 1.2s; } .tp-step:nth-child(3) { animation: tpText 6s ease-in-out infinite 1.2s; }
+        .tp-step:nth-child(4) .tp-dot { animation-delay: 1.8s; } .tp-step:nth-child(4) { animation: tpText 6s ease-in-out infinite 1.8s; }
+        .tp-step:nth-child(5) .tp-dot { animation-delay: 2.4s; } .tp-step:nth-child(5) { animation: tpText 6s ease-in-out infinite 2.4s; }
+        .tp-step:nth-child(6) .tp-dot { animation-delay: 3.0s; } .tp-step:nth-child(6) { animation: tpText 6s ease-in-out infinite 3.0s; }
+        @keyframes tpDot {
+            0%,4% { background: #cdc8bd; box-shadow: none; }
+            8% { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-dim); }
+            16%,100% { background: var(--success); box-shadow: none; }
+        }
+        @keyframes tpText { 0%,6% { color: var(--text-muted); } 14%,100% { color: var(--text-main); } }
+        .tp-side { display: flex; flex-direction: column; gap: 12px; }
+        .tp-metric { background: var(--bg-main); border: 1px solid var(--border); border-radius: 10px; padding: 12px 10px; text-align: center; }
+        .tp-metric-num { font-size: 26px; font-weight: 700; color: var(--danger); letter-spacing: -1px; line-height: 1; }
+        .tp-metric-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
+        .tp-sev { display: flex; flex-direction: column; gap: 7px; }
+        .tp-sev-row { display: flex; align-items: center; gap: 7px; font-size: 9px; font-weight: 600; color: var(--text-muted); }
+        .tp-sev-row > span { width: 42px; flex: none; }
+        .tp-sev-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--bg-surface2); overflow: hidden; }
+        .tp-sev-bar i { display: block; height: 100%; border-radius: 999px; transform: scaleX(0); transform-origin: left; animation: tpSev 6s ease-in-out infinite; }
+        .tp-sev-row.crit i { background: var(--danger); width: 64%; animation-delay: 1.6s; }
+        .tp-sev-row.maj  i { background: var(--warn);   width: 84%; animation-delay: 2.0s; }
+        .tp-sev-row.min  i { background: var(--accent); width: 48%; animation-delay: 2.4s; }
+        @keyframes tpSev { 0%,20% { transform: scaleX(0); } 55%,100% { transform: scaleX(1); } }
+
+        /* ── CN Studio: live basin delineation map ── */
+        .cn-map { position: relative; border-radius: 10px; overflow: hidden; background:
+            radial-gradient(130% 120% at 20% 0%, #eef3ec, #e3ebe2 55%, #d9e3d6 100%);
+            border: 1px solid var(--border); }
+        .cn-map svg { display: block; width: 100%; height: 218px; }
+        .cn-sub { stroke: rgba(37,99,235,0.30); stroke-width: 0.7; opacity: 0; animation: cnSub 5.5s ease-in-out infinite; }
+        .cn-sub.s1 { fill: rgba(37,99,235,0.16); animation-delay: 0.2s; }
+        .cn-sub.s2 { fill: rgba(5,150,105,0.16);  animation-delay: 0.7s; }
+        .cn-sub.s3 { fill: rgba(96,165,250,0.20); animation-delay: 1.2s; }
+        .cn-sub.s4 { fill: rgba(217,119,6,0.14);  animation-delay: 1.7s; }
+        @keyframes cnSub { 0%,6% { opacity: 0; } 22%,92% { opacity: 1; } 100% { opacity: 0; } }
+        .cn-aoi { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+        .cn-stream { fill: none; stroke: #2563EB; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5 5; animation: cnFlow 0.85s linear infinite; }
+        .cn-lfp { fill: none; stroke: #DC2626; stroke-width: 1.7; stroke-linecap: round; stroke-dasharray: 2 4; animation: cnFlow 1.1s linear infinite; }
+        @keyframes cnFlow { to { stroke-dashoffset: -10; } }
+        .cn-pp { fill: #DC2626; }
+        .cn-pp-ring { fill: none; stroke: #DC2626; stroke-width: 1.5; transform-origin: center; transform-box: fill-box; animation: cnPing 1.8s ease-out infinite; }
+        @keyframes cnPing { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.6); opacity: 0; } }
+        .cn-stats { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 6px; }
+        .cn-stat { background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 8px; padding: 6px 9px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .cn-stat-num { display: block; font-size: 15px; font-weight: 700; color: var(--text-main); letter-spacing: -0.4px; line-height: 1; }
+        .cn-stat-lab { display: block; font-size: 8px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-dim); margin-top: 3px; }
+        .cn-mode { position: absolute; right: 10px; top: 10px; font-size: 8.5px; font-weight: 600; color: var(--text-muted); background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 6px; padding: 3px 7px; }
+
+        /* ── Prelim Floodway: HEC-RAS encroachment optimizer ── */
+        .fw-xs { position: relative; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg, #f4f6fb 0%, #eef1f7 100%); border: 1px solid var(--border); }
+        .fw-xs svg { display: block; width: 100%; height: 150px; }
+        .fw-ground { fill: #e7ddcf; stroke: #b08968; stroke-width: 1.6; stroke-linejoin: round; }
+        .fw-water { fill: rgba(37,99,235,0.28); stroke: #2563EB; stroke-width: 1.2; }
+        .fw-wsel { stroke: #1D4ED8; stroke-width: 1; stroke-dasharray: 3 3; }
+        .fw-fringe { fill: rgba(217,119,6,0.16); transform-box: fill-box; }
+        .fw-fringe.l { transform-origin: left;  animation: fwGrow 4s ease-in-out infinite; }
+        .fw-fringe.r { transform-origin: right; animation: fwGrow 4s ease-in-out infinite; }
+        .fw-enc { stroke: #D97706; stroke-width: 1.6; stroke-dasharray: 4 3; }
+        .fw-enc.l { animation: fwEncL 4s ease-in-out infinite; }
+        .fw-enc.r { animation: fwEncR 4s ease-in-out infinite; }
+        @keyframes fwGrow { 0% { transform: scaleX(0); } 55%,100% { transform: scaleX(1); } }
+        @keyframes fwEncL { 0% { transform: translateX(-72px); } 55%,100% { transform: translateX(0); } }
+        @keyframes fwEncR { 0% { transform: translateX(72px); } 55%,100% { transform: translateX(0); } }
+        .fw-tag { position: absolute; top: 8px; font-size: 8px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; color: var(--warn); background: rgba(255,255,255,0.85); padding: 2px 5px; border-radius: 4px; }
+        .fw-tag.l { left: 9px; } .fw-tag.r { right: 9px; }
+        .fw-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; }
+        .fw-gauge { display: flex; align-items: baseline; gap: 8px; }
+        .fw-gauge-lab { font-size: 10px; font-weight: 600; color: var(--text-muted); }
+        .fw-gauge-val { font-size: 19px; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; }
+        .fw-conv { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--success); background: var(--success-dim); padding: 4px 10px; border-radius: 999px; }
+
+        /* ── gINT → OpenGround: boring log to AGS4 ── */
+        .gint-body { display: grid; grid-template-columns: 0.62fr 1fr; gap: 13px; }
+        .gint-log { background: var(--bg-main); border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+        .gint-log-cap { font-size: 9px; font-weight: 700; letter-spacing: 0.4px; color: var(--text-muted); text-align: center; margin-bottom: 6px; text-transform: uppercase; }
+        .gint-strata { height: 150px; display: flex; flex-direction: column; border-radius: 5px; overflow: hidden; border: 1px solid var(--border); }
+        .gint-layer { width: 100%; height: 0; flex: 0 0 auto; animation: gintLayer 5s ease-in-out infinite; }
+        .gint-layer.l1 { background: #b9966b; }
+        .gint-layer.l2 { background: #d8c39a; background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 5px); animation-delay: 0.5s; }
+        .gint-layer.l3 { background: #9bb1c9; background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 5px); animation-delay: 1.0s; }
+        .gint-layer.l4 { background: #9a9a9a; background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.14) 0 1px, transparent 1px 4px), repeating-linear-gradient(-45deg, rgba(0,0,0,0.14) 0 1px, transparent 1px 4px); animation-delay: 1.5s; }
+        @keyframes gintLayer { 0%,6% { height: 0; } 30%,100% { height: var(--h); } }
+        .gint-ags { font-family: 'JetBrains Mono', monospace; display: flex; flex-direction: column; gap: 5px; }
+        .gint-ags-row { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--text-main); opacity: 0; transform: translateX(7px); animation: gintRow 5s ease-in-out infinite; }
+        .gint-ags-row b { color: var(--accent); font-weight: 700; flex: none; }
+        .gint-ags-row i { display: block; height: 6px; border-radius: 3px; background: var(--border); width: 0; animation: gintCell 5s ease-in-out infinite; }
+        .gint-ags-row:nth-child(1) { animation-delay: 0.3s; } .gint-ags-row:nth-child(1) i { animation-delay: 0.45s; }
+        .gint-ags-row:nth-child(2) { animation-delay: 0.7s; } .gint-ags-row:nth-child(2) i { animation-delay: 0.85s; }
+        .gint-ags-row:nth-child(3) { animation-delay: 1.1s; } .gint-ags-row:nth-child(3) i { animation-delay: 1.25s; }
+        .gint-ags-row:nth-child(4) { animation-delay: 1.5s; } .gint-ags-row:nth-child(4) i { animation-delay: 1.65s; }
+        .gint-ags-row:nth-child(5) { animation-delay: 1.9s; } .gint-ags-row:nth-child(5) i { animation-delay: 2.05s; }
+        .gint-ags-row:nth-child(6) { animation-delay: 2.3s; } .gint-ags-row:nth-child(6) i { animation-delay: 2.45s; }
+        @keyframes gintRow { 0%,6% { opacity: 0; transform: translateX(7px); } 22%,92% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateX(7px); } }
+        @keyframes gintCell { 0%,10% { width: 0; } 34%,100% { width: var(--w, 38px); } }
+        .gint-foot { margin-top: 11px; }
+        .gint-foot-top { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); margin-bottom: 6px; }
+        .gint-foot-top b { color: var(--accent); font-weight: 700; }
+        .gint-bar { height: 6px; border-radius: 999px; background: var(--bg-surface2); overflow: hidden; }
+        .gint-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(to right, var(--success), #34D399); width: 0; animation: soqBar 5s ease-in-out infinite; }
+
+        /* New demo screens. The plain (un-animated) style is the finished
+           state, so reduced motion shows a complete picture. */
+
+        /* ── Pond Studio: inflow vs outflow hydrograph + pond section ── */
+        .pd-body { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 12px; }
+        .pd-hydro, .pd-section { position: relative; border: 1px solid var(--border); border-radius: 10px; background: linear-gradient(180deg, #f6f8fc, #eef2f8); overflow: hidden; }
+        .pd-hydro svg { display: block; width: 100%; height: 148px; }
+        .pd-cap { position: absolute; top: 7px; right: 9px; display: flex; align-items: center; gap: 5px; font-size: 8.5px; font-weight: 600; color: var(--text-muted); }
+        .pd-key { width: 10px; height: 2.5px; border-radius: 2px; display: inline-block; margin-left: 4px; }
+        .pd-key.in { background: #F97316; } .pd-key.out { background: #2563EB; }
+        .pd-axis { fill: none; stroke: #c7cdd8; stroke-width: 1; }
+        .pd-in-fill { fill: rgba(249,115,22,0.10); animation: pdFade 7s ease-in-out infinite; }
+        .pd-in, .pd-out { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; }
+        .pd-in { stroke: #F97316; animation: pdDraw 7s ease-in-out infinite; }
+        .pd-out { stroke: #2563EB; animation: pdDraw 7s ease-in-out infinite .9s; }
+        @keyframes pdDraw { 0%,4% { stroke-dashoffset: 100; } 36%,92% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+        @keyframes pdFade { 0%,18% { opacity: 0; } 40%,92% { opacity: 1; } 100% { opacity: 0; } }
+        .pd-peak { stroke: #fff; stroke-width: 1.2; animation: pdPop 7s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+        .pd-peak.a { fill: #F97316; animation-delay: .9s; } .pd-peak.b { fill: #2563EB; animation-delay: 1.9s; }
+        @keyframes pdPop { 0%,22% { transform: scale(0); } 30%,92% { transform: scale(1); } 100% { transform: scale(0); } }
+        .pd-section svg { display: block; width: 100%; height: 148px; }
+        .pd-grade { fill: none; stroke: #8b6f4e; stroke-width: 2; stroke-linejoin: round; }
+        .pd-water { fill: rgba(37,99,235,0.22); transform-box: fill-box; transform-origin: bottom; animation: pdRise 7s ease-in-out infinite; }
+        @keyframes pdRise { 0%,6% { transform: scaleY(0.62); } 60%,92% { transform: scaleY(1); } 100% { transform: scaleY(0.62); } }
+        .pd-lvl { stroke-width: 1; stroke-dasharray: 3 2; animation: pdFade 7s ease-in-out infinite; }
+        .pd-lvl.l1 { stroke: #10B981; animation-delay: -.6s; } .pd-lvl.l2 { stroke: #F59E0B; animation-delay: .4s; } .pd-lvl.l3 { stroke: #EF4444; animation-delay: 1.4s; }
+        .pd-riser { fill: #94a3b8; }
+        .pd-soil { fill: #e9dfd0; }
+        .pd-tag { position: absolute; right: 6px; font-size: 7.5px; font-weight: 700; padding: 1px 4px; border-radius: 3px; background: rgba(255,255,255,0.9); animation: pdFade 7s ease-in-out infinite; }
+        .pd-tag.t1 { top: 50%; color: #059669; animation-delay: -.6s; } .pd-tag.t2 { top: 38%; color: #B45309; animation-delay: .4s; } .pd-tag.t3 { top: 26%; color: #DC2626; animation-delay: 1.4s; }
+        .pd-foot { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 11px; }
+        .pd-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 9.5px; font-weight: 600; color: var(--text-muted); background: var(--success-dim); border-radius: 999px; padding: 4px 9px; animation: pdChip 7s ease-in-out infinite; }
+        .pd-chip i { color: var(--success); font-size: 10px; } .pd-chip b { color: var(--text-main); }
+        .pd-chip.c1 { animation-delay: 1.8s; } .pd-chip.c2 { animation-delay: 2.3s; } .pd-chip.c3 { animation-delay: 2.8s; }
+        @keyframes pdChip { 0%,8% { opacity: 0; transform: translateY(5px); } 16%,92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+        /* ── Drainage-CADD Studio: CAD model space with callouts ── */
+        .dr-cad { position: relative; border-radius: 10px; overflow: hidden; background: #0B1220; border: 1px solid #1e293b;
+            background-image: linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
+            background-size: 16px 16px; }
+        .dr-cad svg { display: block; width: 100%; height: 176px; }
+        .dr-road { fill: none; stroke: #64748B; stroke-width: 1.1; }
+        .dr-cl { fill: none; stroke: #F87171; stroke-width: .8; stroke-dasharray: 10 3 2 3; opacity: .7; }
+        .dr-pipe { fill: none; stroke: #22D3EE; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; filter: drop-shadow(0 0 2px rgba(34,211,238,0.6)); animation: drPipe 7s ease-in-out infinite; }
+        .dr-pipe.p2 { animation-delay: .35s; } .dr-pipe.p3 { animation-delay: .7s; } .dr-pipe.p4 { animation-delay: 1.05s; }
+        @keyframes drPipe { 0%,3% { stroke-dashoffset: 100; } 14%,92% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+        .dr-str { fill: #0B1220; stroke: #F8FAFC; stroke-width: 1.4; transform-box: fill-box; transform-origin: center; animation: drPop 7s ease-in-out infinite; }
+        .dr-str.s2 { animation-delay: .35s; } .dr-str.s3 { animation-delay: .7s; } .dr-str.s4 { animation-delay: 1.05s; } .dr-str.s5 { animation-delay: 1.4s; }
+        @keyframes drPop { 0%,2% { transform: scale(0); } 8%,92% { transform: scale(1); } 100% { transform: scale(1); opacity: 0; } }
+        .dr-call path { fill: none; stroke: #FDE047; stroke-width: .9; }
+        .dr-call text { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 6.6px; fill: #FDE047; }
+        .dr-call text.sub { fill: #FEF9C3; font-size: 5.8px; }
+        .dr-call { animation: drCall 7s ease-in-out infinite; }
+        .dr-call.c1 { animation-delay: 1.6s; } .dr-call.c2 { animation-delay: 2.2s; } .dr-call.c3 { animation-delay: 2.8s; }
+        @keyframes drCall { 0%,4% { opacity: 0; } 12%,92% { opacity: 1; } 100% { opacity: 0; } }
+        .dr-coords { position: absolute; left: 8px; bottom: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 7.5px; color: #64748B; }
+        .dr-foot { display: flex; align-items: center; gap: 14px; margin-top: 11px; font-size: 10.5px; color: var(--text-muted); }
+        .dr-stat b { color: var(--text-main); font-size: 13px; margin-right: 3px; }
+        .dr-file { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #7C3AED; background: rgba(124,58,237,0.10); padding: 4px 10px; border-radius: 999px; }
+
+        /* ── Time of Concentration: flow path segments + Tc breakdown ── */
+        .tc-prof { position: relative; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: linear-gradient(180deg, #f5f7fb, #eef1f6); }
+        .tc-prof svg { display: block; width: 100%; height: 118px; }
+        .tc-ground { fill: #e9dfd0; }
+        .tc-seg { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; animation: tcDraw 7s ease-in-out infinite; }
+        .tc-seg.sheet { stroke: #8B5CF6; } .tc-seg.shallow { stroke: #0EA5E9; animation-delay: .7s; } .tc-seg.chan { stroke: #2563EB; animation-delay: 1.4s; }
+        @keyframes tcDraw { 0%,3% { stroke-dashoffset: 100; } 14%,92% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: .2; } }
+        .tc-flow { fill: none; stroke: rgba(255,255,255,0.9); stroke-width: 1.2; stroke-dasharray: 3 9; stroke-linecap: round; animation: tcFlow 1s linear infinite; }
+        @keyframes tcFlow { to { stroke-dashoffset: -12; } }
+        .tc-tick { stroke: #94a3b8; stroke-width: 1; stroke-dasharray: 2 2; }
+        .tc-lab { position: absolute; font-size: 8.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.92); border: 1px solid var(--border); animation: tcLab 7s ease-in-out infinite; }
+        .tc-lab.l1 { left: 6px; top: 46%; color: #7C3AED; animation-delay: .3s; }
+        .tc-lab.l2 { left: 34%; top: 18%; color: #0284C7; animation-delay: 1s; }
+        .tc-lab.l3 { right: 6px; top: 40%; color: #1D4ED8; animation-delay: 1.7s; }
+        @keyframes tcLab { 0%,6% { opacity: 0; transform: translateY(4px); } 14%,92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+        .tc-sum { margin-top: 11px; }
+        .tc-stack { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--bg-surface2); }
+        .tc-stack i { display: block; height: 100%; width: var(--w); animation: tcGrow 7s ease-in-out infinite; }
+        .tc-stack i.sheet { background: #8B5CF6; animation-delay: 2s; } .tc-stack i.shallow { background: #0EA5E9; animation-delay: 2.3s; } .tc-stack i.chan { background: #2563EB; animation-delay: 2.6s; }
+        @keyframes tcGrow { 0%,4% { width: 0; } 14%,100% { width: var(--w); } }
+        .tc-legend { display: flex; gap: 12px; margin-top: 7px; font-size: 9.5px; font-weight: 600; color: var(--text-muted); flex-wrap: wrap; }
+        .tc-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 5px; }
+        .tc-legend i.sheet { background: #8B5CF6; } .tc-legend i.shallow { background: #0EA5E9; } .tc-legend i.chan { background: #2563EB; }
+        .tc-total { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+        .tc-total-lab { font-size: 10px; font-weight: 700; color: var(--text-dim); letter-spacing: .5px; }
+        .tc-total b { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-main); }
+        .tc-pdf { margin-left: auto; align-self: center; font-size: 9.5px; font-weight: 700; color: var(--danger); background: rgba(220,38,38,0.08); padding: 3px 9px; border-radius: 999px; animation: pdChip 7s ease-in-out infinite 3s; }
+
+        /* ── C-Calculator: boundary over land use + weighted table ── */
+        .cc-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+        .cc-map { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #d9ead0; display: flex; align-items: center; }
+        .cc-map svg { display: block; width: 100%; height: auto; }
+        .cc-lawn { fill: #d9ead0; }
+        .cc-woods { fill: #9fc29a; }
+        .cc-road { fill: none; stroke: #a8b0bc; stroke-width: 9; }
+        .cc-roof { fill: #8f99a8; }
+        .cc-da { fill: none; stroke: #2563EB; stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 100; stroke-dashoffset: 0; animation: ccDraw 7s ease-in-out infinite; }
+        .cc-da-fill { fill: rgba(37,99,235,0.10); animation: ccFill 7s ease-in-out infinite; }
+        @keyframes ccDraw { 0%,3% { stroke-dashoffset: 100; } 26%,100% { stroke-dashoffset: 0; } }
+        @keyframes ccFill { 0%,24% { opacity: 0; } 34%,92% { opacity: 1; } 100% { opacity: 0; } }
+        .cc-table { display: flex; flex-direction: column; gap: 6px; }
+        .cc-row { display: grid; grid-template-columns: 1.5fr .7fr .6fr; gap: 6px; align-items: center; font-size: 10.5px; color: var(--text-main); background: var(--bg-main); border: 1px solid var(--border); border-radius: 7px; padding: 6px 9px; animation: ccRow 7s ease-in-out infinite; }
+        .cc-row span:nth-child(n+2) { text-align: right; font-variant-numeric: tabular-nums; }
+        .cc-row.hd { background: none; border-color: transparent; padding: 0 9px; font-size: 8.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); animation: none; }
+        .cc-row i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+        .cc-row i.imp { background: #8f99a8; } .cc-row i.lawn { background: #b5d6a5; } .cc-row i.woods { background: #6f9c69; }
+        .cc-row.r1 { animation-delay: 1.9s; } .cc-row.r2 { animation-delay: 2.3s; } .cc-row.r3 { animation-delay: 2.7s; }
+        @keyframes ccRow { 0%,6% { opacity: 0; transform: translateX(6px); } 14%,92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+        .cc-result { margin-top: auto; display: flex; align-items: baseline; gap: 8px; padding: 9px 10px; border-radius: 9px; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.18); animation: ccRow 7s ease-in-out infinite 3.2s; }
+        .cc-result span { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .3px; }
+        .cc-result b { font-size: 21px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-main); }
+        .cc-result small { margin-left: auto; font-size: 9.5px; color: var(--text-dim); }
+
+        /* ── USDA HSG: SSURGO polygons classified A/B/C/D ── */
+        .hsg-body { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 12px; }
+        .hsg-map { position: relative; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #f3f1ea; }
+        .hsg-map svg { display: block; width: 100%; height: 160px; }
+        .hsg-poly { stroke: #7a6f60; stroke-width: .8; stroke-linejoin: round; fill-opacity: .62; animation: hsgFill 7s ease-in-out infinite; animation-delay: calc(var(--i) * .28s); }
+        .hsg-poly.g-a, .hsg-row b.g-a { fill: #4ADE80; background: #4ADE80; }
+        .hsg-poly.g-b, .hsg-row b.g-b { fill: #60A5FA; background: #60A5FA; }
+        .hsg-poly.g-c, .hsg-row b.g-c { fill: #FBBF24; background: #FBBF24; }
+        .hsg-poly.g-d, .hsg-row b.g-d { fill: #F87171; background: #F87171; }
+        @keyframes hsgFill { 0%,6% { fill-opacity: 0; } 18%,92% { fill-opacity: .62; } 100% { fill-opacity: 0; } }
+        .hsg-lab { font-size: 12px; font-weight: 800; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; animation: hsgLab 7s ease-in-out infinite; animation-delay: calc(var(--i) * .28s + .3s); }
+        @keyframes hsgLab { 0%,8% { opacity: 0; } 18%,92% { opacity: .85; } 100% { opacity: 0; } }
+        .hsg-sweep { position: absolute; top: 0; bottom: 0; left: 0; width: 26%; opacity: 0; pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(37,99,235,0.20), transparent); border-right: 1.5px solid rgba(37,99,235,0.6);
+            animation: hsgSweep 7s ease-in-out infinite; }
+        @keyframes hsgSweep { 0% { transform: translateX(-100%); opacity: 1; } 34% { transform: translateX(390%); opacity: 1; } 35%,100% { opacity: 0; } }
+        .hsg-legend { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+        .hsg-row { display: grid; grid-template-columns: 18px 1fr; grid-template-rows: auto 5px; column-gap: 7px; row-gap: 3px; align-items: center; font-size: 9.5px; color: var(--text-muted); animation: ccRow 7s ease-in-out infinite; animation-delay: calc(var(--i) * .3s + 1.6s); }
+        .hsg-row b { grid-row: 1 / 3; width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #1f2937; }
+        .hsg-row i { display: block; height: 5px; border-radius: 3px; width: var(--w); background: var(--border-hover); }
+        .hsg-row:nth-child(1) i { background: #4ADE80; } .hsg-row:nth-child(2) i { background: #60A5FA; } .hsg-row:nth-child(3) i { background: #FBBF24; } .hsg-row:nth-child(4) i { background: #F87171; }
+        .hsg-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; font-size: 10.5px; color: var(--text-muted); }
+        .hsg-foot b { color: var(--accent); font-weight: 700; }
+
+        /* off-screen laptops sit still */
+        .demo-grid.js-live .demo-card:not(.is-live) .app-screen *,
+        .demo-grid.js-live .demo-card:not(.is-live) .app-screen *::before,
+        .demo-grid.js-live .demo-card:not(.is-live) .app-screen *::after { animation-play-state: paused !important; }
+        @media (prefers-reduced-motion: reduce) {
+            .demo-card { transition: none; }
+            .demo-card:hover { transform: none; }
+            .live-dot, .pd-screen *, .dr-screen *, .tc-screen *, .cc-screen *, .hsg-screen * { animation: none !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .soq-scan, .soq-check, .soq-bar-fill, .tp-dot, .tp-step, .tp-pipe::after, .tp-sev-bar i,
+            .cn-sub, .cn-stream, .cn-lfp, .cn-pp-ring, .fw-fringe, .fw-enc, .gint-layer, .gint-ags-row,
+            .gint-ags-row i, .gint-bar-fill, .as-pill.run::before { animation: none !important; }
+            .soq-check { opacity: 1; } .gint-ags-row { opacity: 1; transform: none; }
+            .gint-ags-row i { width: var(--w, 38px); } .gint-layer { height: var(--h); }
+            .tp-sev-bar i { transform: scaleX(1); } .cn-sub { opacity: 1; } .fw-fringe { transform: scaleX(1); } .fw-enc { transform: none; }
+            .soq-bar-fill, .gint-bar-fill { width: 88%; }
+        }
+
+        @media (max-width: 900px) {
+            .hero { padding: 36px 22px 40px; }
+            .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+            .hero-copy { align-items: center; text-align: center; }
+            .hero-sub { max-width: 560px; }
+            .hero-ctas, .hero-trust { justify-content: center; }
+            .tab-content.active, .trust-grid, .data-grid, .request-layout { grid-template-columns: 1fr; }
+            .idea-form-card { padding: 22px; }
+            .tools-grid { grid-template-columns: 1fr 1fr; }
+            .contact-actions { grid-template-columns: 1fr; }
+            .usecases-section, .features-section, .data-section, .idea-section { padding: 32px 24px; }
+            .idea-form-header { padding-bottom: 14px; margin-bottom: 14px; }
+            .idea-form-pill { order: 3; }
+            .footer { padding: 36px 24px 24px; }
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 28px; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .trust-strip, .closing-cta { padding-left: 24px; padding-right: 24px; }
+            .closing-stats { grid-template-columns: 1fr 1fr; }
+            .closing-card { padding: 40px 22px; }
+            .closing-card h2 { font-size: 25px; }
+        }
+
+        /* ─── TWO PATHS ─── */
+        .paths-section { padding: 44px 48px 48px; border-top: 1px solid var(--border); background: var(--bg-main); }
+        .paths-inner { max-width: 1200px; margin: 0 auto; }
+        .paths-heading { font-size: 13px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-dim); text-align: center; margin-bottom: 20px; }
+        .paths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .path-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; display: flex; flex-direction: column; gap: 14px; }
+        .path-top { display: flex; gap: 14px; align-items: center; }
+        .path-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; background: var(--accent-dim); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .path-kicker { font-size: 11.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--accent); }
+        .path-card h3 { font-size: 21px; font-weight: 700; letter-spacing: -.4px; line-height: 1.2; }
+        .path-card > p { font-size: 14.5px; line-height: 1.6; color: var(--text-muted); }
+        .path-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+        .path-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text-main); text-decoration: none; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-main); transition: border-color .15s, color .15s; }
+        .path-chip:hover { border-color: var(--accent); color: var(--accent); }
+        .free-tag { font-size: 10px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--success); background: var(--success-dim); border-radius: 999px; padding: 1px 6px; }
+        .path-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .path-list li { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--text-muted); }
+        .path-list i { color: var(--success); font-size: 12px; margin-top: 5px; }
+        .path-ctas { margin-top: auto; padding-top: 6px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+        .path-link { font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+        .path-link:hover { color: #1D4ED8; }
+
+        /* ─── FAQ ─── */
+        .faq-section { padding: 48px 48px; border-top: 1px solid var(--border); background: var(--bg-main); }
+        .faq-inner { max-width: 820px; margin: 0 auto; text-align: center; }
+        .faq-list { margin-top: 26px; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+        .faq-item { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+        .faq-item[open] { border-color: var(--border-hover); }
+        .faq-item summary { list-style: none; cursor: pointer; padding: 16px 20px; font-size: 15.5px; font-weight: 700; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary i { color: var(--text-dim); font-size: 13px; transition: transform .2s; flex-shrink: 0; }
+        .faq-item[open] summary i { transform: rotate(45deg); }
+        .faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 12px; }
+        .faq-item p { padding: 0 20px 18px; font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+        .faq-more { margin-top: 20px; font-size: 14px; color: var(--text-muted); }
+        .faq-more a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+        .swipe-hint { display: none; }
+        .contact-alt { margin-top: 28px; display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 15px; color: var(--text-muted); text-align: center; }
+
+        /* Scroll-in: added by JS only, so content is visible without it. */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .7s cubic-bezier(.22,.61,.36,1); transition-delay: var(--d, 0s); }
+        .reveal.in-view { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; transition: none; } }
+        @media (max-width: 900px) {
+            .paths-section, .faq-section { padding: 32px 24px; }
+            .paths-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: 1fr 1fr; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+
+        /* Phones: long card stacks become sideways swipes */
+        @media (max-width: 760px) {
+            .swipe-hint { display: flex; justify-content: flex-end; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-dim); margin: 0 2px 8px; }
+            .data-grid {
+                display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+                margin: 0 -24px; padding: 2px 24px 10px; scroll-padding: 0 24px;
+            }
+            .data-grid::-webkit-scrollbar { display: none; }
+            .data-card { flex: 0 0 84%; scroll-snap-align: start; }
+            .tabs-row { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin: 0 -24px 24px; padding: 2px 24px; }
+            .tabs-row::-webkit-scrollbar { display: none; }
+            .tab-btn { flex-shrink: 0; }
+        }
+    </style>
+</head>
+<body><div style="background:#0f172a;color:#e2e8f0;text-align:center;padding:10px 16px;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:1000">The KAPPS web tools are offline for now. For a demo or project work, email <a href="mailto:support@kapps.ai" style="color:#7dd3fc">support@kapps.ai</a> or call <a href="tel:+18044043621" style="color:#7dd3fc">804-404-3621</a>.</div>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    
+<style>
+    .site-nav { position: sticky; top: 0; z-index: 100; height: 64px; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: rgba(250, 250, 247, 0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border, #E7E3DA); font-family: 'Mukta', -apple-system, sans-serif; }
+    .site-nav .sn-brand { flex: 1 1 0; display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main, #1C1917); }
+    .site-nav .sn-brand img { height: 32px; width: auto; object-fit: contain; }
+    .site-nav .sn-links { display: flex; gap: 32px; align-items: center; }
+    .site-nav .sn-links a { font-size: 14px; font-weight: 500; line-height: 1; color: var(--text-muted, #423E39); text-decoration: none; transition: color .2s; }
+    .site-nav .sn-links a:hover, .site-nav .sn-links a.active { color: var(--text-main, #1C1917); }
+    .site-nav .sn-links a.active { text-decoration: underline; text-decoration-color: var(--accent, #2563EB); text-decoration-thickness: 2px; text-underline-offset: 8px; }
+    .site-nav .sn-right { flex: 1 1 0; display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+    .site-nav .sn-ghost, .site-nav .sn-primary { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1; padding: 11px 20px; border-radius: 8px; text-decoration: none; white-space: nowrap; transition: background .2s, border-color .2s, box-shadow .2s, color .2s; }
+    .site-nav .sn-ghost { color: var(--text-muted, #423E39); border: 1px solid transparent; }
+    .site-nav .sn-ghost:hover { color: var(--text-main, #1C1917); background: rgba(0,0,0,0.04); border-color: var(--border, #E7E3DA); }
+    .site-nav .sn-ghost .fa-shield-halved { color: var(--warn, #D97706); }
+    .site-nav .sn-primary { color: #fff; background: var(--accent, #2563EB); border: 1px solid transparent; }
+    .site-nav .sn-primary:hover { background: #1D4ED8; box-shadow: 0 0 20px var(--accent-glow, rgba(37,99,235,.25)); }
+    .site-nav .sn-primary i { font-size: 11px; }
+    @media (max-width: 1100px) { .site-nav { padding: 0 24px; } .site-nav .sn-links { gap: 24px; } }
+    @media (max-width: 900px) { .site-nav .sn-links { display: none; } }
+    @media (max-width: 480px) {
+        .site-nav { padding: 0 16px; }
+        .site-nav .sn-right { gap: 6px; }
+        .site-nav .sn-ghost, .site-nav .sn-primary { padding: 9px 12px; font-size: 13.5px; }
+        .site-nav .sn-primary i, .site-nav .sn-admin { display: none; }
+    }
+</style>
+
+<nav class="site-nav">
+    <a href="/" class="sn-brand"><img src="/static/core/images/kapps.png" alt="KAPPS Logo"> KAPPS</a>
+    <div class="sn-links">
+        <a href="#studio">Services</a>
+        <a href="/tools/">Tools</a>
+        <a href="#faq">FAQ</a>
+        <a href="/team/">Team</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <div class="sn-right">
+        <a href="/#contact" class="sn-primary">Contact us <i class="fas fa-arrow-right"></i></a>
+        
+    </div>
+</nav>
+
+
+
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-copy">
+                <div class="hero-badge">
+                    Bridging AI and the AEC Industry
+                </div>
+
+                <h1>KAPPS Studio brings <em>real AI</em> to AEC work, so your team can focus on the engineering.</h1>
+
+                <p class="hero-sub">
+                    We are a software company in Virginia. KAPPS Studio is our AI platform for the AEC industry, running everything from QA/QC and data science to the automation that clears away engineering busywork. Use the tools yourself, or hand us the project.
+                </p>
+
+                <div class="hero-ctas">
+                    <a href="mailto:support@kapps.ai" class="btn-primary">Email us <i class="fas fa-arrow-right"></i></a>
+                    <a href="#contact" class="btn-secondary">
+                        <i class="fas fa-headset"></i> Talk to us
+                    </a>
+                </div>
+
+                <div class="hero-trust">
+                    <div class="hero-trust-item"><i class="fas fa-circle-check"></i> <span>Made for <strong>AEC work</strong></span></div>
+                    <div class="hero-trust-item"><i class="fas fa-bolt"></i> <span><strong>No installs</strong>, nothing to maintain</span></div>
+                    <div class="hero-trust-item"><i class="fas fa-lock"></i> <span>Your files <strong>stay private</strong></span></div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="macbook">
+                    <div class="mb-lid">
+                        <div class="mb-notch"></div>
+                        <div class="mb-screen">
+                            <div class="aw-bar">
+                                <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                <span class="aw-title">KAPPS Studio</span>
+                            </div>
+                            <div class="aw-body">
+                                <div class="aw-section-label">Your tools</div>
+                                <div class="aw-toolgrid">
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-file-circle-check"></i></div><div class="aw-tool-name">Design-Build Studio</div></div>
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-chart-pie"></i></div><div class="aw-tool-name">CN Studio</div></div>
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-mountain"></i></div><div class="aw-tool-name">Geotech Studio</div></div>
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-house-flood-water"></i></div><div class="aw-tool-name">Floodway Studio</div></div>
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-circle-nodes"></i></div><div class="aw-tool-name">Pond Studio</div></div>
+                                    <div class="aw-tool"><div class="aw-tool-ico"><i class="fas fa-drafting-compass"></i></div><div class="aw-tool-name">Drainage-CADD Studio</div></div>
+                                </div>
+                                <div class="aw-job">
+                                    <div class="aw-job-row">
+                                        <i class="fas fa-circle-notch aw-job-ico"></i>
+                                        <span class="aw-job-name">Floodway optimizer</span>
+                                        <span class="aw-job-pct">68%</span>
+                                    </div>
+                                    <div class="aw-track"><div class="aw-fill"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-base"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── TRUST STRIP ─── -->
+    <section class="trust-strip">
+        <p class="trust-strip-label">Built on the standards, data, and tools your work already runs on</p>
+        <div class="trust-logos">
+            <span>VDOT</span>
+            <span>TR-55</span>
+            <span>USGS</span>
+            <span>NOAA&nbsp;Atlas&nbsp;14</span>
+            <span>USDA&nbsp;SSURGO</span>
+            <span>AGS4</span>
+            <span>Autodesk&nbsp;Civil&nbsp;3D</span>
+            <span>HEC-RAS</span>
+            <span>OpenGround</span>
+        </div>
+    </section>
+
+    <!-- ─── PRODUCTS · every tool, animated, two per row ─── -->
+    <section id="products" class="products-section">
+        <div class="products-inner">
+            <div class="products-header">
+                <div class="section-label" style="justify-content:center;"><span class="live-dot"></span> Live demos</div>
+                <h2 class="section-heading">Every tool, working live.</h2>
+                <p class="section-sub">All 9 tools in KAPPS Studio, shown as they run a job, from a license audit to a HEC-RAS floodway solve. Nothing to install: you work in the browser.</p>
+            </div>
+            <div class="demo-grid">
+                <article class="demo-card wide" id="demo-designbuild">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Design-Build Studio &middot; SOQ</span>
+                                        </div>
+                                        <div class="app-screen soq-screen">
+                                                                            <div class="as-head">
+                                                                                <span><i class="fas fa-file-pdf"></i> SOQ_Submittal.pdf</span>
+                                                                                <span class="as-pill run">Auditing</span>
+                                                                            </div>
+                                                                            <div class="soq-body">
+                                                                                <div class="soq-doc">
+                                                                                    <span class="soq-line w1"></span><span class="soq-line w2"></span>
+                                                                                    <span class="soq-line w3"></span><span class="soq-line w1"></span>
+                                                                                    <span class="soq-line w2"></span><span class="soq-line w3"></span>
+                                                                                    <span class="soq-line w1"></span><span class="soq-line w2"></span>
+                                                                                    <span class="soq-line w3"></span>
+                                                                                    <div class="soq-scan"></div>
+                                                                                </div>
+                                                                                <div class="soq-checks">
+                                                                                    <div class="soq-check"><i class="fas fa-circle-check"></i><span>PE license · DPOR</span><span class="soq-tick">OK</span></div>
+                                                                                    <div class="soq-check"><i class="fas fa-circle-check"></i><span>Firm registration · SCC</span><span class="soq-tick">OK</span></div>
+                                                                                    <div class="soq-check"><i class="fas fa-circle-check"></i><span>DBE certification</span><span class="soq-tick">OK</span></div>
+                                                                                    <div class="soq-check flag"><i class="fas fa-triangle-exclamation"></i><span>Key staff registration</span><span class="soq-tick">FLAG</span></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="soq-foot">
+                                                                                <div class="soq-foot-top"><span>Cross-referencing DPOR &amp; SCC</span><b><span data-count="42">42</span> reqs</b></div>
+                                                                                <div class="soq-bar"><div class="soq-bar-fill"></div></div>
+                                                                            </div>
+                                                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Design-Build Studio &middot; Technical Proposal</span>
+                                        </div>
+                                        <div class="app-screen tp-screen">
+                                                                            <div class="as-head">
+                                                                                <span><i class="fas fa-gavel"></i> Adversarial audit pipeline</span>
+                                                                                <span class="as-pill run">7 phases</span>
+                                                                            </div>
+                                                                            <div class="tp-body">
+                                                                                <ol class="tp-pipe">
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Mine RFP requirements</li>
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Administrative compliance</li>
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Technical volume audit</li>
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Cross-volume consistency</li>
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Adjudicate findings</li>
+                                                                                    <li class="tp-step"><span class="tp-dot"></span>Render PDF report</li>
+                                                                                </ol>
+                                                                                <div class="tp-side">
+                                                                                    <div class="tp-metric">
+                                                                                        <div class="tp-metric-num" data-count="37">37</div>
+                                                                                        <div class="tp-metric-label">findings</div>
+                                                                                    </div>
+                                                                                    <div class="tp-sev">
+                                                                                        <div class="tp-sev-row crit"><span>Critical</span><div class="tp-sev-bar"><i></i></div></div>
+                                                                                        <div class="tp-sev-row maj"><span>Major</span><div class="tp-sev-bar"><i></i></div></div>
+                                                                                        <div class="tp-sev-row min"><span>Minor</span><div class="tp-sev-bar"><i></i></div></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-file-circle-check"></i> Compliance auditing</div>
+                        <h3 class="product-name">Design-Build Studio</h3>
+                        <p class="product-desc">Two AI auditors for VDOT design-build. The SOQ Auditor checks every license and registration you claim against live Virginia DPOR and SCC records. The Technical Proposal Auditor runs a seven-phase adversarial audit of both volumes against every RFP requirement and ranks each finding by severity.</p>
+                        <a href="/tools/design-build-studio/" class="product-link">More about Design-Build Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-cn">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">CN Studio</span>
+                                        </div>
+                                        <div class="app-screen cn-screen">
+                                                                            <div class="cn-map">
+                                                                                <svg viewBox="0 0 220 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path class="cn-sub s1" d="M18,42 C30,18 70,14 98,24 C92,52 78,70 58,80 C40,72 24,60 18,42 Z"/>
+                                                                                    <path class="cn-sub s2" d="M98,24 C124,30 152,18 180,36 C172,62 150,76 120,74 C104,62 96,46 98,24 Z"/>
+                                                                                    <path class="cn-sub s3" d="M58,80 C78,70 92,52 98,24 C96,46 104,62 120,74 C112,100 96,116 80,112 C66,102 58,92 58,80 Z"/>
+                                                                                    <path class="cn-sub s4" d="M120,74 C150,76 172,62 180,36 C202,50 206,88 192,112 C176,136 140,140 110,132 C118,112 122,94 120,74 Z"/>
+                                                                                    <path class="cn-aoi" d="M18,42 C30,18 70,14 98,24 C124,30 152,18 180,36 C202,50 206,88 192,112 C176,136 140,140 110,132 C80,124 44,132 30,108 C16,86 8,60 18,42 Z"/>
+                                                                                    <path class="cn-stream" d="M150,32 C140,56 122,68 110,84 C100,98 96,114 98,128 M62,42 C82,60 98,72 110,84 M186,62 C160,74 132,80 110,84"/>
+                                                                                    <path class="cn-lfp" d="M150,32 C140,56 122,68 110,84 C100,98 96,114 98,128"/>
+                                                                                    <circle class="cn-pp-ring" cx="98" cy="129" r="4"/>
+                                                                                    <circle class="cn-pp" cx="98" cy="129" r="3.4"/>
+                                                                                </svg>
+                                                                                <div class="cn-mode">NHDPlus HR · auto-delineated</div>
+                                                                                <div class="cn-stats">
+                                                                                    <div class="cn-stat"><span class="cn-stat-num" data-count="78">78</span><span class="cn-stat-lab">Weighted CN</span></div>
+                                                                                    <div class="cn-stat"><span class="cn-stat-num" data-count="6">6</span><span class="cn-stat-lab">Subbasins</span></div>
+                                                                                    <div class="cn-stat"><span class="cn-stat-num" data-count="0.42" data-suffix=" hr">0.42 hr</span><span class="cn-stat-lab">Tc</span></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-water"></i> Hydrology</div>
+                        <h3 class="product-name">CN Studio</h3>
+                        <p class="product-desc">Drop a pin or an area of interest and CN Studio auto-delineates the watershed, traces the stream network, splits it into subbasins, and returns a weighted curve number and time of concentration — no GIS desktop required.</p>
+                        <a href="/tools/cn-studio/" class="product-link">More about CN Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-floodway">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Floodway Studio</span>
+                                        </div>
+                                        <div class="app-screen fw-screen">
+                                                                            <div class="as-head">
+                                                                                <span><i class="fas fa-house-flood-water"></i> HEC-RAS · Method 1 optimizer</span>
+                                                                                <span class="as-pill run">Solving</span>
+                                                                            </div>
+                                                                            <div class="fw-xs">
+                                                                                <svg viewBox="0 0 240 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path class="fw-ground" d="M0,44 L26,50 L52,60 L82,86 L104,100 L136,100 L158,86 L188,60 L214,50 L240,44 L240,120 L0,120 Z"/>
+                                                                                    <path class="fw-water" d="M92,72 L108,92 L132,92 L148,72 Z"/>
+                                                                                    <line class="fw-wsel" x1="80" y1="72" x2="160" y2="72"/>
+                                                                                    <rect class="fw-fringe l" x="0" y="6" width="92" height="92"/>
+                                                                                    <rect class="fw-fringe r" x="148" y="6" width="92" height="92"/>
+                                                                                    <line class="fw-enc l" x1="92" y1="6" x2="92" y2="100"/>
+                                                                                    <line class="fw-enc r" x1="148" y1="6" x2="148" y2="100"/>
+                                                                                </svg>
+                                                                                <span class="fw-tag l">L encroach</span>
+                                                                                <span class="fw-tag r">R encroach</span>
+                                                                            </div>
+                                                                            <div class="fw-foot">
+                                                                                <div class="fw-gauge"><span class="fw-gauge-lab">Surcharge</span><span class="fw-gauge-val" data-count="1.00" data-suffix=" ft">1.00 ft</span></div>
+                                                                                <span class="fw-conv"><i class="fas fa-circle-check"></i> Converged · iter <span data-count="7">7</span>/7</span>
+                                                                            </div>
+                                                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-house-flood-water"></i> Hydraulics</div>
+                        <h3 class="product-name">Floodway Studio</h3>
+                        <p class="product-desc">Hand it a HEC-RAS model and Floodway Studio runs the Method&nbsp;1 encroachment optimizer, marching the left and right stations inward cross-section by cross-section until the surcharge converges right at the 1.0&nbsp;ft target.</p>
+                        <a href="/tools/floodway-studio/" class="product-link">More about Floodway Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-pond">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Pond Studio</span>
+                                        </div>
+                                        <div class="app-screen pd-screen">
+                                            <div class="as-head">
+                                                <span><i class="fas fa-circle-nodes"></i> Wet pond &middot; reservoir routing</span>
+                                                <span class="as-pill run">Routing</span>
+                                            </div>
+                                            <div class="pd-body">
+                                                <div class="pd-hydro">
+                                                    <div class="pd-cap"><span class="pd-key in"></span>Inflow <span class="pd-key out"></span>Outflow</div>
+                                                    <svg viewBox="0 0 200 112" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path class="pd-axis" d="M8,100 H196 M8,100 V6"/>
+                                                        <path class="pd-in-fill" d="M8,100 C30,99 44,96 56,70 C64,40 70,14 78,14 C88,14 96,56 112,78 C128,94 160,99 196,100 Z"/>
+                                                        <path class="pd-in" pathLength="100" d="M8,100 C30,99 44,96 56,70 C64,40 70,14 78,14 C88,14 96,56 112,78 C128,94 160,99 196,100"/>
+                                                        <path class="pd-out" pathLength="100" d="M8,100 C40,99 60,95 78,82 C94,70 104,62 118,62 C134,62 150,80 170,92 C182,97 190,99 196,100"/>
+                                                        <circle class="pd-peak a" cx="78" cy="14" r="2.6"/>
+                                                        <circle class="pd-peak b" cx="118" cy="62" r="2.6"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="pd-section">
+                                                    <svg viewBox="0 0 120 112" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                                        <defs><clipPath id="pdBowl"><path d="M6,30 L22,30 L30,44 L40,44 L50,86 L76,86 L84,44 L92,44 L100,30 L114,30 Z"/></clipPath></defs>
+                                                        <path class="pd-soil" d="M0,30 L22,30 L30,44 L40,44 L50,86 L76,86 L84,44 L92,44 L100,30 L120,30 L120,112 L0,112 Z"/>
+                                                        <rect class="pd-water" x="0" y="34" width="120" height="52" clip-path="url(#pdBowl)"/>
+                                                        <path class="pd-grade" d="M6,30 L22,30 L30,44 L40,44 L50,86 L76,86 L84,44 L92,44 L100,30 L114,30"/>
+                                                        <line class="pd-lvl l1" x1="26" y1="62" x2="96" y2="62"/>
+                                                        <line class="pd-lvl l2" x1="22" y1="50" x2="100" y2="50"/>
+                                                        <line class="pd-lvl l3" x1="18" y1="38" x2="104" y2="38"/>
+                                                        <rect class="pd-riser" x="62" y="40" width="6" height="46" rx="1"/>
+                                                    </svg>
+                                                    <span class="pd-tag t1">1-yr</span><span class="pd-tag t2">10-yr</span><span class="pd-tag t3">100-yr</span>
+                                                </div>
+                                            </div>
+                                            <div class="pd-foot">
+                                                <span class="pd-chip c1"><i class="fas fa-circle-check"></i> 1-yr <b>3.8</b> &le; 4.2 cfs</span>
+                                                <span class="pd-chip c2"><i class="fas fa-circle-check"></i> 10-yr <b>11.6</b> &le; 12.0 cfs</span>
+                                                <span class="pd-chip c3"><i class="fas fa-circle-check"></i> Freeboard <b><span data-count="1.2" data-suffix=" ft">1.2 ft</span></b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-circle-nodes"></i> Stormwater</div>
+                        <h3 class="product-name">Pond Studio</h3>
+                        <p class="product-desc">Give it the pond outline and drainage data. Pond Studio builds the grading with safety and aquatic benches, computes stage-storage, then sizes the riser orifice, weir and culvert and routes each storm until the discharge limits are met.</p>
+                        <a href="/tools/pond-studio/" class="product-link">More about Pond Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-geotech">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Geotech Studio</span>
+                                        </div>
+                                        <div class="app-screen gint-screen">
+                                                                            <div class="as-head">
+                                                                                <span><i class="fas fa-layer-group"></i> Project.gpj &rarr; AGS4</span>
+                                                                                <span class="as-pill run">Converting</span>
+                                                                            </div>
+                                                                            <div class="gint-body">
+                                                                                <div class="gint-log">
+                                                                                    <div class="gint-log-cap">BH-04</div>
+                                                                                    <div class="gint-strata">
+                                                                                        <div class="gint-layer l1" style="--h:22%"></div>
+                                                                                        <div class="gint-layer l2" style="--h:30%"></div>
+                                                                                        <div class="gint-layer l3" style="--h:18%"></div>
+                                                                                        <div class="gint-layer l4" style="--h:30%"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="gint-ags">
+                                                                                    <div class="gint-ags-row"><b>**PROJ</b><i style="--w:46px"></i></div>
+                                                                                    <div class="gint-ags-row"><b>**LOCA</b><i style="--w:34px"></i><i style="--w:22px"></i></div>
+                                                                                    <div class="gint-ags-row"><b>**HOLE</b><i style="--w:40px"></i><i style="--w:18px"></i></div>
+                                                                                    <div class="gint-ags-row"><b>**GEOL</b><i style="--w:30px"></i><i style="--w:34px"></i></div>
+                                                                                    <div class="gint-ags-row"><b>**SAMP</b><i style="--w:38px"></i></div>
+                                                                                    <div class="gint-ags-row"><b>**ISPT</b><i style="--w:26px"></i><i style="--w:30px"></i></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="gint-foot">
+                                                                                <div class="gint-foot-top"><span>Mapping gINT fields to AGS4 groups</span><b><span data-count="24">24</span> borings</b></div>
+                                                                                <div class="gint-bar"><div class="gint-bar-fill"></div></div>
+                                                                            </div>
+                                                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-mountain"></i> Geotechnical</div>
+                        <h3 class="product-name">Geotech Studio</h3>
+                        <p class="product-desc">One window for subsurface data. Load a <code>.gpj</code>, boring-log <strong>PDFs</strong>, CPT files, or just a <strong>VDOT Project ID</strong> once, then make <strong>fence diagrams</strong>, an <strong>AGS4</strong> file for Bentley OpenGround and boring logs from it, downloaded together in one bundle.</p>
+                        <a href="/tools/geotech-studio/" class="product-link">More about Geotech Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-drainage">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Drainage-CADD Studio</span>
+                                        </div>
+                                        <div class="app-screen dr-screen">
+                                            <div class="as-head">
+                                                <span><i class="fas fa-drafting-compass"></i> SUDA export &rarr; DXF</span>
+                                                <span class="as-pill run">Drafting</span>
+                                            </div>
+                                            <div class="dr-cad">
+                                                <svg viewBox="0 0 260 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                                                    <path class="dr-road" d="M-4,104 C60,96 120,86 180,62 C210,50 236,44 264,42"/>
+                                                    <path class="dr-road" d="M-4,128 C60,120 124,110 186,86 C214,75 238,68 264,66"/>
+                                                    <path class="dr-cl" d="M-4,116 C60,108 122,98 183,74 C212,62 237,56 264,54"/>
+                                                    <path class="dr-pipe p1" pathLength="100" d="M34,101 L96,92"/>
+                                                    <path class="dr-pipe p2" pathLength="100" d="M96,92 L154,74"/>
+                                                    <path class="dr-pipe p3" pathLength="100" d="M154,74 L210,52"/>
+                                                    <path class="dr-pipe p4" pathLength="100" d="M210,52 L226,104"/>
+                                                    <rect class="dr-str s1" x="30" y="97" width="8" height="8"/>
+                                                    <rect class="dr-str s2" x="92" y="88" width="8" height="8"/>
+                                                    <circle class="dr-str s3" cx="154" cy="74" r="4.6"/>
+                                                    <rect class="dr-str s4" x="206" y="48" width="8" height="8"/>
+                                                    <path class="dr-str s5" d="M220,104 L232,104 L229,112 L223,112 Z"/>
+                                                    <g class="dr-call c1"><path d="M38,97 L50,64 L92,64"/><text x="52" y="61">STR 11 &middot; DI-3B</text><text class="sub" x="52" y="72">INV 214.30</text></g>
+                                                    <g class="dr-call c2"><path d="M158,70 L168,42 L214,42"/><text x="170" y="39">STR 13 &middot; MH-1</text><text class="sub" x="170" y="50">TOP 221.40</text></g>
+                                                    <g class="dr-call c3"><path d="M120,84 L126,116 L170,116"/><text x="128" y="113">18&quot; RCP &middot; 0.62%</text></g>
+                                                </svg>
+                                                <span class="dr-coords">X 11,824,316 &nbsp; Y 3,712,905</span>
+                                            </div>
+                                            <div class="dr-foot">
+                                                <span class="dr-stat"><b data-count="24">24</b> callouts</span>
+                                                <span class="dr-stat"><b data-count="3">3</b> profile sheets</span>
+                                                <span class="dr-file"><i class="fas fa-file-arrow-down"></i> Drainage_Plan.dxf</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-drafting-compass"></i> Drafting</div>
+                        <h3 class="product-name">Drainage-CADD Studio</h3>
+                        <p class="product-desc">Upload one OpenRoads Designer SUDA export and get AutoCAD drawings back: a callout for every inlet, manhole, end section and pipe, plus storm sewer profile sheets with the hydraulic grade line.</p>
+                        <a href="/tools/drainage-cadd-studio/" class="product-link">More about Drainage-CADD Studio <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-tc">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">Time of Concentration</span>
+                                        </div>
+                                        <div class="app-screen tc-screen">
+                                            <div class="as-head">
+                                                <span><i class="fas fa-stopwatch"></i> TR-55 &middot; longest flow path</span>
+                                                <span class="as-pill run">Calculating</span>
+                                            </div>
+                                            <div class="tc-prof">
+                                                <svg viewBox="0 0 260 104" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path class="tc-ground" d="M0,22 C24,24 40,30 56,36 C90,48 120,60 150,70 C190,82 224,88 260,92 L260,104 L0,104 Z"/>
+                                                    <path class="tc-seg sheet" pathLength="100" d="M0,22 C24,24 40,30 56,36"/>
+                                                    <path class="tc-seg shallow" pathLength="100" d="M56,36 C90,48 120,60 150,70"/>
+                                                    <path class="tc-seg chan" pathLength="100" d="M150,70 C190,82 224,88 260,92"/>
+                                                    <path class="tc-flow" d="M0,22 C24,24 40,30 56,36 C90,48 120,60 150,70 C190,82 224,88 260,92"/>
+                                                    <line class="tc-tick" x1="56" y1="26" x2="56" y2="46"/>
+                                                    <line class="tc-tick" x1="150" y1="60" x2="150" y2="80"/>
+                                                </svg>
+                                                <span class="tc-lab l1">Sheet &middot; 100 ft</span>
+                                                <span class="tc-lab l2">Shallow &middot; 640 ft</span>
+                                                <span class="tc-lab l3">Channel &middot; 1,850 ft</span>
+                                            </div>
+                                            <div class="tc-sum">
+                                                <div class="tc-stack"><i class="sheet" style="--w:55%"></i><i class="shallow" style="--w:19%"></i><i class="chan" style="--w:26%"></i></div>
+                                                <div class="tc-legend">
+                                                    <span><i class="sheet"></i>Sheet 0.21 hr</span>
+                                                    <span><i class="shallow"></i>Shallow 0.07 hr</span>
+                                                    <span><i class="chan"></i>Channel 0.10 hr</span>
+                                                </div>
+                                                <div class="tc-total"><span class="tc-total-lab">Tc</span><b data-count="0.38" data-suffix=" hr">0.38 hr</b><span class="tc-pdf"><i class="fas fa-file-pdf"></i> Report ready</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-stopwatch"></i> Hydrology &middot; Free</div>
+                        <h3 class="product-name">Time of Concentration</h3>
+                        <p class="product-desc">Enter sheet flow, shallow concentrated flow and as many channel segments as you need. KAPPS returns the TR-55 time of concentration with a PDF that shows every input, so the calculation documents itself.</p>
+                        <a href="/tools/time-of-concentration/" class="product-link">More about Time of Concentration <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-ccalc">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">C-Calculator</span>
+                                        </div>
+                                        <div class="app-screen cc-screen">
+                                            <div class="as-head">
+                                                <span><i class="fas fa-cloud-rain"></i> DA-2 &middot; Rational Method C</span>
+                                                <span class="as-pill run">Overlaying</span>
+                                            </div>
+                                            <div class="cc-body">
+                                                <div class="cc-map">
+                                                    <svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect class="cc-lawn" x="0" y="0" width="200" height="150"/>
+                                                        <path class="cc-woods" d="M118,0 L200,0 L200,92 C176,96 150,84 136,62 C126,44 116,22 118,0 Z"/>
+                                                        <path class="cc-road" d="M-6,112 C50,104 110,98 206,108"/>
+                                                        <rect class="cc-roof" x="22" y="30" width="26" height="18" rx="1"/>
+                                                        <rect class="cc-roof" x="58" y="48" width="22" height="16" rx="1"/>
+                                                        <rect class="cc-roof" x="30" y="66" width="30" height="16" rx="1"/>
+                                                        <rect class="cc-roof" x="86" y="22" width="20" height="22" rx="1"/>
+                                                        <path class="cc-da-fill" d="M14,18 C60,8 120,10 168,26 C186,52 184,88 166,120 C120,134 60,136 20,124 C6,92 4,50 14,18 Z"/>
+                                                        <path class="cc-da" pathLength="100" d="M14,18 C60,8 120,10 168,26 C186,52 184,88 166,120 C120,134 60,136 20,124 C6,92 4,50 14,18 Z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="cc-table">
+                                                    <div class="cc-row hd"><span>Land use</span><span>Acres</span><span>C</span></div>
+                                                    <div class="cc-row r1"><span><i class="imp"></i>Impervious</span><span>2.1</span><span>0.90</span></div>
+                                                    <div class="cc-row r2"><span><i class="lawn"></i>Lawn</span><span>3.4</span><span>0.25</span></div>
+                                                    <div class="cc-row r3"><span><i class="woods"></i>Woods</span><span>1.8</span><span>0.15</span></div>
+                                                    <div class="cc-result"><span>Composite C</span><b data-count="0.41">0.41</b><small>7.3 ac</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-cloud-rain"></i> Hydrology &middot; Free</div>
+                        <h3 class="product-name">C-Calculator</h3>
+                        <p class="product-desc">Overlay your drainage-area boundary on land-use polygons and get an area-weighted Rational Method runoff coefficient for storm sewer, inlet and rational-method sizing.</p>
+                        <a href="/tools/c-calculator/" class="product-link">More about C-Calculator <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="demo-card" id="demo-hsg">
+                    <div class="demo-visuals">
+                        <div class="demo-visual">
+                            <div class="macbook">
+                                <div class="mb-lid">
+                                    <div class="mb-notch"></div>
+                                    <div class="mb-screen">
+                                        <div class="aw-bar">
+                                            <span class="aw-dot"></span><span class="aw-dot"></span><span class="aw-dot"></span>
+                                            <span class="aw-title">USDA HSG</span>
+                                        </div>
+                                        <div class="app-screen hsg-screen">
+                                            <div class="as-head">
+                                                <span><i class="fas fa-layer-group"></i> Henrico County, VA &middot; SSURGO</span>
+                                                <span class="as-pill run">Joining HSG</span>
+                                            </div>
+                                            <div class="hsg-body">
+                                                <div class="hsg-map">
+                                                    <svg viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                                                        <polygon class="hsg-poly g-b" style="--i:0" points="0,0 70,0 52,74 0,62"/>
+                                                        <polygon class="hsg-poly g-c" style="--i:1" points="70,0 150,0 118,58 52,74"/>
+                                                        <polygon class="hsg-poly g-b" style="--i:2" points="150,0 240,0 240,66 176,80 118,58"/>
+                                                        <polygon class="hsg-poly g-d" style="--i:3" points="0,62 52,74 90,150 0,150"/>
+                                                        <polygon class="hsg-poly g-a" style="--i:4" points="52,74 118,58 126,104 90,150"/>
+                                                        <polygon class="hsg-poly g-c" style="--i:5" points="118,58 176,80 168,150 90,150 126,104"/>
+                                                        <polygon class="hsg-poly g-b" style="--i:6" points="176,80 240,66 240,118 200,112"/>
+                                                        <polygon class="hsg-poly g-d" style="--i:7" points="176,80 200,112 240,118 240,150 168,150"/>
+                                                        <text class="hsg-lab" style="--i:0" x="30" y="34">B</text>
+                                                        <text class="hsg-lab" style="--i:1" x="98" y="30">C</text>
+                                                        <text class="hsg-lab" style="--i:2" x="190" y="34">B</text>
+                                                        <text class="hsg-lab" style="--i:3" x="34" y="112">D</text>
+                                                        <text class="hsg-lab" style="--i:4" x="96" y="96">A</text>
+                                                        <text class="hsg-lab" style="--i:5" x="146" y="112">C</text>
+                                                        <text class="hsg-lab" style="--i:6" x="214" y="92">B</text>
+                                                        <text class="hsg-lab" style="--i:7" x="204" y="134">D</text>
+                                                    </svg>
+                                                    <div class="hsg-sweep"></div>
+                                                </div>
+                                                <div class="hsg-legend">
+                                                    <div class="hsg-row" style="--i:0"><b class="g-a">A</b><span>High infiltration</span><i style="--w:14%"></i></div>
+                                                    <div class="hsg-row" style="--i:1"><b class="g-b">B</b><span>Moderate</span><i style="--w:41%"></i></div>
+                                                    <div class="hsg-row" style="--i:2"><b class="g-c">C</b><span>Slow</span><i style="--w:31%"></i></div>
+                                                    <div class="hsg-row" style="--i:3"><b class="g-d">D</b><span>Very slow</span><i style="--w:14%"></i></div>
+                                                </div>
+                                            </div>
+                                            <div class="hsg-foot"><span>Soil groups joined to every map unit</span><b><span data-count="186">186</span> polygons</b></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-copy">
+                        <div class="product-eyebrow"><i class="fas fa-layer-group"></i> Soils &middot; Free</div>
+                        <h3 class="product-name">USDA HSG</h3>
+                        <p class="product-desc">Pick a state and county and get official USDA SSURGO soils back as ready-to-use shapefiles, with the Hydrologic Soil Group (A / B / C / D) already joined to every polygon.</p>
+                        <a href="/tools/usda-hsg/" class="product-link">More about USDA HSG <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            <div class="products-more">
+                <a href="/tools/" class="btn-secondary">See all 9 tools <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ─── TWO WAYS TO WORK WITH KAPPS ─── -->
+    <section class="paths-section" aria-labelledby="paths-heading">
+        <div class="paths-inner">
+            <h2 id="paths-heading" class="paths-heading">Two ways to work with KAPPS</h2>
+            <div class="paths-grid">
+                <div class="path-card">
+                    <div class="path-top">
+                        <div class="path-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div>
+                            <div class="path-kicker">Self-serve software</div>
+                            <h3>Use the tools yourself</h3>
+                        </div>
+                    </div>
+                    <p>Run 9 browser tools for proposal audits, hydrology, floodplain, drafting and geotechnical work. 3 are free with an account.</p>
+                    <ul class="path-list">
+                        <li><i class="fas fa-check"></i> Nothing to install; heavy runs like HEC-RAS happen on our servers</li>
+                        <li><i class="fas fa-check"></i> Subscribe per tool, or pay per run for Design-Build audits</li>
+                    </ul>
+                    <div class="path-ctas">
+                        <a href="/#contact" class="btn-primary">Contact us <i class="fas fa-arrow-right"></i></a>
+                        <a href="/tools/" class="path-link">See all tools <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="path-card">
+                    <div class="path-top">
+                        <div class="path-icon"><i class="fas fa-handshake"></i></div>
+                        <div>
+                            <div class="path-kicker">Project services</div>
+                            <h3>Hire us for a project</h3>
+                        </div>
+                    </div>
+                    <p>Hand us the work: plan and proposal QA/QC, data science and predictive models, geospatial analysis, sensor pipelines, or a custom AI workflow built around how your team works.</p>
+                    <ul class="path-list">
+                        <li><i class="fas fa-check"></i> Scoped to your project and your reviewers' standards</li>
+                        <li><i class="fas fa-check"></i> Read by a person, with a reply in two business days</li>
+                    </ul>
+                    <div class="path-ctas">
+                        <a href="#contact" class="btn-secondary"><i class="fas fa-headset"></i> Talk to us</a>
+                        <a href="#studio" class="path-link">What we deliver <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="studio" class="data-section">
+        <div class="data-inner">
+            <div class="data-header">
+                <div class="section-label visually-center"><i class="fas fa-gears"></i> What KAPPS Studio Does</div>
+                <h2 class="section-heading">QA/QC, data science, and automation in one platform.</h2>
+                <p class="section-sub">Plan and proposal QA/QC, data science, geospatial analysis, sensor pipelines, and custom automation. Every one of them is scoped to your project, your standards, and the way your reviewers expect the work.</p>
+            </div>
+
+            <p class="swipe-hint" aria-hidden="true">Swipe for more <i class="fas fa-arrow-right"></i></p>
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Construction Plan QA/QC</h3>
+                    <p>We run AI across your plan sets to surface what a tired reviewer misses. Conflicting details, missing callouts, and sheets that do not match the spec, each one flagged back to the page so your QA reviewer starts from a checklist.</p>
+                </div>
+
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-file-contract"></i></div>
+                    <h3>Proposal and SOQ QA/QC</h3>
+                    <p>Before you submit, our AI reads your proposal against every requirement in the RFP. It shows you which shall statements are still unanswered and where a reviewer could mark you non responsive, while you still have time to fix it.</p>
+                </div>
+
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-chart-line"></i></div>
+                    <h3>Data Science and Predictive Analytics</h3>
+                    <p>Which assets are about to fail, how traffic will grow, what a project will really cost. We build the models that turn your data into a number you can plan around instead of a guess.</p>
+                </div>
+
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-earth-americas"></i></div>
+                    <h3>Geospatial Data Analysis</h3>
+                    <p>Satellite imagery, lidar, and GIS turned into something you can design with. Change detection along a corridor, inundation mapping after a storm, or clean terrain pulled for a hydraulic model.</p>
+                </div>
+
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-tower-broadcast"></i></div>
+                    <h3>Sensor and IoT Data Pipelines</h3>
+                    <p>We connect your sensors through to a dashboard you can watch. Water levels, rain gauges, and traffic counts collected and checked, with an alert the moment a reading crosses a threshold.</p>
+                </div>
+
+                <div class="data-card">
+                    <div class="data-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-robot"></i></div>
+                    <h3>Custom AI Workflows</h3>
+                    <p>If a task on your team is repetitive, rule based, and eats real hours, it can probably be automated. Tell us what it is and we will scope the AI workflow that takes it off your plate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── PRODUCTS SHOWCASE ─── -->
+
+    <section id="capabilities" class="features-section">
+        <div class="features-inner">
+            <div class="section-label visually-center"><i class="fas fa-shield-halved"></i> Why Teams Trust KAPPS</div>
+            <h2 class="section-heading" style="text-align: center; margin-bottom: 10px;">We know the work, we know the agencies, and we guard your data.</h2>
+            <p class="section-sub" style="margin: 0 auto 28px; text-align: center;">Three things worth knowing before you hand us a project.</p>
+
+            <div class="trust-grid">
+                <div class="feat-card">
+                    <div class="feat-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Built by people who did the work</h3>
+                    <p>The people behind KAPPS spent years doing AEC and infrastructure work by hand. All of that experience is built into the tools, so they fit the way the work really gets done. This is not a generic SaaS product with an industry label stuck on it.</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-map-pin"></i></div>
+                    <h3>Virginia based, workflow aligned</h3>
+                    <p>We are based in Richmond, Virginia, and we know the agencies you answer to. Our tools and models follow the VDOT, FEMA, VA DEQ, and FHWA workflows you work in every day, so what comes out is what a reviewer expects to see.</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Defensible AI, secure data</h3>
+                    <p>We use AI to pull out and check facts, never to make things up. Every flag points straight back to the page it came from. Your files are processed in their own private workspace and deleted when you download the results, or within 24 hours regardless. Passwords are hashed with Argon2, and we never store payment cards.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ─── FAQ ─── -->
+    <section id="faq" class="faq-section">
+        <div class="faq-inner">
+            <div class="section-label visually-center" style="justify-content:center;"><i class="fas fa-circle-question"></i> FAQ</div>
+            <h2 class="section-heading">Questions teams ask before they start.</h2>
+            <div class="faq-list">
+                
+                <details class="faq-item" open>
+                    <summary>Where is my data stored, and for how long?<i class="fas fa-plus" aria-hidden="true"></i></summary>
+                    <p>In the United States, on Amazon Web Services in Northern Virginia (us-east-1). Uploaded job files and results are deleted when you download the result, and within 24 hours regardless. Geotech Studio files are private to your session and deleted as soon as you download the bundle.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Do the results need a PE&#x27;s review?<i class="fas fa-plus" aria-hidden="true"></i></summary>
+                    <p>Yes. KAPPS is a software company, not an engineering firm. Results are advisory, for internal screening and drafting, and anything used in regulated work must be reviewed and sealed by a licensed Professional Engineer. See section 4 of our Terms.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Do I need to install anything?<i class="fas fa-plus" aria-hidden="true"></i></summary>
+                    <p>No. Everything runs in your browser. Heavy work, such as HEC-RAS runs and terrain processing, happens on our servers, so there is no software to install or license.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>What does it cost?<i class="fas fa-plus" aria-hidden="true"></i></summary>
+                    <p>USDA HSG, C-Calculator and Time of Concentration are free with an account. The other tools are a monthly subscription per tool, and Design-Build Studio audits are paid per run. You see the price before you pay, and payment is handled by Stripe.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Can I cancel?<i class="fas fa-plus" aria-hidden="true"></i></summary>
+                    <p>Yes. Cancel any tool from your profile and you keep access until the end of the period you have paid for.</p>
+                </details>
+                
+            </div>
+            <p class="faq-more">More questions? <a href="#contact">Talk to us</a>, or read our <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms</a>.</p>
+        </div>
+    </section>
+
+    <!-- ─── CONTACT ─── -->
+    <section id="ideas" class="idea-section">
+        <div class="idea-inner">
+            <div class="section-label" style="justify-content: center;"><i class="fas fa-envelope-open-text"></i> Contact</div>
+            <h2 class="section-heading">Tell us about the work and we will point you the right way.</h2>
+            <p class="section-sub" style="margin: 0 auto;">
+                Maybe you have a QA/QC job, a data or AI project, or a question about KAPPS Studio. Email or call us and tell us what you need.
+            </p>
+
+            <div class="request-layout">
+                <div class="idea-form-card contact-card" id="contact">
+                    <div class="idea-form-header">
+                        <div class="idea-form-header-left">
+                            <div class="idea-form-icon"><i class="fas fa-headset"></i></div>
+                            <div>
+                                <div class="idea-form-title">Email or call us directly</div>
+                                <div class="idea-form-sub">A real person on the KAPPS team answers</div>
+                            </div>
+                        </div>
+                        <span class="idea-form-pill"><i class="fas fa-circle"></i> Reply in 2 business days</span>
+                    </div>
+                    <div class="contact-actions">
+                        <a class="contact-btn" href="mailto:support@kapps.ai?subject=Service%20request">
+                            <span class="contact-btn-icon"><i class="fas fa-envelope"></i></span>
+                            <span><span class="contact-btn-label">Email</span><span class="contact-btn-value">support@kapps.ai</span></span>
+                        </a>
+                        <a class="contact-btn" href="tel:+18044043621">
+                            <span class="contact-btn-icon"><i class="fas fa-phone"></i></span>
+                            <span><span class="contact-btn-label">Call</span><span class="contact-btn-value">804-404-3621</span></span>
+                        </a>
+                    </div>
+                    <div class="contact-include">
+                        <h4>To get a useful first reply, include</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> What it is about: a QA/QC review, a data or AI project, KAPPS Studio, or something else</li>
+                            <li><i class="fas fa-check"></i> The scope, and who the owner or agency is</li>
+                            <li><i class="fas fa-check"></i> Your timeline and anything else that matters</li>
+                        </ul>
+                    </div>
+                    <p class="contact-foot"><i class="fas fa-map-pin"></i> Richmond, Virginia, USA</p>
+                </div>
+
+                <aside class="request-aside">
+                    <div class="aside-card">
+                        <div class="aside-card-header">
+                            <div class="aside-icon" style="background: var(--accent-dim); color: var(--accent);"><i class="fas fa-clock"></i></div>
+                            <h4>What happens next</h4>
+                        </div>
+                        <ol class="aside-steps">
+                            <li>We read your request and size up what you need.</li>
+                            <li>You hear back with a question, a draft scope, or next steps.</li>
+                            <li>If it looks like a fit, we set up a short call to sort out schedule and fee.</li>
+                        </ol>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="fb-logo">
+                    <img src="/static/core/images/kapps.png" alt="KAPPS Logo" style="height: 26px; width: auto; object-fit: contain;">
+                    KAPPS
+                </div>
+                <p>A small Virginia based software company. KAPPS Studio is our web based automation platform.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Tools</h4>
+                <a href="/tools/design-build-studio/">Design-Build Studio</a><a href="/tools/usda-hsg/">USDA HSG</a><a href="/tools/cn-studio/">CN Studio</a><a href="/tools/c-calculator/">C-Calculator</a><a href="/tools/time-of-concentration/">Time of Concentration</a><a href="/tools/drainage-cadd-studio/">Drainage-CADD Studio</a><a href="/tools/floodway-studio/">Floodway Studio</a><a href="/tools/pond-studio/">Pond Studio</a><a href="/tools/geotech-studio/">Geotech Studio</a>
+                <a href="/tools/">All tools</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#studio">Services</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+                <a href="/team/">Team</a>
+            </div>
+            <div class="footer-col">
+                <h4>Account &amp; Legal</h4>
+                <a href="/terms/">Terms of Service</a>
+                <a href="/privacy/">Privacy Policy</a>
+                <a href="mailto:support@kapps.ai">support@kapps.ai</a>
+                <a href="tel:+18044043621">804-404-3621</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 KAPPS LLC. All rights reserved.</span>
+            <span>Richmond, Virginia, USA</span>
+        </div>
+    </footer>
+
+    <script src="/static/core/js/csrfpatch.js"></script>
+    <script nonce="gZsK5hQbFx-vGF9dioe4PQ">
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── Sections: cards and headings ease in once as they scroll into view ──
+        (function () {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+            // Phones show the service cards as a sideways swipe; don't fade those.
+            const swipe = window.matchMedia('(max-width: 760px)').matches;
+            const groups = ['.paths-grid > *', swipe ? null : '.data-grid > *', '.trust-grid > *', '.faq-list > *', '.request-layout > *, .request-aside > *',
+                            '.data-header', '.products-header', '.features-inner > .section-heading', '.faq-inner > .section-heading', '.idea-inner > .section-heading'];
+            const els = [];
+            groups.filter(Boolean).forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
+                el.style.setProperty('--d', Math.min(i, 5) * 0.07 + 's');
+                el.classList.add('reveal'); els.push(el);
+            }));
+            const io = new IntersectionObserver(entries => entries.forEach(en => {
+                if (en.isIntersecting) { en.target.classList.add('in-view'); io.unobserve(en.target); }
+            }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+            els.forEach(el => io.observe(el));
+        })();
+
+        // ── Products: laptops animate only while on screen; counters run once ──
+        (function () {
+            const grid = document.querySelector('.demo-grid');
+            if (!grid || !('IntersectionObserver' in window)) return;
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function countUp(el) {
+                const target = parseFloat(el.dataset.count), suffix = el.dataset.suffix || '';
+                const decimals = (String(el.dataset.count).split('.')[1] || '').length;
+                const start = performance.now(), dur = 1300;
+                (function tick(now) {
+                    const t = Math.min(1, (now - start) / dur);
+                    el.textContent = (target * (1 - Math.pow(1 - t, 3))).toFixed(decimals) + suffix;
+                    if (t < 1) requestAnimationFrame(tick);
+                })(start);
+            }
+            grid.classList.add('js-live');
+            const io = new IntersectionObserver(entries => entries.forEach(en => {
+                en.target.classList.toggle('is-live', en.isIntersecting);
+                if (en.isIntersecting && !en.target.dataset.counted) {
+                    en.target.dataset.counted = '1';
+                    if (!reduce) en.target.querySelectorAll('[data-count]').forEach(countUp);
+                }
+            }), { threshold: 0.2 });
+            grid.querySelectorAll('.demo-card').forEach(c => io.observe(c));
+        })();
+    </script>
+</body>
+</html>

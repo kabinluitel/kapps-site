@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/core/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/core/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/core/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/core/images/apple-touch-icon.png">
+    <title>Master Subscription Agreement & Global Terms of Service — KAPPS LLC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-blOohCVdhjmtROpu8+CfTnUWham9nkX7P7OZQMst+RUnhtoY/9qemFAkIKOYxDI3" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #FAFAF7;
+            --surface: #FFFFFF;
+            --primary: #2563EB;
+            --text: #1C1917;
+            --muted: #423E39;
+            --border: #E7E3DA;
+            --danger: #DC2626;
+            --warning: #D97706;
+            --accent: #1C1917;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Mukta', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 500;
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: auto;
+        }
+
+        /* ── NAV ── */
+        .navbar {
+            background: rgba(250,250,247,0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .nav-brand { font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 9px; letter-spacing: -.2px; }
+        .nav-brand span { color: var(--primary); }
+        .btn-back {
+            background: none; border: none; color: var(--primary);
+            font-size: 15px; font-weight: 500; cursor: pointer;
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+        }
+        .btn-back:hover { text-decoration: underline; }
+
+        /* ── HERO BANNER ── */
+        .hero {
+            background: var(--accent);
+            color: #fff;
+            text-align: center;
+            padding: 52px 40px 42px;
+        }
+        .hero h1 {
+            font-size: 28px; font-weight: 800; letter-spacing: -.5px;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .hero .subtitle {
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: #D97706; margin-bottom: 16px;
+        }
+        .hero .badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+        .badge {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.25); color: #fff;
+        }
+        .badge.danger { border-color: #DC2626; color: #DC2626; }
+        .badge.warn { border-color: #D97706; color: #D97706; }
+        .badge.ok { border-color: #32D74B; color: #32D74B; }
+        .eff-date { font-size: 13px; color: #6A635B; margin-top: 10px; }
+
+        /* ── STICKY TOC ── */
+        .layout { display: flex; max-width: 1280px; margin: 0 auto; padding: 40px 24px; gap: 36px; }
+        .toc {
+            width: 240px; flex-shrink: 0;
+            position: sticky; top: 64px; height: fit-content;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px; font-size: 12px;
+        }
+        .toc h3 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+        .toc a { display: block; color: var(--text); text-decoration: none; padding: 4px 0; border-left: 2px solid transparent; padding-left: 10px; transition: all .15s; line-height: 1.4; }
+        .toc a:hover { color: var(--primary); border-left-color: var(--primary); }
+        .toc .toc-num { color: var(--muted); font-size: 10px; }
+
+        /* ── MAIN DOC ── */
+        .doc {
+            flex: 1; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 18px;
+            padding: 60px 64px; max-width: 860px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+        }
+
+        /* intro block */
+        .intro-block {
+            background: #F5F3EE; border-radius: 12px; border: 1px solid var(--border);
+            padding: 24px 28px; margin-bottom: 40px; font-size: 13px; color: #423E39;
+        }
+        .intro-block strong { color: var(--text); }
+
+        /* section heading */
+        .doc h2 {
+            font-size: 13px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text);
+            border-bottom: 2px solid var(--text); padding-bottom: 5px;
+            display: inline-block; margin-top: 48px; margin-bottom: 16px;
+        }
+        .doc h3 { font-size: 14px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+        .doc p { font-size: 14px; color: #1C1917; margin-bottom: 14px; text-align: justify; }
+        .doc ul { font-size: 14px; color: #423E39; padding-left: 22px; margin-bottom: 18px; }
+        .doc li { margin-bottom: 7px; }
+        .doc strong { color: var(--text); }
+
+        /* callout boxes */
+        .callout {
+            border-radius: 12px; padding: 20px 24px;
+            margin: 22px 0; font-size: 13px; font-weight: 600;
+            border-left: 4px solid;
+        }
+        .callout-black { background: #F5F3EE; border-color: var(--accent); color: var(--accent); }
+        .callout-red { background: rgba(220,38,38,0.08); border-color: #DC2626; color: #7F1D1D; }
+        .callout-orange { background: rgba(217,119,6,0.12); border-color: var(--warning); color: #78350F; }
+        .callout-blue { background: rgba(37,99,235,0.08); border-color: var(--primary); color: #1E3A8A; }
+        .callout p { font-size: 13px; margin: 0; color: inherit; font-weight: 600; }
+        .callout .callout-title { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; opacity: .7; }
+
+        /* acceptance box */
+        .accept-box {
+            background: var(--accent); color: #fff; border-radius: 14px;
+            padding: 28px 32px; margin: 32px 0; text-align: center;
+            font-size: 13px; font-weight: 700; letter-spacing: .3px; line-height: 1.6;
+        }
+        .accept-box .accept-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #D97706; margin-bottom: 10px; }
+
+        /* signature / footer */
+        .sig-block {
+            margin-top: 50px; border-top: 1px solid var(--border); padding-top: 30px;
+            font-size: 12px; color: var(--muted); text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .toc { display: none; }
+            .doc { padding: 32px 24px; }
+            .layout { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body><div style="background:#0f172a;color:#e2e8f0;text-align:center;padding:10px 16px;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:1000">The KAPPS web tools are offline for now. For a demo or project work, email <a href="mailto:support@kapps.ai" style="color:#7dd3fc">support@kapps.ai</a> or call <a href="tel:+18044043621" style="color:#7dd3fc">804-404-3621</a>.</div>
+
+<!-- NAV -->
+<nav class="navbar">
+    <div class="nav-brand"><i class="fas fa-layer-group"></i> <span>KAPPS</span>&nbsp;LLC Legal</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="subtitle"><i class="fas fa-gavel"></i> &nbsp;Legally Binding Agreement — Read in Full</div>
+    <h1>Master Subscription Agreement<br>& Global Terms of Service</h1>
+    <div class="eff-date">Effective Date: October 8, 2026 &nbsp;|&nbsp; Version 2.1 &nbsp;|&nbsp; KAPPS LLC, Richmond, Virginia, USA</div>
+    <div class="badges">
+        <span class="badge danger"><i class="fas fa-ban"></i> &nbsp;Waiver of Right to Sue</span>
+        <span class="badge danger"><i class="fas fa-file-contract"></i> &nbsp;AI Outputs ≠ Legal Documents</span>
+        <span class="badge warn"><i class="fas fa-robot"></i> &nbsp;AI Risk Assumption</span>
+        <span class="badge warn"><i class="fas fa-gavel"></i> &nbsp;Binding Arbitration</span>
+        <span class="badge ok"><i class="fas fa-shield-alt"></i> &nbsp;VCDPA Compliant</span>
+        <span class="badge ok"><i class="fas fa-globe"></i> &nbsp;International Applicability</span>
+    </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+    <!-- TOC -->
+    <nav class="toc">
+        <h3>Contents</h3>
+        <a href="#s0"><span class="toc-num">§0 &nbsp;</span>Acceptance & Clickwrap</a>
+        <a href="#s1"><span class="toc-num">§1 &nbsp;</span>Definitions</a>
+        <a href="#s2"><span class="toc-num">§2 &nbsp;</span>International Framework</a>
+        <a href="#s3"><span class="toc-num">§3 &nbsp;</span>License Grant & Restrictions</a>
+        <a href="#s4"><span class="toc-num">§4 &nbsp;</span>Engineering Disclaimer</a>
+        <a href="#s5"><span class="toc-num">§5 &nbsp;</span>AI / ML Disclaimer</a>
+        <a href="#s6"><span class="toc-num">§6 &nbsp;</span>Acceptable Use Policy</a>
+        <a href="#s7"><span class="toc-num">§7 &nbsp;</span>Data Privacy & VCDPA</a>
+        <a href="#s8"><span class="toc-num">§8 &nbsp;</span>Intellectual Property</a>
+        <a href="#s9"><span class="toc-num">§9 &nbsp;</span>Confidentiality</a>
+        <a href="#s10"><span class="toc-num">§10</span> Fees & Payment</a>
+        <a href="#s11"><span class="toc-num">§11</span> Term & Termination</a>
+        <a href="#s12"><span class="toc-num">§12</span> Warranty Disclaimer</a>
+        <a href="#s13"><span class="toc-num">§13</span> Limitation of Liability</a>
+        <a href="#s14"><span class="toc-num">§14</span> Indemnification</a>
+        <a href="#s15"><span class="toc-num">§15</span> Arbitration & Jury Waiver</a>
+        <a href="#s16"><span class="toc-num">§16</span> Governing Law</a>
+        <a href="#s17"><span class="toc-num">§17</span> Export Controls</a>
+        <a href="#s18"><span class="toc-num">§18</span> Force Majeure</a>
+        <a href="#s19"><span class="toc-num">§19</span> Miscellaneous</a>
+        <a href="#s20"><span class="toc-num">§20</span> Contact & Notice</a>
+    </nav>
+
+    <!-- MAIN DOCUMENT -->
+    <main class="doc">
+
+        <!-- ACCEPTANCE BOX -->
+        <div id="s0" class="accept-box">
+            <div class="accept-title"><i class="fas fa-mouse-pointer"></i> &nbsp;Clickwrap Acceptance — Required to Proceed</div>
+            BY CLICKING "I AGREE", CREATING AN ACCOUNT, OR ACCESSING ANY PORTION OF THE KAPPS HYDROINFORMATICS PLATFORM, YOU ARE ENTERING INTO THIS AGREEMENT AS OF THE DATE OF YOUR FIRST ACCESS. YOU AFFIRM THAT YOU ARE AT LEAST 18 YEARS OF AGE, LEGALLY AUTHORIZED TO BIND THE ENTITY ON WHOSE BEHALF YOU ACT (IF APPLICABLE), AND HAVE READ, UNDERSTOOD, AND AGREE TO EVERY PROVISION OF THIS AGREEMENT WITHOUT MODIFICATION. IF YOU DO NOT AGREE, YOU MUST IMMEDIATELY CEASE ALL ACCESS AND USE.
+        </div>
+
+        <!-- PREAMBLE -->
+        <div class="intro-block">
+            <strong>Parties.</strong> This Master Subscription Agreement and Global Terms of Service (the "<strong>Agreement</strong>") is entered into between <strong>KAPPS LLC</strong>, a limited liability company organized and existing under the laws of the Commonwealth of Virginia, United States of America, with its principal place of business in Richmond, Virginia ("<strong>KAPPS</strong>", "<strong>we</strong>", "<strong>us</strong>", or "<strong>our</strong>"), and the individual or legal entity registering for, accessing, or using the KAPPS Hydroinformatics Platform ("<strong>User</strong>", "<strong>you</strong>", or "<strong>your</strong>"). KAPPS and User are each a "<strong>Party</strong>" and together the "<strong>Parties</strong>."
+            <br><br>
+            <strong>Purpose.</strong> KAPPS operates a workflow automation platform that provides computational modeling, geospatial analysis, and AI-assisted document analysis tools. This Agreement governs all access to and use of those Services.
+        </div>
+
+        <!-- PLATFORM SCOPE NOTICE -->
+        <div class="callout callout-red">
+            <div class="callout-title">Advisory Software Only — Read Carefully</div>
+            <p>The Platform is a self-service software product that provides computational modeling, geospatial analysis, and AI-assisted document review. KAPPS LLC is a software and data company; it is <strong>not</strong> a licensed engineering, surveying, or architecture firm, and nothing it provides — whether the Platform, an AI or data service engagement, or any Output — constitutes the practice of professional engineering or the issuance of a sealed engineering deliverable (see Section 4). Platform Outputs, and the results of any AI or data service KAPPS performs, are advisory, preliminary, and intended for internal screening and drafting assistance only; they are not, and may not be treated as, sealed engineering deliverables, certified audits, expert opinions, or evidence. By creating an account or using the Platform or any KAPPS service, you represent and warrant that: (a) any Output used in connection with a regulated engineering work product will first be independently reviewed, validated, and certified by a duly licensed Professional Engineer in the relevant jurisdiction in accordance with Section 4; (b) you will not submit, file, cite, or rely on any Output as evidence or as a certified professional analysis in any litigation, bid protest, procurement challenge, administrative appeal, or other adversarial or adjudicative proceeding (see Sections 5.6 and 5.7); and (c) you will comply with all professional engineering, licensing, and procurement laws applicable to your use of the Platform.</p>
+        </div>
+
+        <!-- §1 DEFINITIONS -->
+        <h2 id="s1">1. Definitions</h2>
+        <p>As used in this Agreement, the following terms have the meanings set forth below:</p>
+        <ul>
+            <li><strong>"Agreement"</strong> means this Master Subscription Agreement & Global Terms of Service, together with any Order Forms, Statements of Work, and incorporated policies (Privacy Policy, Acceptable Use Policy), all of which are incorporated herein by reference.</li>
+            <li><strong>"AI Components"</strong> means any feature, module, or sub-system of the Platform that employs artificial intelligence, machine learning, large language models (LLMs), neural networks, computer vision, natural language processing, optical character recognition, or similar probabilistic or statistical algorithms, including but not limited to PDF data extraction, automated scheduling, and geospatial inference engines.</li>
+            <li><strong>"Authorized User"</strong> means any natural person granted access credentials by User to access the Platform on User's behalf.</li>
+            <li><strong>"Confidential Information"</strong> means any non-public technical, financial, business, or operational information disclosed by one Party to the other, whether marked confidential or not, that a reasonable person in the industry would understand to be confidential.</li>
+            <li><strong>"Documentation"</strong> means all user manuals, technical guides, API references, and release notes made available by KAPPS in connection with the Platform.</li>
+            <li><strong>"Feedback"</strong> means any suggestion, idea, enhancement request, recommendation, correction, or other input provided by User or Authorized Users regarding the Platform.</li>
+            <li><strong>"Intellectual Property Rights"</strong> means all patents, copyrights, trademarks, trade secrets, moral rights, database rights, and all other intellectual or industrial property rights of any kind, whether registered or unregistered, worldwide.</li>
+            <li><strong>"Order Form"</strong> means a written or electronic order document executed by the Parties specifying subscription tier, term, fees, and any special conditions.</li>
+            <li><strong>"Output"</strong> means any data, report, calculation, model result, geospatial layer, extracted value, recommendation, or other content generated by the Platform in response to User input.</li>
+            <li><strong>"Personal Data"</strong> has the meaning ascribed to "personal data" or "personal information" under Applicable Data Protection Laws, including but not limited to the Virginia Consumer Data Protection Act (Va. Code §§ 59.1-575–59.1-585) ("<strong>VCDPA</strong>") and, where applicable, the EU General Data Protection Regulation ("<strong>GDPR</strong>") and the California Consumer Privacy Act ("<strong>CCPA/CPRA</strong>").</li>
+            <li><strong>"Platform" / "Services"</strong> means KAPPS's cloud-hosted Hydroinformatics Platform, including all computational engines, geospatial analysis tools, AI Components, APIs, web interfaces, and related Documentation, as updated from time to time.</li>
+            <li><strong>"Subscription Term"</strong> means the period during which User is authorized to access the Platform as set forth in an Order Form or, absent an Order Form, on a month-to-month basis.</li>
+            <li><strong>"User Data"</strong> means any data, files, geospatial layers, PDF documents, or other content uploaded by User or Authorized Users to the Platform.</li>
+        </ul>
+
+        <!-- §2 INTERNATIONAL FRAMEWORK -->
+        <h2 id="s2">2. International Applicability & Legal Framework</h2>
+        <p>This Agreement is intended to be enforceable globally to the maximum extent permitted by applicable law. By accepting this Agreement, you agree that:</p>
+        <ul>
+            <li><strong>CISG Exclusion.</strong> The United Nations Convention on Contracts for the International Sale of Goods (CISG) shall not apply to this Agreement or the Services.</li>
+            <li><strong>UCC / UCITA Exclusion.</strong> For U.S.-based Users, the transaction is a license and provision of services—not a sale of goods. Article 2 of the Uniform Commercial Code (UCC) and the Uniform Computer Information Transactions Act (UCITA) are expressly excluded.</li>
+            <li><strong>EU / UK Users.</strong> To the extent you are located in the European Economic Area or the United Kingdom, the data processing provisions of Section 7 shall apply in addition to all other provisions, and nothing in this Agreement shall override mandatory statutory consumer rights under EU or UK law that cannot lawfully be waived.</li>
+            <li><strong>Canadian Users.</strong> Users in Canada acknowledge that PIPEDA (or applicable provincial privacy legislation) governs personal information handling, and KAPPS's obligations under Section 7 are intended to satisfy those obligations in substance.</li>
+            <li><strong>Australian Users.</strong> Nothing in this Agreement limits rights under the Australian Consumer Law (Schedule 2 of the Competition and Consumer Act 2010 (Cth)) that cannot lawfully be excluded; however, all warranties and remedies that may be lawfully limited are limited to the maximum extent permitted.</li>
+            <li><strong>Venue Waiver.</strong> To the maximum extent permitted by applicable international treaties and local law, you expressly waive any right to assert jurisdiction or venue outside Richmond, Virginia, USA for any dispute governed by this Agreement.</li>
+        </ul>
+
+        <!-- §3 LICENSE -->
+        <h2 id="s3">3. License Grant, Restrictions & Ownership</h2>
+        <h3>3.1. Limited License</h3>
+        <p>Subject to your full compliance with this Agreement and timely payment of all fees, KAPPS grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license during the Subscription Term to access and use the Platform solely for your internal business purposes and as expressly permitted by the Documentation.</p>
+
+        <h3>3.2. License Restrictions</h3>
+        <p>You shall not, and shall ensure Authorized Users do not, directly or indirectly:</p>
+        <ul>
+            <li>Copy, modify, create derivative works of, or reverse engineer any component of the Platform or its underlying source code, algorithms, or AI models;</li>
+            <li>Sublicense, sell, resell, rent, lease, transfer, assign, or otherwise commercially exploit the Platform or Outputs to any third party without KAPPS's express prior written consent;</li>
+            <li>Use the Platform to develop a competing product or service, or to benchmark against a competing product for public disclosure;</li>
+            <li>Circumvent, disable, or tamper with any security, access control, or authentication mechanism of the Platform;</li>
+            <li>Introduce or transmit any virus, malware, Trojan horse, worm, or other malicious code;</li>
+            <li>Use the Platform for any unlawful purpose or in violation of any applicable federal, state, local, or international law or regulation;</li>
+            <li>Scrape, index, or systematically extract data from the Platform through automated means (bots, crawlers, scripts) without prior written permission;</li>
+            <li>Remove, alter, or obscure any proprietary notices or labels on the Platform.</li>
+        </ul>
+
+        <h3>3.3. Reservation of Rights</h3>
+        <p>KAPPS retains all right, title, and interest in and to the Platform, including all Intellectual Property Rights therein. No rights are granted to you except as expressly set forth in this Agreement. All rights not expressly granted are reserved by KAPPS.</p>
+
+        <h3>3.4. Feedback License</h3>
+        <p>If you provide Feedback, you hereby grant KAPPS an irrevocable, perpetual, royalty-free, worldwide license to use, reproduce, modify, and incorporate such Feedback into the Platform or any other product without restriction or obligation to you.</p>
+
+        <!-- §4 ENGINEERING DISCLAIMER -->
+        <h2 id="s4">4. Strict Disclaimer of Engineering Practice</h2>
+
+        <div class="callout callout-red">
+            <div class="callout-title"><i class="fas fa-hard-hat"></i> &nbsp;Critical Engineering Notice</div>
+            <p>KAPPS LLC IS A SOFTWARE DEVELOPMENT AND WORKFLOW AUTOMATION COMPANY. KAPPS LLC IS NOT A LICENSED ENGINEERING OR LAND SURVEYING FIRM. THE PLATFORM DOES NOT CONSTITUTE, AND SHALL NOT BE CONSTRUED AS, THE PRACTICE OF PROFESSIONAL ENGINEERING, LICENSED SURVEYING, ARCHITECTURE, GEOTECHNICAL CONSULTING, OR ANY OTHER REGULATED PROFESSIONAL SERVICE IN ANY JURISDICTION WORLDWIDE.</p>
+        </div>
+
+        <h3>4.1. Statutory Compliance — Virginia</h3>
+        <p>In accordance with Title 54.1, Chapter 4 of the Code of Virginia governing the practice of engineering and land surveying, all Outputs generated by the Platform are provided strictly for <strong>preliminary, informational, and drafting assistance purposes only.</strong> Nothing in the Platform constitutes the issuance, sealing, or signing of engineering documents for construction or permit purposes.</p>
+
+        <h3>4.2. Statutory Compliance — Federal & Other Jurisdictions</h3>
+        <p>Outputs are not warranted to comply with, and Users shall independently verify compliance with, the following standards and regulatory frameworks (non-exhaustive):</p>
+        <ul>
+            <li>FEMA National Flood Insurance Program (NFIP) regulations (44 CFR Parts 59–78);</li>
+            <li>Federal Highway Administration (FHWA) Hydraulic Engineering Circulars (HEC-RAS, HEC-HMS, HEC-2);</li>
+            <li>U.S. Army Corps of Engineers (USACE) engineering manuals and permitting requirements (Section 404, Clean Water Act);</li>
+            <li>EPA stormwater regulations under the Clean Water Act (33 U.S.C. § 1251 et seq.);</li>
+            <li>State Department of Transportation (DOT) drainage and hydraulics manuals for the applicable state;</li>
+            <li>Local municipal stormwater management regulations, ordinances, and design standards;</li>
+            <li>IBC, ASCE 7, and all applicable structural and civil engineering standards.</li>
+        </ul>
+
+        <h3>4.3. Mandatory Professional Engineering Review</h3>
+        <p>You bear absolute, non-delegable, and non-transferable responsibility for the application of any Output derived from the Platform. You represent, warrant, and covenant that:</p>
+        <ul>
+            <li>Every Output will be independently reviewed, subjected to rigorous QA/QC processes, and sealed and certified by a duly licensed Professional Engineer (PE) or equivalent regionally certified professional in your jurisdiction <strong>before</strong> use in any final design, construction document, permit submittal, or regulatory review;</li>
+            <li>You will not submit any Output directly to any governmental agency, municipality, or third party as a final engineering work product without such independent PE review and certification;</li>
+            <li>You assume full professional and legal responsibility for any engineering judgment applied to Outputs.</li>
+        </ul>
+
+        <!-- §5 AI DISCLAIMER -->
+        <h2 id="s5">5. Artificial Intelligence (AI) & Machine Learning Disclaimer</h2>
+
+        <div class="callout callout-orange">
+            <div class="callout-title"><i class="fas fa-robot"></i> &nbsp;Critical AI Warning</div>
+            <p>THE PLATFORM UTILIZES ARTIFICIAL INTELLIGENCE (AI), MACHINE LEARNING (ML), AND LARGE LANGUAGE MODELS (LLMs). THESE TECHNOLOGIES ARE INHERENTLY PROBABILISTIC, EXPERIMENTAL, AND SUBJECT TO SIGNIFICANT COMPUTATIONAL ERRORS, HALLUCINATIONS, OMISSIONS, AND MATHEMATICALLY FLAWED OUTPUTS. AI MODELS DO NOT POSSESS ENGINEERING JUDGMENT, STATUTORY AWARENESS, SITUATIONAL AWARENESS, OR PHYSICAL COMMON SENSE.</p>
+        </div>
+
+        <h3>5.1. Absolute Unreliability of AI Outputs</h3>
+        <p>You explicitly acknowledge and agree that any data, extracted value, code snippet, calculation, geospatial inference, or text generated by any AI Component may be: entirely inaccurate; based on hallucinated or non-existent source material; mathematically incorrect; missing critical values; or inconsistent with applicable engineering standards, local regulations, or physical reality. You shall not rely on any AI Output without independent manual verification against original source materials.</p>
+
+        <h3>5.2. PDF Data Extraction</h3>
+        <p>The AI-assisted PDF extraction feature processes uploaded documents using probabilistic pattern recognition. You acknowledge that: (a) extracted values may be transposed, omitted, or fabricated; (b) tabular data may be misaligned or incorrectly attributed; (c) handwritten or scanned text may be misinterpreted; and (d) no extraction accuracy guarantee is made. You assume 100% of the risk associated with acting on extracted data without manual verification.</p>
+
+        <h3>5.3. Total Assumption of AI Risk</h3>
+        <p>By using any AI-driven feature of the Platform, you expressly assume all risk associated with reliance on AI Outputs. KAPPS is absolutely not liable for any miscalculations, omitted data, fabricated parameters, or erroneous inferences generated by AI Components, even if KAPPS was advised of the possibility of such errors.</p>
+
+        <h3>5.4. Duty to Verify</h3>
+        <p>You covenant that you will manually audit, cross-reference, and independently verify every data point, parameter, and Output generated by any AI Component against original source material and applicable engineering standards before any professional use. This duty is non-waivable, non-delegable, and cannot be disclaimed.</p>
+
+        <h3>5.5. Third-Party AI Models</h3>
+        <p>Certain AI Components may incorporate third-party foundational models, APIs, or services (e.g., OpenAI, Anthropic, Google, or similar providers). KAPPS makes no representations about the accuracy, reliability, or fitness of such third-party models and expressly disclaims all liability arising from their outputs. Use of such components is further subject to those third parties' own terms of service.</p>
+
+        <h3>5.6. Prohibition on Legal, Evidentiary, or Adjudicative Use of AI Outputs</h3>
+
+        <div class="callout callout-red">
+            <div class="callout-title"><i class="fas fa-ban"></i> &nbsp;AI Outputs Are Not Legal Documents — Read Carefully</div>
+            <p>ALL AI-GENERATED OUTPUTS FROM THE PLATFORM — INCLUDING BUT NOT LIMITED TO COMPLIANCE AUDIT REPORTS, RESPONSIVENESS DETERMINATIONS, NON-RESPONSIVE / RESPONSIVE VERDICTS, PROCUREMENT ANALYSES, LICENCE VERIFICATION MATRICES, AND ENGINEERING COMPLIANCE REVIEWS — ARE GENERATED BY PROBABILISTIC MACHINE LEARNING MODELS AND ARE PROVIDED FOR INTERNAL INFORMATIONAL AND PRELIMINARY SCREENING PURPOSES ONLY. THEY DO NOT CONSTITUTE LEGAL OPINIONS, EXPERT WITNESS REPORTS, CERTIFIED AUDITS, SWORN STATEMENTS, OR EVIDENCE OF ANY KIND.</p>
+        </div>
+
+        <p>You explicitly acknowledge, agree, and covenant as follows:</p>
+        <ul>
+            <li><strong>Not a Legal Document.</strong> No AI-generated Output shall be treated, presented, filed, submitted, or relied upon as a legal document, legal opinion, certified audit, expert report, sworn affidavit, or evidence in any legal, administrative, quasi-judicial, or regulatory proceeding of any kind, in any jurisdiction worldwide.</li>
+            <li><strong>No Use in Litigation or Legal Proceedings.</strong> You shall not use, cite, reference, attach, exhibit, or submit any AI-generated Output — in whole or in part, in original or modified form — as the basis for, or in support of, any lawsuit, legal claim, demand letter, bid protest, administrative appeal, regulatory complaint, enforcement action, arbitration proceeding, mediation filing, or any other adversarial or adjudicative proceeding against any party, including but not limited to: any federal, state, or local government agency; any municipality, county, or special district; any department of transportation (including VDOT, FHWA, or any state DOT); any private corporation, limited liability company, partnership, or sole proprietorship; any individual; or any other public, quasi-public, or private entity.</li>
+            <li><strong>No Use in Procurement Challenges.</strong> Without limiting the generality of the foregoing, you shall not use any AI-generated compliance audit, responsiveness determination, or procurement analysis Output to: (a) file, support, or substantiate any bid protest before any contracting authority, board of contract appeals, or court; (b) challenge or contest any procurement award, shortlist decision, or responsiveness determination made by any governmental body; (c) assert that a competing offeror's proposal is non-responsive, deficient, or non-compliant based on the AI-generated Output; or (d) threaten, coerce, or leverage any party — including subcontractors, teaming partners, or competitors — using the AI-generated Output as purported evidence of non-compliance.</li>
+            <li><strong>No Evidentiary Weight.</strong> You acknowledge that AI-generated Outputs are the product of probabilistic language models that may hallucinate, fabricate, omit, or mischaracterize requirements, evidence, and findings. Such Outputs have no evidentiary weight, probative value, or legal standing. Presenting an AI-generated Output as though it constitutes a certified professional analysis, expert opinion, or factual finding would be misleading and is expressly prohibited.</li>
+            <li><strong>Internal Screening Only.</strong> AI-generated compliance reports, audit matrices, and responsiveness verdicts are intended solely as internal preliminary screening tools to assist your own review team in identifying areas that warrant further manual analysis by qualified procurement professionals, attorneys, and licensed engineers. They are a starting point for human judgment — not a substitute for it.</li>
+            <li><strong>No Professional Reliance.</strong> AI-generated Outputs do not constitute the professional opinion of any licensed attorney, licensed professional engineer, certified public accountant, certified procurement professional, or any other credentialed individual. KAPPS does not employ or engage licensed attorneys or procurement officers to review, validate, or certify AI-generated Outputs. No attorney-client privilege, work-product doctrine, or professional-services protection attaches to any AI-generated Output.</li>
+            <li><strong>User's Sole Responsibility.</strong> If you choose to incorporate any finding, observation, or data point from an AI-generated Output into any document that will be used in a legal, procurement, or regulatory context, you bear sole, absolute, and non-delegable responsibility for independently verifying every such finding against original source materials and for ensuring that any resulting document is prepared, reviewed, and certified by appropriately licensed and qualified professionals. KAPPS bears zero liability for any consequences of your failure to do so.</li>
+        </ul>
+
+        <h3>5.7. Indemnification for Prohibited Legal Use</h3>
+        <p>If you use any AI-generated Output in violation of Section 5.6 — including but not limited to filing, submitting, citing, or exhibiting any Output in any legal, administrative, quasi-judicial, or regulatory proceeding, or using any Output to threaten or coerce any third party — you agree to <strong>fully defend, indemnify, and hold harmless</strong> KAPPS and its members, officers, directors, employees, agents, successors, and assigns from and against any and all resulting claims, damages, fines, sanctions, penalties, attorneys' fees, costs, and expenses, including any claim by the party against whom the AI Output was used. This indemnification obligation is in addition to, and not in lieu of, the general indemnification set forth in Section 14.</p>
+
+        <!-- §6 AUP -->
+        <h2 id="s6">6. Acceptable Use Policy (AUP)</h2>
+        <p>You agree to use the Platform only for lawful purposes consistent with this Agreement and the Documentation. Without limiting the foregoing, you shall not use the Platform to:</p>
+        <ul>
+            <li>Transmit, store, or process any data that infringes any third-party Intellectual Property Rights;</li>
+            <li>Process any data classified as "sensitive data" under the VCDPA, GDPR, HIPAA (45 C.F.R. Parts 160 & 164), or equivalent laws without first executing a separate Data Processing Addendum (DPA) with KAPPS;</li>
+            <li>Violate any export control laws or transmit data to embargoed countries or sanctioned parties under OFAC regulations (31 C.F.R. Parts 500–598) or the Export Administration Regulations (15 C.F.R. Parts 730–774);</li>
+            <li>Attempt to gain unauthorized access to KAPPS's systems, other users' accounts, or any third-party systems reachable through the Platform;</li>
+            <li>Facilitate the design, engineering, or construction of any structure in violation of applicable safety codes or building regulations;</li>
+            <li>Engage in any activity that constitutes the unlicensed practice of engineering in any jurisdiction;</li>
+            <li>Use, file, submit, cite, exhibit, or reference any AI-generated Output — including compliance audits, responsiveness determinations, procurement analyses, and licence verification reports — as a legal document, evidence, expert report, or basis for any lawsuit, bid protest, administrative appeal, regulatory complaint, or other legal or quasi-legal proceeding against any government agency, private entity, or individual (see Section 5.6 for full details);</li>
+            <li>Represent, imply, or allow any third party to believe that any AI-generated Output constitutes a certified professional analysis, legal opinion, or official audit conducted by licensed professionals.</li>
+        </ul>
+        <p>KAPPS reserves the right to suspend or terminate your access immediately and without notice for any material violation of this AUP, without liability or refund obligation.</p>
+
+        <!-- §7 DATA PRIVACY -->
+        <h2 id="s7">7. Data Privacy, Security & VCDPA Compliance</h2>
+
+        <h3>7.1. Roles</h3>
+        <p>For the purposes of applicable data protection law: (a) where User uploads User Data containing Personal Data of third parties, User is the "controller" and KAPPS is the "processor"; (b) where KAPPS collects Personal Data directly from Authorized Users for account management, KAPPS is the "controller." These roles are as defined under the VCDPA (Va. Code § 59.1-575), GDPR (Art. 4), and CCPA/CPRA where applicable.</p>
+
+        <h3>7.2. Data Processing Obligations (Processor Role)</h3>
+        <p>Where KAPPS processes Personal Data as a processor on User's behalf, KAPPS shall: (a) process such Personal Data only on documented instructions from User as set forth in this Agreement; (b) implement and maintain commercially reasonable technical and organizational security measures to protect against unauthorized access, destruction, loss, or alteration; (c) not sell, share, or disclose Personal Data to any third party except sub-processors engaged pursuant to §7.4 or as required by law; (d) notify User without undue delay (and in any event within 72 hours to the extent feasible) upon becoming aware of a confirmed data breach involving User's Personal Data; (e) delete or return all Personal Data upon termination of the Subscription Term, at User's election, except to the extent retention is required by applicable law.</p>
+
+        <h3>7.3. VCDPA Consumer Rights</h3>
+        <p>To the extent KAPPS processes Personal Data of Virginia residents in its capacity as a controller, KAPPS acknowledges the following consumer rights under the VCDPA (Va. Code § 59.1-577): the right to access, correct, delete, and obtain a portable copy of Personal Data; and the right to opt out of targeted advertising, profiling with legal or similarly significant effect, and the sale of Personal Data. Requests may be submitted to <strong>support@kapps.ai</strong>. KAPPS will respond within 45 days as required by law and will not discriminate against consumers for exercising these rights.</p>
+
+        <h3>7.4. Sub-Processors</h3>
+        <p>KAPPS may engage sub-processors (including cloud infrastructure providers, AI model APIs, and analytics services) subject to written data processing agreements requiring equivalent data protection obligations. A current list of sub-processors is available upon written request.</p>
+
+        <h3>7.5. International Data Transfers</h3>
+        <p>Where User Data containing Personal Data of EU/UK data subjects is transferred to the United States, such transfer shall be governed by the EU Standard Contractual Clauses (SCCs) approved by the European Commission (Commission Implementing Decision 2021/914), incorporated herein by reference. For UK transfers, the UK International Data Transfer Agreement (IDTA) shall apply as applicable.</p>
+
+        <h3>7.6. Security Standards</h3>
+        <p>KAPPS implements technical and organizational measures including, without limitation: encryption of data in transit (TLS 1.2+) and at rest (AES-256); access controls and multi-factor authentication; regular security assessments; and incident response procedures. These measures do not guarantee absolute security. You remain responsible for the security of your account credentials and Authorized User access.</p>
+
+        <h3>7.7. No HIPAA Business Associate</h3>
+        <p>THE PLATFORM IS NOT DESIGNED FOR THE STORAGE OR PROCESSING OF PROTECTED HEALTH INFORMATION (PHI) AS DEFINED BY HIPAA (45 C.F.R. § 160.103). KAPPS IS NOT A HIPAA BUSINESS ASSOCIATE. YOU SHALL NOT UPLOAD PHI TO THE PLATFORM ABSENT A SEPARATELY EXECUTED BUSINESS ASSOCIATE AGREEMENT (BAA). ANY SUCH UPLOAD IN VIOLATION OF THIS PROVISION IS SOLELY AT YOUR RISK AND KAPPS DISCLAIMS ALL LIABILITY THEREFOR.</p>
+
+        <!-- §8 IP -->
+        <h2 id="s8">8. Intellectual Property Rights</h2>
+        <h3>8.1. Platform Ownership</h3>
+        <p>KAPPS exclusively owns all right, title, and interest in and to the Platform, including all underlying software, source code, algorithms, AI models, model weights, training data (excluding User Data), database schemas, APIs, Documentation, trademarks, service marks, and all Intellectual Property Rights therein. You acquire no ownership interest in the Platform by virtue of this Agreement.</p>
+
+        <h3>8.2. User Data Ownership</h3>
+        <p>As between KAPPS and User, User retains all right, title, and interest in and to User Data. User grants KAPPS a limited, non-exclusive, royalty-free license to access, process, store, reproduce, and transmit User Data solely to the extent necessary to provide the Services during the Subscription Term. KAPPS shall not use User Data to train or fine-tune its AI models without your separate, express written consent.</p>
+
+        <h3>8.3. Output Ownership</h3>
+        <p>Subject to your compliance with this Agreement and full payment of fees, KAPPS assigns to User any KAPPS-owned rights in Outputs generated from User's specific User Data inputs, to the extent permitted by applicable law. Notwithstanding the foregoing, KAPPS retains all rights in the underlying Platform, algorithms, models, and any aggregated, de-identified, or statistical insights derived from Platform usage across all users.</p>
+
+        <h3>8.4. Usage Analytics</h3>
+        <p>KAPPS may collect and use aggregated, de-identified usage data and performance metrics to improve the Platform, provided such data cannot reasonably be used to identify you or any individual. Such de-identified data is owned by KAPPS.</p>
+
+        <!-- §9 CONFIDENTIALITY -->
+        <h2 id="s9">9. Confidentiality</h2>
+        <h3>9.1. Mutual Obligations</h3>
+        <p>Each Party shall: (a) hold the other Party's Confidential Information in strict confidence using at least the same degree of care it uses to protect its own confidential information (but no less than reasonable care); (b) not disclose Confidential Information to any third party without prior written consent; and (c) use Confidential Information solely for the purpose of performing obligations or exercising rights under this Agreement.</p>
+
+        <h3>9.2. Exclusions</h3>
+        <p>Confidentiality obligations do not apply to information that: (a) is or becomes publicly known through no breach of this Agreement; (b) was rightfully known to the receiving Party before disclosure; (c) is independently developed by the receiving Party without use of Confidential Information; or (d) is required to be disclosed by law, court order, or governmental authority, provided the disclosing Party gives prompt prior written notice to the other Party to the extent permitted.</p>
+
+        <h3>9.3. Injunctive Relief</h3>
+        <p>Each Party acknowledges that breach of this Section would cause irreparable harm for which monetary damages would be an inadequate remedy, and that injunctive or other equitable relief may be sought in a court of competent jurisdiction without the requirement to post bond and without waiving the right to arbitrate the underlying dispute.</p>
+
+        <!-- §10 FEES -->
+        <h2 id="s10">10. Fees, Payment & Subscription</h2>
+        <h3>10.1. Fees</h3>
+        <p>You agree to pay all fees set forth in the applicable Order Form or checkout page. All fees are in U.S. dollars unless otherwise stated. Fees are non-refundable except as expressly set forth in this Agreement or required by applicable law.</p>
+
+        <h3>10.2. Per-Use Audit Fees; No Refund After Completion</h3>
+        <p>Certain Platform tools (including the SOQ Auditor and Technical Proposal Auditor) are billed on a per-use, pay-per-run basis rather than by subscription. For these tools: (a) if a run fails before completing, or if you cancel a run before it completes, the applicable fee (less any stated cancellation fee) is automatically refunded as described on the tool's checkout page; and (b) once a run completes and its Output/report has been generated and made available for download, the fee for that run is <strong>final and non-refundable</strong>, regardless of whether you download the Output, and regardless of your assessment of the Output's quality, accuracy, or usefulness. This reflects that the compute, data, and AI-inference costs of a completed run are fully incurred at completion, irrespective of download. This Section 10.2 does not limit any right to a refund required by applicable law.</p>
+
+        <h3>10.3. Automatic Renewal</h3>
+        <p>Unless an Order Form specifies otherwise or a Party provides written notice of non-renewal at least 30 days before the end of the then-current Subscription Term, subscriptions automatically renew for successive periods equal to the initial term at the then-current list price. You authorize KAPPS to charge your payment method on file for each renewal period.</p>
+
+        <h3>10.4. Taxes</h3>
+        <p>Fees are exclusive of all applicable taxes, levies, duties, and assessments (including VAT, GST, and sales tax). You are responsible for payment of all such taxes, except for taxes on KAPPS's net income.</p>
+
+        <h3>10.5. Suspension for Non-Payment</h3>
+        <p>If a subscription payment fails or is declined, access to the paid tools covered by that subscription is suspended automatically and immediately, without prior notice. Our payment processor may retry the charge; if a retry succeeds, or you update your payment method and the outstanding amount is paid, access is restored automatically. Suspension does not cancel your subscription or relieve you of amounts already due. Interest accrues on past-due amounts at the rate of 1.5% per month (18% per annum) or the maximum rate permitted by law, whichever is less.</p>
+
+        <h3>10.6. Removing a Tool During a Billing Period</h3>
+        <p>You may remove a tool from your subscription, or cancel the subscription, at any time from your account. A removed or cancelled tool stays available until the end of the billing period you have already paid for, and no partial refund or credit is issued for the rest of that period. A tool added during a billing period is charged when it is added, prorated for the remainder of that period.</p>
+
+        <h3>10.7. Group Plans</h3>
+        <p>Group plans are available only to accounts that use a company email address; accounts on a personal email address (for example, Gmail or Outlook) are on the individual plan. KAPPS sets up each group, including its name, its members, and its group manager, and all members must use the group manager's company email domain. The group manager chooses the tools for the group and is solely responsible for paying the group's subscription fees; members receive access to the chosen tools only after the group manager's payment succeeds. The monthly fee for each tool is a multiple of that tool's individual monthly price, set by the number of members: up to 5 members, 4 times; 6 to 10 members, 7 times; 11 or more members, 11 times. When members are added or removed, the fee changes to the matching tier, prorated on the next invoice. A group member's individual subscription, if any, ends at the close of its current billing period once the group plan is active. If the group manager changes or the group is closed, the group's subscription ends immediately, with credit for unused time issued to the paying account, and members lose access to the group's tools until a new group subscription is paid. Sections 10.5 and 10.6 apply to group plans. Per-use fees under Section 10.2 are charged to the person who starts the run and are not part of a group plan.</p>
+
+        <!-- §11 TERM & TERMINATION -->
+        <h2 id="s11">11. Term & Termination</h2>
+        <h3>11.1. Term</h3>
+        <p>This Agreement commences on the date you first accept it and continues until the expiration or termination of all active Subscription Terms.</p>
+
+        <h3>11.2. Termination for Cause</h3>
+        <p>Either Party may terminate this Agreement (including all Order Forms) upon 30 days' written notice if the other Party materially breaches this Agreement and fails to cure such breach within the notice period. KAPPS may terminate immediately, without notice, for: (a) violation of Section 3.2 (License Restrictions); (b) violation of Section 6 (AUP); (c) actions that pose a security risk to the Platform or other users; or (d) any fraud or misrepresentation by User.</p>
+
+        <h3>11.3. Effect of Termination</h3>
+        <p>Upon termination: (a) all licenses granted hereunder terminate immediately; (b) you shall immediately cease all use of the Platform and delete all locally cached Outputs; (c) KAPPS will provide a 30-day data export window during which you may export User Data, after which KAPPS may permanently delete all User Data; (d) all accrued payment obligations survive termination; and (e) Sections 1, 7 (data obligations), 8, 9, 12, 13, 14, 15, 16, and 19 survive termination indefinitely.</p>
+
+        <!-- §12 WARRANTY DISCLAIMER -->
+        <h2 id="s12">12. Absolute Disclaimer of All Warranties</h2>
+
+        <div class="callout callout-black">
+            <div class="callout-title"><i class="fas fa-exclamation-circle"></i> &nbsp;Warranty Disclaimer</div>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE PLATFORM AND ALL OUTPUTS ARE PROVIDED "AS IS," "WITH ALL FAULTS," AND "AS AVAILABLE." KAPPS AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AFFILIATES, LICENSORS, AND SERVICE PROVIDERS EXPRESSLY DISCLAIM ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE.</p>
+        </div>
+
+        <p>Without limiting the foregoing, KAPPS explicitly disclaims: (a) the implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement; (b) any warranty that the Platform will be uninterrupted, error-free, timely, secure, or free from bugs, viruses, or computational errors; (c) any warranty that Outputs comply with FEMA, FHWA, USACE, EPA, state DOT, or local stormwater management standards, regulations, or manuals; (d) any warranty as to the accuracy, completeness, or reliability of AI-generated Outputs; and (e) any warranty arising from course of dealing, course of performance, or usage of trade.</p>
+        <p>Some jurisdictions do not allow the exclusion of implied warranties; in such jurisdictions, the foregoing exclusions apply to the maximum extent permitted by law, and any implied warranty is limited in duration to 30 days from the date of first use.</p>
+
+        <!-- §13 LIMITATION OF LIABILITY -->
+        <h2 id="s13">13. Absolute Waiver of Right to Sue & Limitation of Liability</h2>
+
+        <div class="callout callout-red">
+            <div class="callout-title"><i class="fas fa-ban"></i> &nbsp;Waiver of Right to Sue — Read Carefully</div>
+            <p>BY CREATING AN ACCOUNT AND ACCEPTING THIS AGREEMENT, YOU ARE ABSOLUTELY WAIVING YOUR RIGHT TO LEGALLY CHALLENGE, SUE, OR BRING CIVIL ACTION AGAINST KAPPS LLC, ITS MEMBERS, OFFICERS, DIRECTORS, EMPLOYEES, OR AGENTS IN ANY COURT OF LAW, WORLDWIDE, EXCEPT AS EXPRESSLY PERMITTED BY THE ARBITRATION PROVISIONS OF SECTION 15. THIS WAIVER IS KNOWING, VOLUNTARY, AND MADE WITH FULL UNDERSTANDING OF ITS CONSEQUENCES.</p>
+        </div>
+
+        <h3>13.1. Exclusion of Consequential Damages</h3>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, UNDER NO LEGAL THEORY — WHETHER IN TORT (INCLUDING NEGLIGENCE OR STRICT LIABILITY), CONTRACT, STATUTE, OR OTHERWISE — SHALL KAPPS, ITS MEMBERS, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AFFILIATES, OR LICENSORS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY:</p>
+        <ul>
+            <li>Indirect, incidental, special, consequential, punitive, or exemplary damages of any nature;</li>
+            <li>Damages arising from structural failure, flooding, property damage, personal injury, wrongful death, or any other physical harm associated with any design, construction, or engineering work utilizing Platform Outputs or AI-generated data;</li>
+            <li>Financial losses resulting from rejected permit applications, revoked engineering seals, delayed or cancelled construction schedules, contractor claims, or regulatory fines;</li>
+            <li>Loss of profits, revenue, data, business opportunity, goodwill, or anticipated savings;</li>
+            <li>Business interruption, procurement of substitute services, or loss of use of data;</li>
+            <li>Damages arising from reliance on AI-generated Outputs, hallucinated data, or erroneous extractions.</li>
+        </ul>
+
+        <h3>13.2. Aggregate Liability Cap</h3>
+        <p>IF, DESPITE THE FOREGOING ABSOLUTE WAIVER AND EXCLUSIONS, A COURT OF COMPETENT JURISDICTION OR ARBITRATOR FINDS KAPPS LIABLE FOR ANY LOSS OR DAMAGE, KAPPS'S TOTAL, AGGREGATE LIABILITY FOR ALL CLAIMS ARISING UNDER OR RELATED TO THIS AGREEMENT SHALL BE STRICTLY CAPPED AT THE LESSER OF: (A) THE TOTAL FEES ACTUALLY PAID BY YOU TO KAPPS IN THE ONE (1) CALENDAR MONTH IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM; OR (B) FIFTY UNITED STATES DOLLARS (USD $50.00).</p>
+
+        <h3>13.3. Essential Basis of Bargain</h3>
+        <p>You acknowledge that the limitations of liability in this Section reflect a reasonable allocation of risk between the Parties and are an essential element of the basis of the bargain between the Parties. KAPPS would not have entered into this Agreement or provided the Platform at the stated price without these limitations.</p>
+
+        <h3>13.4. Multiple Claims</h3>
+        <p>The existence of more than one claim shall not enlarge the liability cap set forth in Section 13.2. The aggregate cap applies to all claims collectively, not individually.</p>
+
+        <!-- §14 INDEMNIFICATION -->
+        <h2 id="s14">14. Global Indemnification</h2>
+        <h3>14.1. User Indemnification of KAPPS</h3>
+        <p>You agree to <strong>fully defend, indemnify, and hold harmless</strong> KAPPS and its members, officers, directors, employees, agents, successors, and assigns from and against any and all claims, lawsuits, demands, regulatory enforcement actions, investigations, fines, penalties, damages, losses, costs, and expenses (including reasonable attorneys' fees, expert witness fees, and court costs) arising out of or related to:</p>
+        <ul>
+            <li>Your use or misuse of, or inability to use, the Platform or any AI Components;</li>
+            <li>Any engineering design, structure, stormwater system, roadway, drainage network, or physical asset that is constructed, permitted, bid, or designed in reliance on any Output from the Platform;</li>
+            <li>Any claim by any third party—including any natural person, corporation, limited liability company, municipality, county, state, federal agency, or regulatory body—arising from your use of the Platform;</li>
+            <li>Your violation of this Agreement, any applicable law or regulation, or any rights of a third party;</li>
+            <li>Any claim that User Data infringes or misappropriates any third-party Intellectual Property Right;</li>
+            <li>Your failure to obtain required professional engineering review and certification of any Output;</li>
+            <li>Any data breach caused by your failure to maintain adequate access controls over your account credentials or Authorized User accounts;</li>
+            <li>Any claim arising from your submission of Platform Outputs to any governmental authority, municipality, or regulatory body without required PE certification;</li>
+            <li>Any claim, sanction, or adverse consequence arising from your use of any AI-generated Output in any legal, administrative, quasi-judicial, or regulatory proceeding in violation of Section 5.6, including but not limited to bid protests, procurement challenges, litigation, or regulatory complaints directed at any government entity, private company, or individual.</li>
+        </ul>
+
+        <h3>14.2. Indemnification Procedure</h3>
+        <p>KAPPS will: (a) promptly notify you in writing of any indemnifiable claim (failure to notify does not relieve your indemnification obligation except to the extent you are prejudiced); (b) grant you sole control of the defense and settlement of such claim; and (c) provide reasonable cooperation at your expense. You shall not settle any claim that imposes any obligation, restriction, or liability on KAPPS without KAPPS's prior written consent.</p>
+
+        <!-- §15 ARBITRATION -->
+        <h2 id="s15">15. Binding Arbitration, Class Action Waiver & Jury Trial Waiver</h2>
+
+        <div class="callout callout-blue">
+            <div class="callout-title"><i class="fas fa-gavel"></i> &nbsp;Mandatory Arbitration — Read Carefully</div>
+            <p>THIS SECTION CONTAINS A BINDING ARBITRATION PROVISION AND CLASS ACTION WAIVER. BY ACCEPTING THIS AGREEMENT, YOU WAIVE YOUR RIGHT TO A TRIAL BY JURY AND YOUR RIGHT TO PARTICIPATE IN ANY CLASS, COLLECTIVE, OR REPRESENTATIVE ACTION. YOU HAVE THE RIGHT TO OPT OUT AS DESCRIBED BELOW.</p>
+        </div>
+
+        <h3>15.1. Agreement to Arbitrate</h3>
+        <p>Except as set forth in Section 15.6, any dispute, claim, controversy, or cause of action arising out of or relating to this Agreement, the Platform, or the breach, termination, enforcement, interpretation, or validity thereof, including the determination of the scope or applicability of this arbitration agreement, shall be determined exclusively by confidential, binding arbitration seated in Richmond, Virginia, USA, administered by the American Arbitration Association (AAA) under its Commercial Arbitration Rules (or Consumer Arbitration Rules where applicable), as amended from time to time and as modified by this Section 15.</p>
+
+        <h3>15.2. Arbitrator Selection & Rules</h3>
+        <p>The arbitration shall be conducted before a single arbitrator with substantial experience in software licensing, technology disputes, and commercial law. The arbitrator shall have exclusive authority to resolve all issues relating to the interpretation, applicability, enforceability, and scope of this arbitration agreement. The arbitrator's award shall be final and binding and may be entered as a judgment in any court of competent jurisdiction.</p>
+
+        <h3>15.3. Class Action Waiver</h3>
+        <p>YOU AND KAPPS AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS, CONSOLIDATED, COLLECTIVE, OR REPRESENTATIVE ACTION OR PROCEEDING. THE ARBITRATOR MAY NOT CONSOLIDATE MORE THAN ONE PERSON'S CLAIMS AND MAY NOT OTHERWISE PRESIDE OVER ANY CLASS, CONSOLIDATED, OR REPRESENTATIVE PROCEEDING. If this class action waiver is found unenforceable with respect to any particular claim, that claim must be severed and proceed in court, while all remaining claims proceed in arbitration.</p>
+
+        <h3>15.4. Jury Trial Waiver</h3>
+        <p>YOU AND KAPPS EACH HEREBY IRREVOCABLY AND UNCONDITIONALLY WAIVE ANY RIGHT TO TRIAL BY JURY IN ANY ACTION, PROCEEDING, OR COUNTERCLAIM (WHETHER BASED IN CONTRACT, TORT, STATUTE, OR OTHERWISE) ARISING OUT OF OR RELATED TO THIS AGREEMENT OR THE PLATFORM.</p>
+
+        <h3>15.5. Arbitration Costs</h3>
+        <p>Arbitration fees and costs shall be allocated according to the applicable AAA rules. The arbitrator may award attorneys' fees and costs to the prevailing Party to the extent permitted by applicable law. KAPPS shall not seek attorneys' fees against a consumer User unless the arbitrator determines the claim was frivolous or brought in bad faith.</p>
+
+        <h3>15.6. Exceptions to Arbitration</h3>
+        <p>Notwithstanding Section 15.1, either Party may seek: (a) emergency injunctive or other equitable relief from a court of competent jurisdiction to prevent irreparable harm, including breaches of confidentiality or Intellectual Property Rights, pending the outcome of arbitration; and (b) relief in small claims court for disputes within that court's jurisdictional limits, provided the dispute remains in small claims court and is not removed or transferred to a different court.</p>
+
+        <h3>15.7. Opt-Out Right</h3>
+        <p>You may opt out of this arbitration agreement by sending written notice to <strong>support@kapps.ai</strong> within <strong>30 days</strong> of the date you first accept this Agreement. Your opt-out notice must include your full name, account email address, and a clear statement that you opt out of arbitration. Opting out does not affect any other provision of this Agreement. If you opt out, all disputes shall be resolved in the courts specified in Section 16.</p>
+
+        <h3>15.8. Batch Arbitration</h3>
+        <p>To increase efficiency, where 25 or more similar claims are filed against KAPPS by Users with the same or coordinated counsel, the AAA shall administer such claims in batches of no more than 50 claims per batch, with one arbitrator per batch. This provision does not affect each User's right to individual adjudication within the batch.</p>
+
+        <!-- §16 GOVERNING LAW -->
+        <h2 id="s16">16. Governing Law & Venue</h2>
+        <p>This Agreement and all matters arising out of or related to it shall be governed by and construed in accordance with the laws of the Commonwealth of Virginia, USA, without giving effect to any choice-of-law or conflicts-of-law rules that would cause the laws of another jurisdiction to apply. To the extent any court proceeding is permissible under Section 15.6, the Parties irrevocably consent to the exclusive jurisdiction and venue of the state and federal courts located in Richmond, Virginia, and waive any objection to such jurisdiction and venue based on inconvenient forum or otherwise.</p>
+
+        <!-- §17 EXPORT CONTROLS -->
+        <h2 id="s17">17. Export Controls & Sanctions Compliance</h2>
+        <p>The Platform and related technology are subject to U.S. export control laws and regulations, including the Export Administration Regulations (EAR, 15 C.F.R. Parts 730–774) administered by the Bureau of Industry and Security (BIS), and sanctions programs administered by the Office of Foreign Assets Control (OFAC, 31 C.F.R. Parts 500–598). You represent and warrant that: (a) you are not located in, a national of, or ordinarily resident in a country subject to comprehensive U.S. sanctions (currently Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk, and Luhansk regions of Ukraine); (b) you are not on the Specially Designated Nationals (SDN) list, the Denied Persons List, or any other U.S. government restricted party list; and (c) you will not use or permit use of the Platform for any end use prohibited under U.S. export control laws. You shall indemnify KAPPS for all fines, penalties, and costs arising from your violation of this Section.</p>
+
+        <!-- §18 FORCE MAJEURE -->
+        <h2 id="s18">18. Force Majeure</h2>
+        <p>KAPPS shall not be in breach of this Agreement or liable for any delay or failure to perform any obligation under this Agreement to the extent that such delay or failure is caused by circumstances beyond KAPPS's reasonable control, including but not limited to: acts of God, natural disasters, pandemics, epidemics, war, terrorism, civil unrest, governmental actions or regulatory changes, cyberattacks, third-party infrastructure failures (including cloud provider outages), labor disputes, or failures of the internet or public telecommunications networks. KAPPS shall notify User as soon as reasonably practicable and shall use commercially reasonable efforts to resume performance. If a force majeure event continues for more than 60 consecutive days, either Party may terminate the affected Order Form upon written notice without liability (other than for fees already due).</p>
+
+        <!-- §19 MISCELLANEOUS -->
+        <h2 id="s19">19. Miscellaneous Provisions</h2>
+
+        <h3>19.1. Entire Agreement</h3>
+        <p>This Agreement, together with all Order Forms and incorporated policies, constitutes the entire agreement between the Parties with respect to its subject matter and supersedes all prior and contemporaneous understandings, representations, warranties, and agreements, whether written or oral, regarding such subject matter.</p>
+
+        <h3>19.2. Amendments</h3>
+        <p>KAPPS reserves the right to modify this Agreement at any time. Material changes will be communicated via: (a) email to your registered address; (b) prominent notice on the Platform; or (c) both. Continued use of the Platform after the effective date of any modification constitutes acceptance. If you do not agree to a modification, your sole remedy is to terminate your subscription before the effective date of such modification.</p>
+
+        <h3>19.3. Severability</h3>
+        <p>If any provision of this Agreement is held by a court or arbitrator to be invalid, illegal, or unenforceable under applicable law, such provision shall be modified to the minimum extent necessary to make it enforceable (or severed if modification is not possible), without affecting the validity or enforceability of the remaining provisions.</p>
+
+        <h3>19.4. Waiver</h3>
+        <p>No waiver by KAPPS of any right or remedy under this Agreement shall be effective unless in writing and signed by an authorized representative of KAPPS. No single or partial exercise of any right or remedy shall preclude or restrict the further exercise of that or any other right or remedy. No failure to exercise, or delay in exercising, any right or remedy shall constitute a waiver.</p>
+
+        <h3>19.5. Assignment</h3>
+        <p>You may not assign, transfer, delegate, or sublicense any of your rights or obligations under this Agreement without KAPPS's prior written consent, and any purported assignment in violation of this Section is null and void. KAPPS may freely assign this Agreement, in whole or in part, in connection with a merger, acquisition, corporate reorganization, or sale of all or substantially all of its assets, with or without your consent.</p>
+
+        <h3>19.6. No Third-Party Beneficiaries</h3>
+        <p>Except as expressly set forth in Section 14 with respect to indemnified parties, this Agreement is for the sole benefit of the Parties and their respective permitted successors and assigns and does not create any third-party beneficiary rights.</p>
+
+        <h3>19.7. Independent Contractors</h3>
+        <p>The Parties are independent contractors. Nothing in this Agreement shall be construed to create a partnership, joint venture, agency, employment, or fiduciary relationship between the Parties.</p>
+
+        <h3>19.8. Electronic Signature & Clickwrap Enforceability</h3>
+        <p>You agree that your electronic acceptance (clicking "I Agree"), completion of account registration, or first access to the Platform constitutes your electronic signature and is legally binding under the Electronic Signatures in Global and National Commerce Act (E-SIGN Act, 15 U.S.C. § 7001 et seq.), the Uniform Electronic Transactions Act (UETA) as adopted in Virginia (Va. Code §§ 59.1-479–59.1-497), and applicable international law. You waive any right to assert that this Agreement is unenforceable on the ground that it was accepted electronically.</p>
+
+        <h3>19.9. Headings</h3>
+        <p>Section headings are for convenience only and shall not affect the interpretation of this Agreement.</p>
+
+        <h3>19.10. Counterparts</h3>
+        <p>This Agreement may be executed in counterparts, each of which shall be deemed an original, and all of which together shall constitute one and the same instrument.</p>
+
+        <h3>19.11. Statute of Limitations</h3>
+        <p>Notwithstanding any statute of limitations to the contrary, any claim or cause of action arising out of or related to this Agreement or the Platform must be filed within <strong>one (1) year</strong> after the claim or cause of action arose, or be forever barred. This limitation applies to the maximum extent permitted by applicable law.</p>
+
+        <h3>19.12. Equitable Relief</h3>
+        <p>You acknowledge that breach of Sections 3 (License), 8 (IP), or 9 (Confidentiality) would cause KAPPS irreparable harm not adequately compensable in damages, and that KAPPS shall be entitled to seek injunctive or other equitable relief in any court of competent jurisdiction without the requirement to post bond and without waiving arbitration rights.</p>
+
+        <!-- §20 NOTICE -->
+        <h2 id="s20">20. Notice & Contact Information</h2>
+        <p>All legal notices to KAPPS under this Agreement must be in writing and delivered to:</p>
+        <div class="callout callout-blue" style="margin-top:12px;">
+            <p style="font-weight:400; line-height:1.9;">
+                <strong>KAPPS LLC — Legal Department</strong><br>
+                Richmond, Virginia, United States of America<br>
+                <strong>All Notices, Privacy Requests & Security Reports:</strong> support@kapps.ai
+            </p>
+        </div>
+        <p>Notices to you shall be sent to the email address associated with your account. Either Party may update its notice address by written notification to the other Party. Notices are effective upon delivery if sent by email (with read receipt or no bounce notification) or upon signed receipt if sent by registered mail.</p>
+
+        <!-- FINAL ACCEPTANCE BOX -->
+        <div class="accept-box" style="margin-top: 50px;">
+            <div class="accept-title"><i class="fas fa-check-circle"></i> &nbsp;Final Acknowledgment</div>
+            I ACKNOWLEDGE THAT I HAVE READ THIS ENTIRE AGREEMENT, UNDERSTAND ITS TERMS — INCLUDING THE WAIVER OF MY RIGHT TO SUE, THE BINDING ARBITRATION CLAUSE, THE CLASS ACTION WAIVER, THE JURY TRIAL WAIVER, THE ASSUMPTION OF ALL AI RISK, THE PROHIBITION ON USING AI-GENERATED OUTPUTS AS LEGAL DOCUMENTS OR EVIDENCE IN ANY PROCEEDING AGAINST ANY PARTY (SECTION 5.6), AND THE MANDATORY PROFESSIONAL ENGINEERING VERIFICATION REQUIREMENTS — AND I VOLUNTARILY AND KNOWINGLY AGREE TO BE BOUND BY ALL OF ITS PROVISIONS.
+        </div>
+
+        <div class="sig-block">
+            <p>KAPPS LLC &nbsp;·&nbsp; Richmond, Virginia, USA &nbsp;·&nbsp; Effective October 8, 2026 &nbsp;·&nbsp; Version 2.1</p>
+            <p style="margin-top:6px;">See also: <a href="/privacy/" style="color:var(--primary);">Privacy Policy</a>.</p>
+            <p style="margin-top:6px;">This document constitutes a legally binding agreement. Consult independent legal counsel before accepting if you have any questions.</p>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

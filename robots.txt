@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /api/
+Disallow: /master-control/
+Disallow: /hub/
+Disallow: /profile/
+Sitemap: https://kapps.ai/sitemap.xml
